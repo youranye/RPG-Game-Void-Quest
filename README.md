@@ -10,7 +10,14 @@ Authors: [Wen Wu Yiang](https://github.com/W2YUCR), [Youran Ye](https://github.c
  > * What are the features that the project provides?
  > This description should be in enough detail that the TA/instructor can determine the complexity of the project and if it is sufficient for the team members to complete in the time allotted.
 
- > This project interests us because we all are interested in designing and building a game. Some of our group members have played tabletop RPGs and enjoy the fantasy genre.
+In our RPG, you will be able to:
+* Build a character by choosing their name, attributes, and Class
+* Affect the story through your actions
+* Fight enemies
+* Explore the many areas of The Stitch
+* Interact with NPCs
+
+ This project interests us because we all are interested in designing and building a game. Some of our group members have played tabletop RPGs and enjoy the fantasy genre.
  
  > You also need to set up an empty project board using GitHub projects (board view). Make sure you add the board under your project repository. You should also have a Product Backlog and In testing columns added.
  > ## Phase II
