@@ -4,12 +4,16 @@ Authors: [Wen Wu Yiang](https://github.com/W2YUCR), [Youran Ye](https://github.c
 
 ## Project Description
 
+Void Quest is a text based RPG written in C++ that takes place in the Stitch, a world bustling with Humans, Orcs, Elves, Dwarves, Goblins, and Giants.
+
 In our RPG, you will be able to:
 * Build a character by choosing their name, attributes, and Class
 * Affect the story through your actions
 * Fight enemies
 * Explore the many areas of The Stitch
 * Interact with NPCs
+
+Scenes are text-based, and printed out to the console. In each scene, lettered options are displayed to the user, who can select one by typing the corresponding letter. 
 
 This project interests us because we all are interested in designing and building a game. Some of our group members have played tabletop RPGs and enjoy the fantasy genre.
 
