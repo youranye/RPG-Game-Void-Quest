@@ -40,6 +40,22 @@ This diagram shows a flowchart of the various parts of the program, starting fro
 ### Screen Layouts
 > Include the layout of each of your screens. The layout should describe the screen’s major components such as menus and prompts for user inputs, expected output, and buttons (if applicable). Explain what is on the layout, and the purpose of each menu item, button, etc. If many screens share the same layout, start by describing the general layout and then list the screens that will be using that layout and the differences between each of them.
 
+Screens will contain text that relates to the story of the game. They will give the user a list of lettered options and prompt the user to select the letter of the option they desire. The user will select an option by typing the corresponding letter into the terminal and hitting enter. The game will include the following screens:
+
+Home/Start: Displays the title of the game. The user enters ‘a’ to start the game or ‘b’ to see the credits.
+
+Credits: Displays the credits. The user enters any letter to return to the home/start screen.
+
+Story: Narrates a scene in the story. Explains a scenario to the user and asks them to choose what they will do next. Displays a list of options, each labeled with a letter. The user inputs the letter of the option they wish to choose.
+
+Combat help: Displays an explanation of combat mechanics. The user enters any letter to return to the story.
+
+Game over: Displays a message that the player character has died. The user enters any letter to return to the home/start screen.
+
+Win: Displays a message the user has won the game. The user enters any letter to return to the home/start screen.
+
+![](screen_layout.jpg)
+
 ## Class Diagram
  > Include a **class diagram(s)** for your project and a **description** of the diagram(s). Your class diagram(s) should include all the main classes you plan for the project. This should be in sufficient detail that another group could pick up the project this point and successfully complete it. Use proper UML notation (as discussed in the course slides).
  
