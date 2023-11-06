@@ -38,7 +38,6 @@ This diagram shows a flowchart of the various parts of the program, starting fro
 ![](navigation_diagram.jpg)
 
 ### Screen Layouts
-<!--> Include the layout of each of your screens. The layout should describe the screen’s major components such as menus and prompts for user inputs, expected output, and buttons (if applicable). Explain what is on the layout, and the purpose of each menu item, button, etc. If many screens share the same layout, start by describing the general layout and then list the screens that will be using that layout and the differences between each of them.-->
 
 Screens will contain text that relates to the story of the game. They will give the user a list of lettered options and prompt the user to select the letter of the option they desire. The user will select an option by typing the corresponding letter into the terminal and hitting enter. The expected input is one of the listed letters. In the case of character creation, a string is expected for the character's name. The game will include the following screens:
 * Home/Start: Displays the title of the game. The user enters ‘a’ to start the game or ‘b’ to see the credits.
