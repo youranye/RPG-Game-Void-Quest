@@ -29,7 +29,6 @@ This project interests us because we all are interested in designing and buildin
  >     * The tasks you are planning for the first sprint
  >     * How work will be divided between the team members
 ## User Interface Specification
- > Include a navigation diagram for your screens and the layout of each of those screens as desribed below. For all the layouts/diagrams, you can use any tool such as PowerPoint or a drawing program. (Specification requirement is adapted from [this template](https://redirect.cs.umbc.edu/~mgrass2/cmsc345/Template_UI.doc))
 
 ### Navigation Diagram
 
@@ -50,7 +49,6 @@ Screens will contain text that relates to the story of the game. They will give 
 ![](screen_layout.jpg)
 
 ## Class Diagram
- > Include a **class diagram(s)** for your project and a **description** of the diagram(s). Your class diagram(s) should include all the main classes you plan for the project. This should be in sufficient detail that another group could pick up the project this point and successfully complete it. Use proper UML notation (as discussed in the course slides).
 
  ![](class_diagram.png)
 
