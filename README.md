@@ -6,14 +6,17 @@ Authors: [Wen Wu Yiang](https://github.com/W2YUCR), [Youran Ye](https://github.c
 
 Void Quest is a text based RPG written in C++ that takes place in the Stitch, a world bustling with Humans, Orcs, Elves, Dwarves, Goblins, and Giants.
 
-In our RPG, you will be able to:
-* Build a character by choosing their name, attributes, and Class
-* Affect the story through your actions
-* Fight enemies
-* Explore the many areas of The Stitch
-* Interact with NPCs
+Features of our RPG:
 
-Scenes are text-based, and printed out to the console. In each scene, lettered options are displayed to the user, who can select one by typing the corresponding letter. 
+* Character customization: Players can customize their character by choosing their name, attributes, and class, which affects their character stats and abilities.
+* Extendible world: The world is set up using data files, which means that new content can be added by simply adding more files.
+* Branching plotline: Player choices affect the game state, which changes what the user finds in the world.
+* Combat system: Players are able to fight enemies throughout their journey, and upgrade their equipment.
+* NPCs: NPCs can give out quests to players who will be rewarded for completing objectives
+* Game saving and loading: Players can save and load games to continue playing later.
+
+Output: Scenes are text-based, and printed out to the console. It shows the narrative text, status such as health, and options for progression.
+Input: Each option shown is lettered a, b, c, etc.. Users can select one of the options shown by typing the corresponding letter. 
 
 This project interests us because we all are interested in designing and building a game. Some of our group members have played tabletop RPGs and enjoy the fantasy genre.
 
