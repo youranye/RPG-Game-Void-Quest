@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-#include "iomanager.hpp"
+#include "iomanager.h"
 
 class IOManagerTest : public testing::Test
 {
