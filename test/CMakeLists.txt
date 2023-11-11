@@ -10,6 +10,7 @@ add_executable(runAllTests
   GameManagerTests.cpp
 
   BattleManagerTests.cpp
+  sceneparsertests.cpp
 )
 
 add_executable(testCharacterManager
