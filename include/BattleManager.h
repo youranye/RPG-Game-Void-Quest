@@ -9,14 +9,14 @@ class Character
         : hp(h) , sp(s), attack(atk), defense(dfs), dexterity(dex)
         {}
 
-        int get_hp() { return hp; }
-        int get_sp() { return sp; }
-        int get_attack() { return attack; }
-        int get_defense() { return defense; }
-        int get_dexterity()  { return dexterity; }
+        int getHP() { return hp; }
+        int getSP() { return sp; }
+        int getAttack() { return attack; }
+        int getDefense() { return defense; }
+        int getDexterity()  { return dexterity; }
 
         void heal(int amount) { hp = hp + amount; }
-        void take_damage(int amount) { hp = hp - amount; }
+        void takeDamage(int amount) { hp = hp - amount; }
 
     private:
         int hp;
@@ -32,17 +32,17 @@ class BattleManager
         BattleManager(Character& playerCharacter, Character& enemyCharacter)
             : player(playerCharacter), enemy(enemyCharacter), result(ONGOING)
         {}
-
-        void battle();
-        void chooseAction();
-        bool determineAttackSuccess();
-        void dealDamage();
-        void displayAttack();
+        void runBattle();
         BattleOutcome getBattleOutcome();
 
     private:
         Character& player;
         Character& enemy;
         BattleOutcome result;
+
+        void chooseAction();
+        void attack(Character& attacker, Character& target);
+        bool determineAttackSuccess(int successValue);
+        void displayAttack(const Character& attacker, const Character& target, int success, int damage);
 };
 
