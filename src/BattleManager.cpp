@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 
+#include <iostream>
+
 // Runs the battle using turn-based combat
 void BattleManager::runBattle()
 {
@@ -72,7 +74,15 @@ void BattleManager::attack(Character& attacker, Character& target)
 
     // Determine amount of damage the target takes
     totalDamage = ((attackPower * attackModifier) - (targetDefense * defenseModifier)) * hitValue * 0.3;
-    target.takeDamage(totalDamage);
+
+    // If totalDamage is negative, the target takes 0 damage
+    if (totalDamage < 0)
+    {
+        totalDamage = 0;
+    }
+    else{
+        target.takeDamage(totalDamage);
+    }
 
     // Display result of attack to user
     displayAttack(attacker, target, hitValue, totalDamage);
@@ -96,6 +106,27 @@ void BattleManager::displayAttack(const Character& attacker, const Character& ta
 {}
 
 // TODO: necessary to run code, put in test file soon
-int main() {
+int main()
+{
+    Character rogue(15,90,12,11,20);
+    Character paladin(25,60,9,15,10);
+    BattleManager testBattle(rogue, paladin);
+
+    testBattle.runBattle();
+    BattleOutcome result = testBattle.getBattleOutcome();
+
+    if (result == WIN)
+    {
+        std::cout << "win\n";
+    }
+    else if (result == DEATH)
+    {
+        std::cout << "death\n";
+    }
+    else
+    {
+        std::cout << "undetermined\n";
+    }
+
     return 0;
 }
