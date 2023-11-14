@@ -31,8 +31,6 @@ public:
 	int get_hp();
 	void heal(int amount);
 	void take_damage(int amount);
-
-	//after first commit
 	Ability levelup();
 };
 
