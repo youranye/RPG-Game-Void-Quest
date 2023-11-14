@@ -4,38 +4,45 @@
 
 using namespace std;
 
+//character and enemy shared enums
+enum SpeciesType {HUMAN, ELF, DWARF, GOBLIN, TABAXI, ORC, GOLIATH, CHANGELING, GNOME, VOIDWALKER};
+//utilize to differentiate between player type character and Enemy type character
+enum CharacterType {PLAYER, ENEMY, STORY};
+enum AbilityType {ATTACK, DEFEND, BUFF, DEBUFF, HEAL};
+enum AbilityCondition {ATK, DEF, DEX, SLEEP, CONFUSION, NONE};
 
-enum SpeciesType {HUMAN, ELF, DWARF, GOBLIN, TABAXI};
-enum ClassType { ROGUE, PALADIN, WARLOCK, FORGED};
-
-/// gonna have to create derived classes for each Player and enemy, since Enemies have different stats and Species, and no classes
-
+//new way of handling attacks
+struct Ability {
+	string name;
+	AbilityType type;
+	string description;
+	AbilityCondition condition;
+	int power;
+	int cost;
+	int accuracy;
+	Ability() : name("InvalidAbility"), type(DEBUFF), description("EMPTYABILITY"), condition(NONE), power(0), cost(0), accuracy(0) {}
+	Ability(string name, AbilityType type, string desc, AbilityCondition cond, int pow, int cost, int acc) : 
+		name(name), type(type), description(desc), condition(cond), power(pow), cost(cost), accuracy(acc) {}
+};
+//Basic Attack
+//Ability ("Basic Attack", ATTACK, "Attack Enemy", NONE, 90, 0, 99)
+//character is now abstract base class
 class Character
 {
 private:
 	string Name;
 	SpeciesType Species;
-	ClassType Class;
-	int attack;
-	int defense;
-	int dexterity;
-	int hp;
-	const int maxHP;
+	CharacterType type;
+protected:
+	Character() : Name("EMPTYCHARACTER"), Species(VOIDWALKER), type(STORY) {}
 public:
-	Character(string name, SpeciesType species, ClassType clas, int atk, int def, int dex, int health) :
-		Name(name), Species(species), Class(clas), attack(atk), defense(def), dexterity(dex), hp(health), maxHP(health) {}
+	Character(string name, SpeciesType species, CharacterType Character_Type) : Name(name), Species(species), type(Character_Type) {}
 	string get_name();
 	SpeciesType get_species();
-	ClassType get_class();
-	int get_attack();
-	int get_defense();
-	int get_dexterity();
-	int get_hp();
-	void heal(int amount);
-	void take_damage(int amount);
+	CharacterType get_type();
 };
 // When a function looks for a specific character and doesn't find it, it should return nullCharacter to indicate the character was not found.
 #ifndef NULLCHARACTER
 #define NULLCHARACTER
-static Character nullCharacter("NULLCHARACTER", HUMAN, ROGUE, 0, 0, 0, 0);
+static Character nullCharacter("NULLCHARACTER", VOIDWALKER, STORY);
 #endif
