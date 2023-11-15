@@ -4,7 +4,7 @@ void IOManager::write(std::string_view view)
 {
     os << view;
 }
-std::string_view IOManager::prompt(std::vector<std::string> const options)
+std::string_view IOManager::read_option(std::vector<std::string> const options)
 {
     char letter = 'a';
     for (auto const &str : options)

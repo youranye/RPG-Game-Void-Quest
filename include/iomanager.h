@@ -17,7 +17,7 @@ class IOManager
     virtual ~IOManager() = default;
 
     void write(std::string_view);
-    std::string_view prompt(std::vector<std::string> const);
+    std::string_view read_option(std::vector<std::string> const);
 };
 
 #endif

@@ -23,7 +23,7 @@ TEST_F(IOManagerTest, testWrite)
 TEST_F(IOManagerTest, testPrompt)
 {
     iss.str("b\n");
-    auto const result = manager.prompt({"option 1", "option 2", "option 3"});
+    auto const result = manager.read_option({"option 1", "option 2", "option 3"});
 
     EXPECT_EQ(result, "option 2");
 }
@@ -31,7 +31,7 @@ TEST_F(IOManagerTest, testPrompt)
 TEST_F(IOManagerTest, testPromptInputNotAChoiceRetries)
 {
     iss.str("d\nb\n");
-    auto const result = manager.prompt({"option 1", "option 2", "option 3"});
+    auto const result = manager.read_option({"option 1", "option 2", "option 3"});
 
     EXPECT_EQ(oss.str(), "a. option 1\n"
                          "b. option 2\n"
@@ -44,7 +44,7 @@ TEST_F(IOManagerTest, testPromptInputNotAChoiceRetries)
 TEST_F(IOManagerTest, testPromptInputBlankRetries)
 {
     iss.str("\nb\n");
-    auto const result = manager.prompt({"option 1", "option 2", "option 3"});
+    auto const result = manager.read_option({"option 1", "option 2", "option 3"});
 
     EXPECT_EQ(oss.str(), "a. option 1\n"
                          "b. option 2\n"
