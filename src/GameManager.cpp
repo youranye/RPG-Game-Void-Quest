@@ -15,7 +15,7 @@ void GameManager::startGame() {
 
         char option;
         ioManager.write("Enter 'a' to start the game or 'b' for credits: ");
-        ioManager.read(option); //A read function need to be added in the IOManager Class
+        ioManager.readOption(option); //A read function need to be added in the IOManager Class
 
         switch (option) {
             case 'a':
@@ -55,5 +55,5 @@ void GameManager::waitForAnyKey() {
     // Wait for the user to press any key to continue
     ioManager.write("Press any key to continue...");
     char input;
-    ioManager.read(input); // Read and discard the input
+    ioManager.readOption(input); // Read and discard the input
 }
