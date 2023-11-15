@@ -8,9 +8,9 @@ using namespace std;
 enum SpeciesType {HUMAN, ELF, DWARF, GOBLIN, TABAXI, ORC, GOLIATH, CHANGELING, GNOME, VOIDWALKER};
 //utilize to differentiate between player type character and Enemy type character
 enum CharacterType {PLAYER, ENEMY, STORY};
+
 enum AbilityType {ATTACK, DEFEND, BUFF, DEBUFF, HEAL};
 enum AbilityCondition {ATK, DEF, DEX, SLEEP, CONFUSION, NONE};
-
 //new way of handling attacks
 struct Ability {
 	string name;
@@ -33,16 +33,28 @@ private:
 	string Name;
 	SpeciesType Species;
 	CharacterType type;
+	const int maxHP;
+	vector<Ability> abilities;
 protected:
-	Character() : Name("EMPTYCHARACTER"), Species(VOIDWALKER), type(STORY) {}
+	int attack;
+	int defense;
+	int dexterity;
+	int hp;
+	Character() : Name("EMPTYCHARACTER"), Species(VOIDWALKER), type(STORY), maxHP(0) {}
 public:
-	Character(string name, SpeciesType species, CharacterType Character_Type) : Name(name), Species(species), type(Character_Type) {}
+	Character(string name, SpeciesType species, CharacterType Character_Type, int health) : Name(name), Species(species), type(Character_Type), maxHP(health), attack(0), defense(0), dexterity(0), hp(health) {}
 	string get_name();
 	SpeciesType get_species();
 	CharacterType get_type();
+	int get_attack();
+	int get_defense();
+	int get_dexterity();
+	int get_hp();
+	void heal(int amount);
+	void take_damage(int amount);
 };
 // When a function looks for a specific character and doesn't find it, it should return nullCharacter to indicate the character was not found.
 #ifndef NULLCHARACTER
 #define NULLCHARACTER
-static Character nullCharacter("NULLCHARACTER", VOIDWALKER, STORY);
+static Character nullCharacter("NULLCHARACTER", VOIDWALKER, STORY, 0);
 #endif

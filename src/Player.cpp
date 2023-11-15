@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player(string name, SpeciesType species, CharacterType Character_Type, ClassType class_type, Religion Religion_, int health, int maxsp) :
-    Character(name, species, Character_Type), Class_Type(class_type), religion(Religion_), attack(0), defense(0), dexterity(0), hp(health), sp(maxsp), maxHP(health), maxSP(maxsp), level(1)
+    Character(name, species, Character_Type, health), Class_Type(class_type), religion(Religion_), sp(maxsp), maxSP(maxsp), level(1)
 {
     //set abilities and stats
     //not all abilities have yet been implemented will need story to be closer to finished before complete implementation
@@ -60,44 +60,29 @@ ClassType Player::get_class()
     return Class_Type;
 }
 
-int Player::get_attack()
+int Player::get_sp()
 {
-    return attack;
+    return sp;
 }
 
-int Player::get_defense()
+void Player::spend_sp(int amount)
 {
-    return defense;
-}
-
-int Player::get_dexterity()
-{
-    return dexterity;
-}
-
-int Player::get_hp()
-{
-    return hp;
-}
-
-void Player::heal(int amount)
-{
-    if (hp < maxHP)
+    if (sp < maxSP)
     {
-        hp += amount;
+        sp += amount;
     }
-    if(hp > maxHP)
+    if(sp > maxSP)
     {
-        hp = maxHP;
+        sp = maxSP;
     }
 }
 
-void Player::take_damage(int amount)
+void Player::regenerate_sp(int amount)
 {
-    hp -= amount;
-    if (hp < 0)
+    sp -= amount;
+    if (sp < 0)
     {
-        hp = 0;
+        sp = 0;
     }
 }
 
