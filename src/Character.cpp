@@ -1,16 +1,16 @@
 #include "Character.h"
 
-string Character::get_name()
+string Character::get_name() const
 {
 	return Name;
 }
 
-SpeciesType Character::get_species()
+SpeciesType Character::get_species() const
 {
 	return Species;
 }
 
-CharacterType Character::get_type()
+CharacterType Character::get_type() const
 {
 	return type;
 }
@@ -54,4 +54,13 @@ void Character::take_damage(int amount)
     {
         hp = 0;
     }
+}
+
+bool Character::operator==(const Character &rhs) const
+{
+    if(rhs.get_name()==this->Name && rhs.get_species() == this->Species && rhs.get_type() == this->type)
+    {
+        return true;
+    }
+    return false;
 }

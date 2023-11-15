@@ -88,7 +88,7 @@ Player* CharacterManager::create_player()
 	}
 
 	//create player
-	return new Player(name, species, PLAYER, class_type, religion, 0, 0);
+	return new Player(); //returning empty player for now
 }
 
 CharacterManager::CharacterManager()
@@ -100,7 +100,14 @@ CharacterManager::CharacterManager()
 
 void CharacterManager::initialize()
 {
-	player = create_player(); //create player and set player pointer to player
+	if(player == nullptr)
+	{
+		player = create_player(); //create player and set player pointer to player
+	} else
+	{
+		//exception
+		throw std::logic_error("Cannot call initialize more than once");
+	}
 }
 
 CharacterManager::~CharacterManager()
