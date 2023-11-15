@@ -23,33 +23,27 @@ TEST_F(IOManagerTest, testWrite)
 TEST_F(IOManagerTest, testPrompt)
 {
     iss.str("b\n");
-    auto const result = manager.read_option({"option 1", "option 2", "option 3"});
+    auto const result = manager.readOption(3);
 
-    EXPECT_EQ(result, "option 2");
+    EXPECT_EQ(result, 1);
 }
 
 TEST_F(IOManagerTest, testPromptInputNotAChoiceRetries)
 {
     iss.str("d\nb\n");
-    auto const result = manager.read_option({"option 1", "option 2", "option 3"});
+    auto const result = manager.readOption(3);
 
-    EXPECT_EQ(oss.str(), "a. option 1\n"
-                         "b. option 2\n"
-                         "c. option 3\n"
-                         "Please enter a letter from a to c\n");
+    EXPECT_EQ(oss.str(), "Please enter a letter from a to c\n");
 
-    EXPECT_EQ(result, "option 2");
+    EXPECT_EQ(result, 1);
 }
 
 TEST_F(IOManagerTest, testPromptInputBlankRetries)
 {
     iss.str("\nb\n");
-    auto const result = manager.read_option({"option 1", "option 2", "option 3"});
+    auto const result = manager.readOption(3);
 
-    EXPECT_EQ(oss.str(), "a. option 1\n"
-                         "b. option 2\n"
-                         "c. option 3\n"
-                         "Please enter a letter from a to c\n");
+    EXPECT_EQ(oss.str(), "Please enter a letter from a to c\n");
 
-    EXPECT_EQ(result, "option 2");
+    EXPECT_EQ(result, 1);
 }

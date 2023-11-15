@@ -20,10 +20,10 @@ class IOManager
     /// @param text Text to write
     void write(std::string const& text);
 
-    /// @brief Print a list of options and have the user select one
-    /// @param options Vector of options for the user to select from, taking from input stream
-    /// @return a reference to the selected option 
-    std::string const& read_option(std::vector<std::string> const& options);
+    /// @brief Have the user select a letter starting from a, up to the number of options available
+    /// @param numOptions Number of options for the user to select from, taking from input stream
+    /// @return The index of the selected option, starting from 0
+    int readOption(int numOptions);
 };
 
 #endif
