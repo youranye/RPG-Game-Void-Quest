@@ -7,6 +7,18 @@ add_executable(runAllTests
   CharacterManagerTests.cpp
   CharacterTests.cpp
 )
+
+add_executable(testCharacterManager
+CharacterManagerTests.cpp
+)
+
+add_executable(testCharacterClass
+CharacterTests.cpp
+)
  
 target_link_libraries(runAllTests gmock gtest gtest_main)
 target_link_libraries(runAllTests CharacterManager Character)
+target_link_libraries(testCharacterManager gmock gtest gtest_main)
+target_link_libraries(testCharacterManager CharacterManager Character)
+target_link_libraries(testCharacterClass gmock gtest gtest_main)
+target_link_libraries(testCharacterClass Character)
