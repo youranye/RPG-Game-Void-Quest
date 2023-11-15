@@ -13,18 +13,18 @@ void GameManager::startGame() {
     while (!gameStarted) {
         displayStartPage();
 
-        char option;
+        int option;
         ioManager.write("Enter 'a' to start the game or 'b' for credits: ");
-        ioManager.readOption(option); //A read function need to be added in the IOManager Class
+        option = ioManager.readOption(2); //A read function need to be added in the IOManager Class
 
         switch (option) {
-            case 'a':
+            case 0:
                 startGameLogic();
                 gameStarted = true; // Exit loop when game starts
                 break;
-            case 'b':
+            case 1:
                 displayCredits();
-                waitForAnyKey(); // Wait for any key press to return to start page
+                waitForAnyChar(); // Wait for any character press to return to start page
                 break;
             default:
                 ioManager.write("Invalid choice. Please try again.\n");
@@ -51,9 +51,10 @@ void GameManager::startGameLogic() {
     // Additional game initialization and logic
 }
 
-void GameManager::waitForAnyKey() {
+void GameManager::waitForAnyChar() {
     // Wait for the user to press any key to continue
-    ioManager.write("Press any key to continue...");
-    char input;
-    ioManager.readOption(input); // Read and discard the input
+    ioManager.write("Press any character to continue...");
+    int input;
+    input = ioManager.readOption(26); // Read and discard the input
+    
 }
