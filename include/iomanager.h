@@ -16,8 +16,14 @@ class IOManager
     }
     virtual ~IOManager() = default;
 
-    void write(std::string_view);
-    std::string_view read_option(std::vector<std::string> const);
+    /// @brief Write a string to the output stream
+    /// @param text Text to write
+    void write(std::string const& text);
+
+    /// @brief Print a list of options and have the user select one
+    /// @param options Vector of options for the user to select from, taking from input stream
+    /// @return a reference to the selected option 
+    std::string const& read_option(std::vector<std::string> const& options);
 };
 
 #endif
