@@ -1,24 +1,24 @@
-cmake_minimum_required(VERSION 3.20)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/src")
 add_subdirectory(googletest)
+
+enable_testing()
 
 add_executable(runAllTests
   CharacterManagerTests.cpp
   CharacterTests.cpp
+  iomanagertests.cpp
 )
 
 add_executable(testCharacterManager
-CharacterManagerTests.cpp
+  CharacterManagerTests.cpp
 )
 
 add_executable(testCharacterClass
-CharacterTests.cpp
+  CharacterTests.cpp
 )
  
-target_link_libraries(runAllTests gmock gtest gtest_main)
-target_link_libraries(runAllTests CharacterManager Character)
-target_link_libraries(testCharacterManager gmock gtest gtest_main)
-target_link_libraries(testCharacterManager CharacterManager Character)
-target_link_libraries(testCharacterClass gmock gtest gtest_main)
-target_link_libraries(testCharacterClass Character)
+target_link_libraries(runAllTests CharacterManager Character IOManager gmock gtest GTest::gtest_main)
+target_link_libraries(testCharacterManager CharacterManager gmock gtest gtest_main)
+target_link_libraries(testCharacterClass Character gmock gtest gtest_main)
+
+include(GoogleTest)
+gtest_discover_tests(runAllTests)
