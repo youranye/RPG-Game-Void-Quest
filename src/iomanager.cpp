@@ -1,30 +1,27 @@
 #include "iomanager.h"
 
-void IOManager::write(std::string_view view)
+void IOManager::write(std::string const &view)
 {
     os << view;
 }
-std::string_view IOManager::prompt(std::vector<std::string> const options)
+
+int IOManager::readOption(int num_options)
 {
-    char letter = 'a';
-    for (auto const &str : options)
-    {
-        os << letter << ". " << str << '\n';
-        ++letter;
-    }
+    char const last_letter = 'a' + num_options - 1;
 
     std::string buffer{};
-
     while (true)
     {
         std::getline(is, buffer);
 
-        if (buffer.size() == 1 && buffer[0] >= 'a' && buffer[0] < 'a' + options.size())
+        // Validate that the chosen letter is one of the options
+        if (buffer.size() == 1 && buffer[0] >= 'a' && buffer[0] <= last_letter)
         {
-            os << "Please enter a letter from a to " << static_cast<char>('a' + options.size() - 1) << std::endl;
             break;
         }
+
+        os << "Please enter a letter from a to " << last_letter << std::endl;
     }
 
-    return options[buffer[0] - 'a'];
+    return buffer[0] - 'a';
 }

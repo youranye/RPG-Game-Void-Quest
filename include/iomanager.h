@@ -16,8 +16,14 @@ class IOManager
     }
     virtual ~IOManager() = default;
 
-    void write(std::string_view);
-    std::string_view prompt(std::vector<std::string> const);
+    /// @brief Write a string to the output stream
+    /// @param text Text to write
+    void write(std::string const& text);
+
+    /// @brief Have the user select a letter starting from a, up to the number of options available
+    /// @param numOptions Number of options for the user to select from, taking from input stream
+    /// @return The index of the selected option, starting from 0
+    int readOption(int numOptions);
 };
 
 #endif

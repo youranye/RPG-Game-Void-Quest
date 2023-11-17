@@ -1,7 +1,7 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
-#include "IOManager.hpp"
+#include "iomanager.h"
 
 class GameManager {
 public:
@@ -15,7 +15,7 @@ private:
     void displayStartPage();
     void displayCredits();
     void startGameLogic();
-    void waitForAnyKey(); // Helper function to wait for any key press
+    void waitForAnyChar(); // Helper function to wait for any key press
 };
 
 #endif // GAMEMANAGER_H

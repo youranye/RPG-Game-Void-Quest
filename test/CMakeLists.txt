@@ -11,10 +11,12 @@ FetchContent_MakeAvailable(googletest)
 add_executable(
   tests
   iomanagertests.cpp
+  GameManagerTests.cpp
 )
 target_link_libraries(
   tests
   IOManager
+  GameManager
   GTest::gtest_main
 )
 
