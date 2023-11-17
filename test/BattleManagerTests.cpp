@@ -4,8 +4,8 @@
 // Constructor tests
 TEST(BattleManagerTests, TestConstructor)
 {
-    Character player(15,90,12,11,20);
-    Character enemy(25,60,9,15,10);
+    Character player("Abby", HUMAN, PLAYER, 15,12,5,20);
+    Character enemy("Bill", HUMAN, ENEMY, 25, 9,5,10);
 
     EXPECT_NO_THROW(BattleManager(player, enemy));
 }
@@ -13,8 +13,8 @@ TEST(BattleManagerTests, TestConstructor)
 // runBattle tests
 TEST(BattleManagerTests, TestRunBattle)
 {
-    Character player(10,90,12,11,20);
-    Character enemy(15,60,9,15,10);
+    Character player("Abby", HUMAN, PLAYER, 5,25,5,20);
+    Character enemy("Bill", HUMAN, ENEMY, 7,21,1,10);
     BattleManager testBattle(player, enemy);
 
     EXPECT_NO_THROW(testBattle.runBattle());
@@ -23,8 +23,8 @@ TEST(BattleManagerTests, TestRunBattle)
 // getBattleOutcome tests
 TEST(BattleManagerTests, TestGetBattleOutcomeOngoing)
 {
-    Character player(15,90,12,11,20);
-    Character enemy(25,60,9,15,10);
+    Character player("Abby", HUMAN, PLAYER, 15,12,5,20);
+    Character enemy("Bill", HUMAN, ENEMY, 25, 9,5,10);
     BattleManager testBattle(player, enemy);
 
     BattleOutcome battleStatus = testBattle.getBattleOutcome();
@@ -34,8 +34,8 @@ TEST(BattleManagerTests, TestGetBattleOutcomeOngoing)
 
 TEST(BattleManagerTests, TestGetBattleOutcomeWin)
 {
-    Character player(15,90,12,11,20);
-    Character enemy(1,0,0,0,0);
+    Character player("Abby", HUMAN, PLAYER, 15,12,5,20);
+    Character enemy("Bill", HUMAN, ENEMY, 1, 0,0,0);
     BattleManager testBattle(player, enemy);
 
     testBattle.runBattle();
@@ -46,8 +46,8 @@ TEST(BattleManagerTests, TestGetBattleOutcomeWin)
 
 TEST(BattleManagerTests, TestGetBattleOutcomeDeath)
 {
-    Character player(1,0,0,0,0);
-    Character enemy(25,60,9,15,10);
+    Character player("Abby", HUMAN, PLAYER, 1,0,0,0);
+    Character enemy("Bill", HUMAN, ENEMY, 25, 9,5,10);
     BattleManager testBattle(player, enemy);
 
     testBattle.runBattle();
