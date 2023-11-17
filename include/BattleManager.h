@@ -1,30 +1,10 @@
+#ifndef BATTLEMANAGER_H
+#define BATTLEMANAGER_H
+
+#include "../include/Character.h"
+
 // Describes result of the battle
-enum BattleOutcome { WIN, FLEE, DEATH, ONGOING };
-
-//Character stub, put in test file soon
-class Character
-{
-    public:
-        Character(int h, int s, int atk, int dfs, int dex)
-        : hp(h) , sp(s), attack(atk), defense(dfs), dexterity(dex)
-        {}
-
-        int getHP() { return hp; }
-        int getSP() { return sp; }
-        int getAttack() { return attack; }
-        int getDefense() { return defense; }
-        int getDexterity()  { return dexterity; }
-
-        void heal(int amount) { hp = hp + amount; }
-        void takeDamage(int amount) { hp = hp - amount; }
-
-    private:
-        int hp;
-        int sp;
-        int attack;
-        int defense;
-        int dexterity;
-};
+enum BattleOutcome { WIN, DEATH, ONGOING };
 
 class BattleManager
 {
@@ -42,7 +22,12 @@ class BattleManager
 
         void chooseAction();
         void attack(Character& attacker, Character& target);
-        bool determineAttackSuccess(int successValue);
+        void heal(Character& self);
+        int randNumGenerator(int lowest, int highest);
+        int determineAttackSuccess(int accuracy, int dodge);
+        int calculateDamage(int attackPower, int attackMod, int targetDefense, int defenseMod, int hitValue);
         void displayAttack(const Character& attacker, const Character& target, int success, int damage);
+        void displayHeal(const Character& self, int amount);
 };
 
+#endif //BATTLEMANAGER_H

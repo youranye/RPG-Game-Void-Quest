@@ -1,7 +1,6 @@
 #include "../include/BattleManager.h"
 #include <cstdlib>
 #include <ctime>
-
 #include <iostream>
 
 // Runs the battle using turn-based combat
@@ -33,47 +32,32 @@ void BattleManager::runBattle()
     }
     else {
         result = WIN;
-    }
-    // TODO: implement FLEE result    
+    }  
 }
 
 // Returns outcome of the battle.
 BattleOutcome BattleManager::getBattleOutcome() { return result; }
 
-// TODO: User chooses their action. Options are any of their attacks or fleeing.
-void BattleManager::chooseAction() {}
+// TODO: User chooses their action, either attack or heal.
+void BattleManager::chooseAction()
+{}
 
-/* Given an attacker and a target, calculates the results of an attack, deals appropriate damage to target,
+/* Given an attacker and a target, calculates the results of an attack, deals appropriate damage,
    and displays results of the attack to the user. */
 void BattleManager::attack(Character& attacker, Character& target)
 {
-    srand(time(nullptr));
-
-    int accuracy = (rand() % 100) + 1;
+    int accuracy = randNumGenerator(1,100);
     int dodge = target.getDexterity();
-    int attackModifier = (rand() % 10) + 1;
-    int defenseModifier = (rand() % 10) + 1;
-    int hitValue = -1;
-    int attackPower = attacker.getAttack();
+    int atkMod = randNumGenerator(1,10);
+    int defMod = randNumGenerator(1,10);
+    int atkPower = attacker.getAttack();
     int targetDefense = target.getDefense();
-    int totalDamage = 0;
 
     // Determine whether the attack hits
-    if (accuracy < dodge)
-    {
-        hitValue = 0; // miss
-    }
-    else if (accuracy > (100 - dodge))
-    {
-        hitValue = 2; // critical hit, double damage
-    } 
-    else
-    {
-        hitValue = 1; // hit, normal damage
-    }
+    int hitValue = determineAttackSuccess(accuracy, dodge);
 
-    // Determine amount of damage the target takes
-    totalDamage = ((attackPower * attackModifier) - (targetDefense * defenseModifier)) * hitValue * 0.3;
+    // Calculate amount of damage the target takes
+    int totalDamage = calculateDamage(atkMod, atkPower, defMod, targetDefense, hitValue);
 
     // If totalDamage is negative, the target takes 0 damage
     if (totalDamage < 0)
@@ -88,45 +72,44 @@ void BattleManager::attack(Character& attacker, Character& target)
     displayAttack(attacker, target, hitValue, totalDamage);
 }
 
-// Return true if the attack hits and false if the attack misses based on the successValue.
-bool BattleManager::determineAttackSuccess(int successValue)
+// Generates random integer with range from lowest to highest inclusive
+int BattleManager::randNumGenerator(int lowest, int highest)
 {
-    if (successValue <= 0)
-    { 
-        return false;
+    srand(time(nullptr));
+
+    int range = highest - lowest + 1;
+    return (rand() % range) + lowest;
+}
+
+// TODO: Given a target, increases their hitpoints by an amout that depends on their sp.
+void BattleManager::heal(Character& self)
+{}
+
+// Determine if the attack hits. Returns 0 for miss, 1 for hit, 2 for critical hit
+int BattleManager::determineAttackSuccess(int accuracy, int dodge)
+{
+    if (accuracy < dodge)
+    {
+        return 0; // miss
     }
+    else if (accuracy > (100 - dodge))
+    {
+        return 2; // critical hit, double damage
+    } 
     else
     {
-        return true;
+        return 1; // hit, normal damage
     }
 }
 
-// TODO: Display the results of the attack to the user.
+int BattleManager::calculateDamage(int attackPower, int attackMod, int targetDefense, int defenseMod, int hitValue)
+{
+    return ((attackPower * attackMod) - (targetDefense * defenseMod)) * hitValue * 0.3;
+}
+// TODO: Helper of attack that displays the results of the attack to the user.
 void BattleManager::displayAttack(const Character& attacker, const Character& target, int success, int damage)
 {}
 
-// TODO: necessary to run code, put in test file soon
-int main()
-{
-    Character rogue(15,90,12,11,20);
-    Character paladin(25,60,9,15,10);
-    BattleManager testBattle(rogue, paladin);
-
-    testBattle.runBattle();
-    BattleOutcome result = testBattle.getBattleOutcome();
-
-    if (result == WIN)
-    {
-        std::cout << "win\n";
-    }
-    else if (result == DEATH)
-    {
-        std::cout << "death\n";
-    }
-    else
-    {
-        std::cout << "undetermined\n";
-    }
-
-    return 0;
-}
+// TODO: Helper of heal that displays the results of the heal to the user.
+void BattleManager::displayHeal(const Character& self, int amount)
+{}
