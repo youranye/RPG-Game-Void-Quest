@@ -30,7 +30,12 @@ class SceneStore
 {
   public:
     virtual ~SceneStore() = default;
-    virtual Scene &getScene(std::string_view const) = 0;
+
+    /// @brief Get a scene by a key
+    /// @param key The key of the scene
+    /// @return A reference to the Scene
+    /// @throws SceneNotFoundException
+    virtual Scene &getScene(std::string_view const key) = 0;
 };
 
 #endif
