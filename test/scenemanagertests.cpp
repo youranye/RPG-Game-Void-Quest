@@ -11,8 +11,10 @@ class SceneStoreStub : public SceneStore
   public:
     SceneStoreStub()
     {
-        scenes.insert({"scene1", std::make_unique<NarrativeScene>("Scene 1", std::vector<std::string>{"scene2"})});
-        scenes.insert({"scene2", std::make_unique<NarrativeScene>("Scene 2", std::vector<std::string>{"scene3"})});
+        scenes.insert({"scene1", std::make_unique<NarrativeScene>(
+                                     "Scene 1", std::vector<NarrativeScene::Option>{{"Go to scene 2", "scene2"}})});
+        scenes.insert({"scene2", std::make_unique<NarrativeScene>(
+                                     "Scene 2", std::vector<NarrativeScene::Option>{{"Go to scene 3", "scene3"}})});
     }
 
     Scene &getScene(std::string_view const key) override

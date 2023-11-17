@@ -8,8 +8,9 @@
 #include <vector>
 
 #include "scene.h"
+#include "narrativescene.h"
 
-class SceneParseException : protected std::exception
+class SceneParseException : public std::exception
 {
 };
 
@@ -37,8 +38,8 @@ template <class It, class Se> class SceneParser
 
     Line take(LineType);
     void next();
-    std::vector<std::string> parse_options();
-    std::unique_ptr<Scene> parse_scene();
+    std::vector<NarrativeScene::Option> parse_options();
+    std::unique_ptr<Scene> parse_narrative_scene();
 
   public:
     SceneParser(It begin, Se end) : cur{begin}, end{end}

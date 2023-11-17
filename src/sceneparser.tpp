@@ -81,19 +81,23 @@ template <class It, class Se> void SceneParser<It, Se>::next()
     cur_line = {type, text};
 }
 
-template <class It, class Se> std::vector<std::string> SceneParser<It, Se>::parse_options()
+template <class It, class Se> std::vector<NarrativeScene::Option> SceneParser<It, Se>::parse_options()
 {
     take(LineType::H2);
-    std::vector<std::string> options{};
+    std::vector<NarrativeScene::Option> options{};
     while (cur_line.type == LineType::Option)
     {
-        options.push_back(cur_line.text);
+        auto const idx = cur_line.text.find(" -> ");
+        if (idx == std::string::npos) {
+            throw SceneParseException{};
+        }
+        options.push_back(NarrativeScene::Option{cur_line.text.substr(0, idx), cur_line.text.substr(idx + 4)});
         next();
     }
     return options;
 }
 
-template <class It, class Se> std::unique_ptr<Scene> SceneParser<It, Se>::parse_scene()
+template <class It, class Se> std::unique_ptr<Scene> SceneParser<It, Se>::parse_narrative_scene()
 {
     std::string text{};
     while (cur_line.type == LineType::Text)
@@ -113,7 +117,7 @@ std::vector<std::pair<std::string, std::unique_ptr<Scene>>> SceneParser<It, Se>:
     while (cur_line.type != LineType::None)
     {
         auto name = take(LineType::H1).text;
-        auto scene = parse_scene();
+        auto scene = parse_narrative_scene();
         parsed_scenes.push_back({name, std::move(scene)});
     }
 
