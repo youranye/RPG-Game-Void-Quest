@@ -6,60 +6,45 @@ Authors: [Wen Wu Yiang](https://github.com/W2YUCR), [Youran Ye](https://github.c
 
 Void Quest is a text based RPG written in C++ that takes place in the Stitch, a world bustling with Humans, Orcs, Elves, Dwarves, Goblins, and Giants.
 
-In our RPG, you will be able to:
-* Build a character by choosing their name, attributes, and Class
-* Affect the story through your actions
-* Fight enemies
-* Explore the many areas of The Stitch
-* Interact with NPCs
+Features of our RPG:
 
-Scenes are text-based, and printed out to the console. In each scene, lettered options are displayed to the user, who can select one by typing the corresponding letter. 
+* Character customization: Players can customize their character by choosing their name, attributes, and class, which affects their character stats and abilities.
+* Extendible world: The world is set up using data files, which means that new content can be added by simply adding more files.
+* Branching plotline: Player choices affect the game state, which changes what the user finds in the world.
+* Combat system: Players are able to fight enemies throughout their journey, and upgrade their equipment.
+* NPCs: NPCs can give out quests to players who will be rewarded for completing objectives
+* Game saving and loading: Players can save and load games to continue playing later.
+
+Output: Scenes are text-based, and printed out to the console. It shows the narrative text, status such as health, and options for progression.
+Input: Each option shown is lettered a, b, c, etc.. Users can select one of the options shown by typing the corresponding letter. 
 
 This project interests us because we all are interested in designing and building a game. Some of our group members have played tabletop RPGs and enjoy the fantasy genre.
 
- > ## Phase II
- > In addition to completing the "User Interface Specification" and "Class Diagram" sections below, you will need to:
- > * Create an "Epic" (note) for each feature. Place these epics in the `Product Backlog` column
- > * Complete your first *sprint planning* meeting to plan out the next 7 days of work.
- >   * Break down the "Epics" into smaller actionable user stories (i.e. smaller development tasks). Convert them into issues and assign them to team members. Place these in the `TODO` (aka Sprint Backlog) column.
- >   * These cards should represent roughly 7 days worth of development time for your team. Then, once the sprint is over you should be repeating these steps to plan a new sprint, taking you until your second scrum meeting with the reader in phase III.
- > * Schedule two check-ins using Calendly. You need to pick both time slots on Tuesday of week 6. The check-ins will occur on Zoom. Your entire team must be present for both check-ins.
- >   * The first check-in needs to be scheduled with your lab TA. During that meeting, you will discuss your project design/class diagram from phase II.
- >   * The second check-in should be scheduled with a reader. During that meeting you will discuss:
- >     * The tasks you are planning for the first sprint
- >     * How work will be divided between the team members
 ## User Interface Specification
- > Include a navigation diagram for your screens and the layout of each of those screens as desribed below. For all the layouts/diagrams, you can use any tool such as PowerPoint or a drawing program. (Specification requirement is adapted from [this template](https://redirect.cs.umbc.edu/~mgrass2/cmsc345/Template_UI.doc))
 
 ### Navigation Diagram
 
 This diagram shows a flowchart of the various parts of the program, starting from creating a character to progressing the story, combat, and the end of the game.
 
-![](navigation_diagram.jpg)
+![navigation diagram](README_Resources/navigation_diagram.jpg)
 
 ### Screen Layouts
-> Include the layout of each of your screens. The layout should describe the screen’s major components such as menus and prompts for user inputs, expected output, and buttons (if applicable). Explain what is on the layout, and the purpose of each menu item, button, etc. If many screens share the same layout, start by describing the general layout and then list the screens that will be using that layout and the differences between each of them.
 
-Screens will contain text that relates to the story of the game. They will give the user a list of lettered options and prompt the user to select the letter of the option they desire. The user will select an option by typing the corresponding letter into the terminal and hitting enter. The game will include the following screens:
+Screens will contain text that relates to the story of the game. They will give the user a list of lettered options and prompt the user to select the letter of the option they desire. The user will select an option by typing the corresponding letter into the terminal and hitting enter. The expected input is one of the listed letters. In the case of character creation, a string is expected for the character's name. The game will include the following screens:
+* Home/Start: Displays the title of the game. The user enters ‘a’ to start the game or ‘b’ to see the credits.
+* Credits: Displays the credits. The user enters any letter to return to the home/start screen.
+* Story: Narrates a scene in the story. Explains a scenario to the user and asks them to choose what they will do next. Displays a list of options, each labeled with a letter. The user inputs the letter of the option they wish to choose.
+* Combat help: Displays an explanation of combat mechanics. The user enters any letter to return to the story.
+* Game over: Displays a message that the player character has died. The user enters any letter to return to the home/start screen.
+* Win: Displays a message the user has won the game. The user enters any letter to return to the home/start screen.
 
-Home/Start: Displays the title of the game. The user enters ‘a’ to start the game or ‘b’ to see the credits.
-
-Credits: Displays the credits. The user enters any letter to return to the home/start screen.
-
-Story: Narrates a scene in the story. Explains a scenario to the user and asks them to choose what they will do next. Displays a list of options, each labeled with a letter. The user inputs the letter of the option they wish to choose.
-
-Combat help: Displays an explanation of combat mechanics. The user enters any letter to return to the story.
-
-Game over: Displays a message that the player character has died. The user enters any letter to return to the home/start screen.
-
-Win: Displays a message the user has won the game. The user enters any letter to return to the home/start screen.
-
-![](screen_layout.jpg)
+![screen layout](README_Resources/screen_layout.jpg)
 
 ## Class Diagram
- > Include a **class diagram(s)** for your project and a **description** of the diagram(s). Your class diagram(s) should include all the main classes you plan for the project. This should be in sufficient detail that another group could pick up the project this point and successfully complete it. Use proper UML notation (as discussed in the course slides).
 
- ![](class_diagram.png)
+ ![class diagram](README_Resources/class_diagram.png)
+
+This Diagram describes the planned layout of our Project, GameManager is a class that manages the Game, it handles the story and connecting the backend of the game with the frontend. The Character Class is what stores character information and stats, ClassType and SpeciesType are enumerations, The CharacterManager Class stores and manages the characters. Scene is the Abstract Base Class for storing Text options and prompts. SceneStore Stores and Manages these Scenes. BattleManager manages battles and fights. Handles damage calculations, battle menus, everything related to battles. IOManager handles UserInput and verifying that it is valid before passing to other classes and parts of the program.
  
  > ## Phase III
  > You will need to schedule a check-in for the second scrum meeting with the same reader you had your first scrum meeting with (using Calendly). Your entire team must be present. This meeting will occur on Zoom and should be conducted by Wednesday of week 8.
