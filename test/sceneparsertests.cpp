@@ -42,3 +42,30 @@ TEST(SceneParserTest, testOptions)
     EXPECT_EQ(scenes[0].second->get_options()[0], "Option 1");
     EXPECT_EQ(scenes[0].second->get_options()[1], "Option 2");
 }
+
+
+TEST(SceneParserTest, testMultipleScenes)
+{
+    std::string text{"# Name\n"
+                     "## Options\n"
+                     " - Option 1\n"
+                     " - Option 2\n"
+                     "\n"
+                     "# Name 2\n"
+                     "## Options\n"
+                     " - Option 1"};
+
+    SceneParser parser{std::begin(text), std::end(text)};
+
+    auto const scenes = parser.parse_scenes();
+
+    ASSERT_EQ(scenes.size(), 2);
+    EXPECT_EQ(scenes[0].first, "Name");
+    ASSERT_EQ(scenes[0].second->get_options().size(), 2);
+    EXPECT_EQ(scenes[0].second->get_options()[0], "Option 1");
+    EXPECT_EQ(scenes[0].second->get_options()[1], "Option 2");
+    
+    EXPECT_EQ(scenes[1].first, "Name 2");
+    ASSERT_EQ(scenes[1].second->get_options().size(), 1);
+    EXPECT_EQ(scenes[1].second->get_options()[0], "Option 1");
+}
