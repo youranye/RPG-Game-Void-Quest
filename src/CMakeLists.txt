@@ -1,5 +1,6 @@
 add_library(BattleManager BattleManager.cpp)
 add_library(IOManager iomanager.cpp)
+add_library(GameManager GameManager.cpp)
 add_library(Character Character.cpp)
 add_library(CharacterManager CharacterManager.cpp)
 target_link_libraries(CharacterManager Character)
