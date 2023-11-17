@@ -1,10 +1,10 @@
-#include "scenestore.h"
+#include "filescenestore.h"
 
 #include "sceneparser.h"
 
 #include <fstream>
 
-void SceneStore::load_file(std::filesystem::path const path)
+void FileSceneStore::load_file(std::filesystem::path const path)
 {
     std::ifstream ifs{path};
     std::istreambuf_iterator<char> it{ifs};
@@ -19,7 +19,7 @@ void SceneStore::load_file(std::filesystem::path const path)
     }
 }
 
-Scene &SceneStore::get_scene(std::string_view const key)
+Scene &FileSceneStore::getScene(std::string_view const key)
 {
     if (auto it = scenes.find(key); it != std::end(scenes))
     {

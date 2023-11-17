@@ -1,6 +1,6 @@
 #pragma once
-#ifndef SCENESTORE_HPP
-#define SCENESTORE_HPP
+#ifndef SCENESTORE_H
+#define SCENESTORE_H
 
 #include <exception>
 #include <filesystem>
@@ -28,17 +28,9 @@ class SceneNotFoundException : public std::exception
 
 class SceneStore
 {
-    std::map<std::string, std::unique_ptr<Scene>, std::less<>> scenes;
-    std::filesystem::path const root;
-
-    void load_file(std::filesystem::path const);
-
   public:
-    SceneStore(std::filesystem::path const root) : root{root}
-    {
-    }
-
-    Scene &get_scene(std::string_view const);
+    virtual ~SceneStore() = default;
+    virtual Scene &getScene(std::string_view const) = 0;
 };
 
 #endif
