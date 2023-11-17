@@ -26,7 +26,7 @@ This project interests us because we all are interested in designing and buildin
 
 This diagram shows a flowchart of the various parts of the program, starting from creating a character to progressing the story, combat, and the end of the game.
 
-![](navigation_diagram.jpg)
+![navigation diagram](README_Resources/navigation_diagram.jpg)
 
 ### Screen Layouts
 
@@ -38,11 +38,11 @@ Screens will contain text that relates to the story of the game. They will give 
 * Game over: Displays a message that the player character has died. The user enters any letter to return to the home/start screen.
 * Win: Displays a message the user has won the game. The user enters any letter to return to the home/start screen.
 
-![](screen_layout.jpg)
+![screen layout](README_Resources/screen_layout.jpg)
 
 ## Class Diagram
 
- ![](class_diagram.png)
+ ![class diagram](README_Resources/class_diagram.png)
 
 This Diagram describes the planned layout of our Project, GameManager is a class that manages the Game, it handles the story and connecting the backend of the game with the frontend. The Character Class is what stores character information and stats, ClassType and SpeciesType are enumerations, The CharacterManager Class stores and manages the characters. Scene is the Abstract Base Class for storing Text options and prompts. SceneStore Stores and Manages these Scenes. BattleManager manages battles and fights. Handles damage calculations, battle menus, everything related to battles. IOManager handles UserInput and verifying that it is valid before passing to other classes and parts of the program.
  
