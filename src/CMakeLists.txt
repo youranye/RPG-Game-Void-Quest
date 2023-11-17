@@ -1,3 +1,4 @@
+add_library(BattleManager BattleManager.cpp)
 add_library(IOManager iomanager.cpp)
 add_library(Character Character.cpp)
 add_library(CharacterManager CharacterManager.cpp)
