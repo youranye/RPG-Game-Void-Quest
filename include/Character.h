@@ -54,6 +54,17 @@ public:
 			throw std::invalid_argument("health cannot be less than or equal to zero");
 		}
 	}
+	Character(string name, SpeciesType species, CharacterType Character_Type, int health, int atk, int def, int dex) : Name(name), Species(species), type(Character_Type), maxHP(health), attack(atk), defense(def), dexterity(dex), hp(health) 
+	{
+		if(name.empty())
+		{
+			throw std::invalid_argument("name cannot be empty");
+		}
+		if(health <= 0)
+		{
+			throw std::invalid_argument("health cannot be less than or equal to zero");
+		}
+	}
 	string get_name() const;
 	SpeciesType get_species() const;
 	CharacterType get_type() const;
@@ -68,5 +79,5 @@ public:
 // When a function looks for a specific character and doesn't find it, it should return nullCharacter to indicate the character was not found.
 #ifndef NULLCHARACTER
 #define NULLCHARACTER
-static Character nullCharacter("NULLCHARACTER", VOIDWALKER, STORY, 1);
+static Character nullCharacter("NULLCHARACTER", VOIDWALKER, STORY, 1, 0, 0, 0);
 #endif
