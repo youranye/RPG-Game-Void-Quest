@@ -7,26 +7,26 @@
 void BattleManager::runBattle()
 {
     // If enemy has higher dexterity than the player, they attack first.
-    if (enemy.getDexterity() > player.getDexterity())
+    if (enemy.get_dexterity() > player.get_dexterity())
     {
         attack(enemy, player);
     }
 
     // Player and enemy take turns attacking each other until one is dead or the player flees.
-    while (player.getHP() >= 0 && enemy.getHP() >= 0)
+    while (player.get_hp() >= 0 && enemy.get_hp() >= 0)
     {
         // TODO: give player a choice
         // TODO: implement flee option
         attack(player, enemy);
 
-        if (enemy.getHP() >= 0)
+        if (enemy.get_hp() >= 0)
         {
             attack(enemy, player);
         }
     }
 
     // Change result to the outcome of the battle
-    if (player.getHP() <= 0)
+    if (player.get_hp() <= 0)
     {
         result = DEATH;
     }
@@ -47,11 +47,11 @@ void BattleManager::chooseAction()
 void BattleManager::attack(Character& attacker, Character& target)
 {
     int accuracy = randNumGenerator(1,100);
-    int dodge = target.getDexterity();
+    int dodge = target.get_dexterity();
     int atkMod = randNumGenerator(1,10);
     int defMod = randNumGenerator(1,10);
-    int atkPower = attacker.getAttack();
-    int targetDefense = target.getDefense();
+    int atkPower = attacker.get_attack();
+    int targetDefense = target.get_defense();
 
     // Determine whether the attack hits
     int hitValue = determineAttackSuccess(accuracy, dodge);
@@ -65,7 +65,7 @@ void BattleManager::attack(Character& attacker, Character& target)
         totalDamage = 0;
     }
     else{
-        target.takeDamage(totalDamage);
+        target.take_damage(totalDamage);
     }
 
     // Display result of attack to user
