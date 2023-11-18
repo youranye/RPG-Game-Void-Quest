@@ -10,10 +10,14 @@
 #include "scene.h"
 #include "narrativescene.h"
 
+/// @brief Exception thrown when parser encounters an error
 class SceneParseException : public std::exception
 {
 };
 
+/// @brief Parser for scenes
+/// @tparam It Iterator over char
+/// @tparam Se Sentinel for It
 template <class It, class Se> class SceneParser
 {
     enum class LineType
@@ -36,16 +40,35 @@ template <class It, class Se> class SceneParser
 
     Line cur_line;
 
-    Line take(LineType);
+    /// @brief Check that the current line is the correct type, advancing if true
+    /// @param type Expected type of the line
+    /// @return The current line, before advancing
+    /// @throws `SceneParseException`
+    Line take(LineType type);
+
+    /// @brief Advance to the next line
     void next();
+
+    /// @brief Parse a list of options
+    /// @return A vector of options
     std::vector<NarrativeScene::Option> parse_options();
+
+    /// @brief Parse a `NarrativeScene`
+    /// @return A unique_ptr to the NarrativeScene
     std::unique_ptr<Scene> parse_narrative_scene();
 
   public:
+
+    /// @brief Construct a SceneParser over
+    /// @param begin Iterator to the start of the text to parse
+    /// @param end Iterator to the end of the text to parse
     SceneParser(It begin, Se end) : cur{begin}, end{end}
     {
         next();
     }
+
+    /// @brief Parse the scenes
+    /// @return A vector of name-Scene pairs
     std::vector<std::pair<std::string, std::unique_ptr<Scene>>> parse_scenes();
 };
 

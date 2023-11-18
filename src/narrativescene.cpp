@@ -14,6 +14,7 @@ std::vector<std::string> NarrativeScene::get_options() const
 
 std::string NarrativeScene::getKey(std::string const& optionText) const
 {
+    // Search each option for a match
     for (auto const &option : options)
     {
         if (option.text == optionText)

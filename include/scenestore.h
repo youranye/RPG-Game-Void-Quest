@@ -26,6 +26,7 @@ class SceneNotFoundException : public std::exception
     }
 };
 
+/// @brief Repository for Scenes
 class SceneStore
 {
   public:
