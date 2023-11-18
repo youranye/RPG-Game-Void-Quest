@@ -1,8 +1,6 @@
 
 add_subdirectory(googletest)
 
-enable_testing()
-
 add_executable(runAllTests
   CharacterManagerTests.cpp
   CharacterTests.cpp
@@ -41,4 +39,3 @@ target_link_libraries(testIoManager IOManager gmock gtest GTest::gtest_main)
 target_link_libraries(testGameManager GameManager gmock gtest GTest::gtest_main)
 
 include(GoogleTest)
-gtest_discover_tests(runAllTests)
