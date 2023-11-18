@@ -9,11 +9,10 @@
 class BattleScene : public Scene
 {
   private:
-    Player &player;
-    Enemy &enemy;
+    std::string enemyName;
 
   public:
-    BattleScene(Player &player, Enemy &enemy) : player{player}, enemy{enemy}
+    BattleScene(std::string enemyName) : enemy{enemyName}
     {
     }
 
