@@ -5,10 +5,14 @@
 #include <string>
 #include <vector>
 
+#include "scenevisitor.h"
+
 class Scene
 {
   public:
     virtual ~Scene() = default;
+
+    virtual void accept(SceneVisitor &) = 0;
 
     /// @brief Get the text of the scene
     /// @return The text of the scene
