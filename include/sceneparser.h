@@ -38,7 +38,7 @@ template <class It, class Se> class SceneParser
     It cur;
     Se end;
 
-    Line cur_line;
+    Line curLine;
 
     /// @brief Check that the current line is the correct type, advancing if true
     /// @param type Expected type of the line
@@ -51,11 +51,11 @@ template <class It, class Se> class SceneParser
 
     /// @brief Parse a list of options
     /// @return A vector of options
-    std::vector<NarrativeScene::Option> parse_options();
+    std::vector<NarrativeScene::Option> parseOptions();
 
     /// @brief Parse a `NarrativeScene`
     /// @return A unique_ptr to the NarrativeScene
-    std::unique_ptr<Scene> parse_narrative_scene();
+    std::unique_ptr<Scene> parseNarrativeScene();
 
   public:
 
@@ -69,7 +69,7 @@ template <class It, class Se> class SceneParser
 
     /// @brief Parse the scenes
     /// @return A vector of name-Scene pairs
-    std::vector<std::pair<std::string, std::unique_ptr<Scene>>> parse_scenes();
+    std::vector<std::pair<std::string, std::unique_ptr<Scene>>> parseScenes();
 };
 
 #include "sceneparser.tpp"

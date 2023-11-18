@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-std::vector<std::string> NarrativeScene::get_options() const
+std::vector<std::string> NarrativeScene::getOptions() const
 {
     std::vector<std::string> result;
     for (auto const &option : options)

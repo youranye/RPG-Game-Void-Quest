@@ -45,7 +45,7 @@ TEST_F(SceneManagerTest, testReplaceScene)
 {
     manager.replaceScene("scene1");
 
-    EXPECT_EQ(manager.getCurrentScene()->get_text(), "Scene 1");
+    EXPECT_EQ(manager.getCurrentScene()->getText(), "Scene 1");
 }
 
 TEST_F(SceneManagerTest, testReplaceWithMissingSceneThrowsSceneNotFoundException)

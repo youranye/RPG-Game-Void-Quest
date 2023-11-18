@@ -9,9 +9,9 @@
 
 template <class It, class Se> typename SceneParser<It, Se>::Line SceneParser<It, Se>::take(LineType type)
 {
-    if (cur_line.type == type)
+    if (curLine.type == type)
     {
-        auto ret = cur_line;
+        auto ret = curLine;
         next();
         return ret;
     }
@@ -31,7 +31,7 @@ template <class It, class Se> void SceneParser<It, Se>::next()
 
     if (cur == end)
     {
-        cur_line = {LineType::None, {}};
+        curLine = {LineType::None, {}};
         return;
     }
 
@@ -88,16 +88,16 @@ template <class It, class Se> void SceneParser<It, Se>::next()
         ++cur;
     }
 
-    cur_line = {type, text};
+    curLine = {type, text};
 }
 
-template <class It, class Se> std::vector<NarrativeScene::Option> SceneParser<It, Se>::parse_options()
+template <class It, class Se> std::vector<NarrativeScene::Option> SceneParser<It, Se>::parseOptions()
 {
     take(LineType::H2);
     std::vector<NarrativeScene::Option> options{};
-    while (cur_line.type == LineType::Option)
+    while (curLine.type == LineType::Option)
     {
-        auto const idx = cur_line.text.find(" -> ");
+        auto const idx = curLine.text.find(" -> ");
         // Throw if there isn't an ->
         if (idx == std::string::npos)
         {
@@ -105,43 +105,43 @@ template <class It, class Se> std::vector<NarrativeScene::Option> SceneParser<It
         }
 
         // Split at ->
-        auto const name = cur_line.text.substr(0, idx);
-        auto const optionText = cur_line.text.substr(idx + 4);
+        auto const name = curLine.text.substr(0, idx);
+        auto const optionText = curLine.text.substr(idx + 4);
         options.push_back(NarrativeScene::Option{name, optionText});
         next();
     }
     return options;
 }
 
-template <class It, class Se> std::unique_ptr<Scene> SceneParser<It, Se>::parse_narrative_scene()
+template <class It, class Se> std::unique_ptr<Scene> SceneParser<It, Se>::parseNarrativeScene()
 {
     std::string text{};
     // Read the flavor text
-    while (cur_line.type == LineType::Text)
+    while (curLine.type == LineType::Text)
     {
-        text.append(cur_line.text);
+        text.append(curLine.text);
         next();
     }
     // Read the options
-    auto const options = parse_options();
+    auto const options = parseOptions();
     return std::make_unique<NarrativeScene>(text, options);
 }
 
 template <class It, class Se>
-std::vector<std::pair<std::string, std::unique_ptr<Scene>>> SceneParser<It, Se>::parse_scenes()
+std::vector<std::pair<std::string, std::unique_ptr<Scene>>> SceneParser<It, Se>::parseScenes()
 {
-    std::vector<std::pair<std::string, std::unique_ptr<Scene>>> parsed_scenes{};
+    std::vector<std::pair<std::string, std::unique_ptr<Scene>>> parsedScenes{};
 
     // Read all the narrative scenes
     // TODO: Implement BattleScene parsing
-    while (cur_line.type != LineType::None)
+    while (curLine.type != LineType::None)
     {
         auto name = take(LineType::H1).text;
-        auto scene = parse_narrative_scene();
-        parsed_scenes.push_back({name, std::move(scene)});
+        auto scene = parseNarrativeScene();
+        parsedScenes.push_back({name, std::move(scene)});
     }
 
-    return parsed_scenes;
+    return parsedScenes;
 }
 
 #endif

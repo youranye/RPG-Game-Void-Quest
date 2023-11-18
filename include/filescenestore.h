@@ -12,7 +12,7 @@ class FileSceneStore : public SceneStore
 
     /// @brief Load scenes from a file into `scenes`
     /// @param file Filepath to load relative to `root`
-    void load_file(std::filesystem::path const file);
+    void loadFile(std::filesystem::path const file);
 
   public:
     FileSceneStore(std::filesystem::path const root) : root{root}

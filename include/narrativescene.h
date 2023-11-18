@@ -22,12 +22,12 @@ class NarrativeScene : public Scene
         visitor.visit(*this);
     }
 
-    std::string get_text() const override
+    std::string getText() const override
     {
         return text;
     }
 
-    std::vector<std::string> get_options() const override;
+    std::vector<std::string> getOptions() const override;
 
     std::string getKey(std::string const &optionText) const;
 

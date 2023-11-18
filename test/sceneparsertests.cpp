@@ -17,12 +17,12 @@ TEST(SceneParserTest, testBasic)
 
     SceneParser parser{std::begin(text), std::end(text)};
 
-    auto const scenes = parser.parse_scenes();
+    auto const scenes = parser.parseScenes();
 
     ASSERT_EQ(scenes.size(), 1);
     EXPECT_EQ(scenes[0].first, "Name");
-    EXPECT_EQ(scenes[0].second->get_text(), "This is some text");
-    EXPECT_EQ(scenes[0].second->get_options().size(), 0);
+    EXPECT_EQ(scenes[0].second->getText(), "This is some text");
+    EXPECT_EQ(scenes[0].second->getOptions().size(), 0);
 }
 
 TEST(SceneParserTest, testOptions)
@@ -35,16 +35,16 @@ TEST(SceneParserTest, testOptions)
 
     SceneParser parser{std::begin(text), std::end(text)};
 
-    auto const scenes = parser.parse_scenes();
+    auto const scenes = parser.parseScenes();
 
     ASSERT_EQ(scenes.size(), 1);
 
     if (NarrativeScene const *scene = dynamic_cast<NarrativeScene const*>(scenes[0].second.get()); scene != nullptr)
     {
-        ASSERT_EQ(scene->get_options().size(), 2);
-        EXPECT_EQ(scene->get_options()[0], "Option 1");
+        ASSERT_EQ(scene->getOptions().size(), 2);
+        EXPECT_EQ(scene->getOptions()[0], "Option 1");
         EXPECT_EQ(scene->getKey("Option 1"), "#option1");
-        EXPECT_EQ(scene->get_options()[1], "Option 2");
+        EXPECT_EQ(scene->getOptions()[1], "Option 2");
         EXPECT_EQ(scene->getKey("Option 2"), "#option2");
     }
     else
@@ -66,15 +66,15 @@ TEST(SceneParserTest, testMultipleScenes)
 
     SceneParser parser{std::begin(text), std::end(text)};
 
-    auto const scenes = parser.parse_scenes();
+    auto const scenes = parser.parseScenes();
 
     ASSERT_EQ(scenes.size(), 2);
     EXPECT_EQ(scenes[0].first, "Name");
-    ASSERT_EQ(scenes[0].second->get_options().size(), 2);
-    EXPECT_EQ(scenes[0].second->get_options()[0], "Option 1");
-    EXPECT_EQ(scenes[0].second->get_options()[1], "Option 2");
+    ASSERT_EQ(scenes[0].second->getOptions().size(), 2);
+    EXPECT_EQ(scenes[0].second->getOptions()[0], "Option 1");
+    EXPECT_EQ(scenes[0].second->getOptions()[1], "Option 2");
 
     EXPECT_EQ(scenes[1].first, "Name 2");
-    ASSERT_EQ(scenes[1].second->get_options().size(), 1);
-    EXPECT_EQ(scenes[1].second->get_options()[0], "Option 1");
+    ASSERT_EQ(scenes[1].second->getOptions().size(), 1);
+    EXPECT_EQ(scenes[1].second->getOptions()[0], "Option 1");
 }
