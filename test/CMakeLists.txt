@@ -6,9 +6,8 @@ enable_testing()
 add_executable(runAllTests
   CharacterManagerTests.cpp
   CharacterTests.cpp
-  iomanagertests.cpp
+  IOManagerTests.cpp
   GameManagerTests.cpp
-
   BattleManagerTests.cpp
 )
 
@@ -17,7 +16,7 @@ add_executable(testCharacterManager
 )
 
 add_executable(testIoManager
-  iomanagertests.cpp
+  IOManagerTests.cpp
 )
 
 add_executable(testGameManager
