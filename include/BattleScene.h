@@ -10,9 +10,10 @@ class BattleScene : public Scene
 {
   private:
     std::string enemyName;
+    std::string nextKey;
 
   public:
-    BattleScene(std::string enemyName) : enemyName{enemyName}
+    BattleScene(std::string const &enemyName, std::string const &nextKey) : enemyName{enemyName}, nextKey{nextKey}
     {
     }
 
@@ -37,6 +38,13 @@ class BattleScene : public Scene
     std::string getEnemyName() const
     {
         return enemyName;
+    }
+
+    /// @brief Get the key of the scene to go to after the battle
+    /// @return The key of the next scene
+    std::string getNextKey() const
+    {
+        return nextKey;
     }
 };
 

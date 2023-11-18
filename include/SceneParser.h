@@ -48,6 +48,10 @@ template <class It, class Se> class SceneParser
     std::string prefix;
     Line curLine;
 
+    /// @brief Resolve relative keys
+    /// @param key Key to resolve
+    std::string resolveKey(std::string const &key);
+
     /// @brief Skip whitespace characters until a non-whitespace or end of input is reached
     void skipWhitespace();
 
@@ -68,6 +72,8 @@ template <class It, class Se> class SceneParser
     /// @return A unique_ptr to the NarrativeScene
     std::unique_ptr<NarrativeScene> parseNarrativeScene();
 
+    /// @brief Parse a `BattleScene`
+    /// @return A unique_ptr to the BattleScene
     std::unique_ptr<BattleScene> parseBattleScene();
 
   public:

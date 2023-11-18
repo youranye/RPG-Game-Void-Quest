@@ -7,6 +7,18 @@
 
 #include <algorithm>
 
+/// @brief Resolve relative keys
+/// @param key Key to resolve
+template <class It, class Se> std::string SceneParser<It, Se>::resolveKey(std::string const &key)
+{
+    if (key.size() == 0)
+    {
+        throw SceneParseException{};
+    }
+
+    return key[0] == '#' ? prefix + key : key;
+}
+
 template <class It, class Se> void SceneParser<It, Se>::skipWhitespace()
 {
     while (cur != end && std::isspace(*cur))
@@ -127,13 +139,7 @@ template <class It, class Se> std::vector<NarrativeScene::Option> SceneParser<It
 
         // Split at ->
         auto const optionText = curLine.text.substr(0, idx);
-        std::string key{curLine.text.substr(idx + 4)};
-
-        // Check relative keys
-        if (key.size() > 0 && key[0] == '#')
-        {
-            key = prefix + key;
-        }
+        std::string key = resolveKey(curLine.text.substr(idx + 4));
 
         options.push_back(NarrativeScene::Option{optionText, key});
         next();
@@ -157,10 +163,15 @@ template <class It, class Se> std::unique_ptr<NarrativeScene> SceneParser<It, Se
 
 template <class It, class Se> std::unique_ptr<BattleScene> SceneParser<It, Se>::parseBattleScene()
 {
-    // Read the options
+    // Read the enemy
     take(LineType::H2);
     auto const enemyName = take(LineType::Option).text;
-    return std::make_unique<BattleScene>(enemyName);
+
+    // Read the key of the next scene
+    take(LineType::H2);
+    auto const nextKey = resolveKey(take(LineType::Option).text);
+
+    return std::make_unique<BattleScene>(enemyName, nextKey);
 }
 
 template <class It, class Se>

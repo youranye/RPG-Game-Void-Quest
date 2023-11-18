@@ -78,9 +78,11 @@ TEST(SceneParserTest, testBattleScene)
 {
     std::string text{"# [battle] Fight\n"
                      "## Enemy\n"
-                     " - Bear"};
+                     " - Bear\n"
+                     "## Next\n"
+                     " - #next"};
 
-    SceneParser parser{std::begin(text), std::end(text), ""};
+    SceneParser parser{std::begin(text), std::end(text), "test"};
 
     auto const scenes = parser.parseScenes();
 
@@ -91,4 +93,5 @@ TEST(SceneParserTest, testBattleScene)
 
     ASSERT_NE(scene, nullptr);
     EXPECT_EQ(scene->getEnemyName(), "Bear");
+    EXPECT_EQ(scene->getNextKey(), "test#next");
 }
