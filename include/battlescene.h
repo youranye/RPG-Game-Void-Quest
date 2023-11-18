@@ -12,13 +12,31 @@ class BattleScene : public Scene
     std::string enemyName;
 
   public:
-    BattleScene(std::string enemyName) : enemy{enemyName}
+    BattleScene(std::string enemyName) : enemyName{enemyName}
     {
     }
 
-    void accept(SceneVisitor &visitor)
+    void accept(SceneVisitor &visitor) override
     {
         visitor.visit(*this);
+    }
+
+    virtual std::string getText() const override
+    {
+        // TODO: Actually add the battle information
+        return "Fighting: " + enemyName;
+    };
+
+    virtual std::vector<std::string> getOptions() const override
+    {
+        return {"Attack", "Flee"};
+    }
+
+    /// @brief Get the name of the enemy in the battle
+    /// @return The name of the enemy
+    std::string getEnemyName() const
+    {
+        return enemyName;
     }
 };
 

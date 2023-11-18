@@ -7,6 +7,14 @@
 
 #include <algorithm>
 
+template <class It, class Se> void SceneParser<It, Se>::skipWhitespace()
+{
+    while (cur != end && std::isspace(*cur))
+    {
+        ++cur;
+    }
+}
+
 template <class It, class Se> typename SceneParser<It, Se>::Line SceneParser<It, Se>::take(LineType type)
 {
     if (curLine.type == type)
@@ -24,10 +32,7 @@ template <class It, class Se> typename SceneParser<It, Se>::Line SceneParser<It,
 template <class It, class Se> void SceneParser<It, Se>::next()
 {
     // Skip leading whitespace
-    while (cur != end && std::isspace(*cur))
-    {
-        ++cur;
-    }
+    skipWhitespace();
 
     if (cur == end)
     {
@@ -68,8 +73,21 @@ template <class It, class Se> void SceneParser<It, Se>::next()
     }
 
     // Skip trailing whitespace
-    while (cur != end && std::isspace(*cur))
+    skipWhitespace();
+
+    std::string attribute{};
+    if (cur != end && *cur == '[')
     {
+        ++cur;
+        while (cur != end && *cur != ']')
+        {
+            attribute.push_back(*cur);
+            ++cur;
+        }
+        if (cur == end)
+        {
+            throw SceneParseException{};
+        }
         ++cur;
     }
 
@@ -88,7 +106,7 @@ template <class It, class Se> void SceneParser<It, Se>::next()
         ++cur;
     }
 
-    curLine = {type, text};
+    curLine = {type, attribute, text};
 }
 
 template <class It, class Se> std::vector<NarrativeScene::Option> SceneParser<It, Se>::parseOptions()
@@ -113,7 +131,7 @@ template <class It, class Se> std::vector<NarrativeScene::Option> SceneParser<It
     return options;
 }
 
-template <class It, class Se> std::unique_ptr<Scene> SceneParser<It, Se>::parseNarrativeScene()
+template <class It, class Se> std::unique_ptr<NarrativeScene> SceneParser<It, Se>::parseNarrativeScene()
 {
     std::string text{};
     // Read the flavor text
@@ -127,18 +145,35 @@ template <class It, class Se> std::unique_ptr<Scene> SceneParser<It, Se>::parseN
     return std::make_unique<NarrativeScene>(text, options);
 }
 
+
+template <class It, class Se> std::unique_ptr<BattleScene> SceneParser<It, Se>::parseBattleScene()
+{
+    // Read the options
+    take(LineType::H2);
+    auto const enemyName = take(LineType::Option).text;
+    return std::make_unique<BattleScene>(enemyName);
+}
+
 template <class It, class Se>
 std::vector<std::pair<std::string, std::unique_ptr<Scene>>> SceneParser<It, Se>::parseScenes()
 {
     std::vector<std::pair<std::string, std::unique_ptr<Scene>>> parsedScenes{};
 
-    // Read all the narrative scenes
-    // TODO: Implement BattleScene parsing
     while (curLine.type != LineType::None)
     {
-        auto name = take(LineType::H1).text;
-        auto scene = parseNarrativeScene();
-        parsedScenes.push_back({name, std::move(scene)});
+        auto line = take(LineType::H1);
+
+        std::unique_ptr<Scene> scene;
+        if (line.attribute == "battle")
+        {
+            scene = parseBattleScene();
+        }
+        else
+        {
+            scene = parseNarrativeScene();
+        }
+
+        parsedScenes.push_back({line.text, std::move(scene)});
     }
 
     return parsedScenes;

@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 
-#include "narrativescene.h"
 #include "sceneparser.h"
 
 TEST(SceneParserTest, testEmpty)
@@ -39,18 +38,14 @@ TEST(SceneParserTest, testOptions)
 
     ASSERT_EQ(scenes.size(), 1);
 
-    if (NarrativeScene const *scene = dynamic_cast<NarrativeScene const*>(scenes[0].second.get()); scene != nullptr)
-    {
-        ASSERT_EQ(scene->getOptions().size(), 2);
-        EXPECT_EQ(scene->getOptions()[0], "Option 1");
-        EXPECT_EQ(scene->getKey("Option 1"), "#option1");
-        EXPECT_EQ(scene->getOptions()[1], "Option 2");
-        EXPECT_EQ(scene->getKey("Option 2"), "#option2");
-    }
-    else
-    {
-        FAIL();
-    }
+    NarrativeScene const *scene = dynamic_cast<NarrativeScene const *>(scenes[0].second.get());
+
+    ASSERT_NE(scene, nullptr);
+    ASSERT_EQ(scene->getOptions().size(), 2);
+    EXPECT_EQ(scene->getOptions()[0], "Option 1");
+    EXPECT_EQ(scene->getKey("Option 1"), "#option1");
+    EXPECT_EQ(scene->getOptions()[1], "Option 2");
+    EXPECT_EQ(scene->getKey("Option 2"), "#option2");
 }
 
 TEST(SceneParserTest, testMultipleScenes)
@@ -77,4 +72,22 @@ TEST(SceneParserTest, testMultipleScenes)
     EXPECT_EQ(scenes[1].first, "Name 2");
     ASSERT_EQ(scenes[1].second->getOptions().size(), 1);
     EXPECT_EQ(scenes[1].second->getOptions()[0], "Option 1");
+}
+
+TEST(SceneParserTest, testBattleScene)
+{
+    std::string text{"# [battle] Fight\n"
+                     "## Enemy\n"
+                     " - Bear"};
+
+    SceneParser parser{std::begin(text), std::end(text)};
+
+    auto const scenes = parser.parseScenes();
+
+    ASSERT_EQ(scenes.size(), 1);
+
+    BattleScene const *scene = dynamic_cast<BattleScene const *>(scenes[0].second.get());
+
+    ASSERT_NE(scene, nullptr);
+    EXPECT_EQ(scene->getEnemyName(), "Bear");
 }

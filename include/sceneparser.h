@@ -7,12 +7,18 @@
 #include <string>
 #include <vector>
 
-#include "scene.h"
+#include "battlescene.h"
 #include "narrativescene.h"
+#include "scene.h"
 
 /// @brief Exception thrown when parser encounters an error
 class SceneParseException : public std::exception
 {
+  public:
+    char const *what() const noexcept override
+    {
+        return "Failed to parse";
+    }
 };
 
 /// @brief Parser for scenes
@@ -32,6 +38,7 @@ template <class It, class Se> class SceneParser
     struct Line
     {
         LineType type;
+        std::string attribute;
         std::string text;
     };
 
@@ -39,6 +46,9 @@ template <class It, class Se> class SceneParser
     Se end;
 
     Line curLine;
+
+    /// @brief Skip whitespace characters until a non-whitespace or end of input is reached
+    void skipWhitespace();
 
     /// @brief Check that the current line is the correct type, advancing if true
     /// @param type Expected type of the line
@@ -55,10 +65,11 @@ template <class It, class Se> class SceneParser
 
     /// @brief Parse a `NarrativeScene`
     /// @return A unique_ptr to the NarrativeScene
-    std::unique_ptr<Scene> parseNarrativeScene();
+    std::unique_ptr<NarrativeScene> parseNarrativeScene();
+
+    std::unique_ptr<BattleScene> parseBattleScene();
 
   public:
-
     /// @brief Construct a SceneParser over
     /// @param begin Iterator to the start of the text to parse
     /// @param end Iterator to the end of the text to parse
