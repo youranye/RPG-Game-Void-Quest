@@ -36,7 +36,7 @@ add_executable (testBattleManager
 )
  
 
-target_link_libraries(runAllTests CharacterManager Character IOManager GameManager BattleManager SceneManager gmock gtest GTest::gtest_main)
+target_link_libraries(runAllTests CharacterManager Character IOManager GameManager BattleManager SceneManager NarrativeScene gmock gtest GTest::gtest_main)
 target_link_libraries(testCharacterManager CharacterManager gmock gtest gtest_main)
 target_link_libraries(testCharacterClass Character gmock gtest gtest_main)
 target_link_libraries(testBattleManager BattleManager Character gmock gtest gtest_main)

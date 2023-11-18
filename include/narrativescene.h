@@ -27,27 +27,9 @@ class NarrativeScene : public Scene
         return text;
     }
 
-    std::vector<std::string> get_options() const override
-    {
-        std::vector<std::string> result;
-        for (auto const &option : options)
-        {
-            result.push_back(option.text);
-        }
-        return result;
-    }
+    std::vector<std::string> get_options() const override;
 
-    std::string getKey(std::string const &optionText) const
-    {
-        for (auto const &option : options)
-        {
-            if (option.text == optionText)
-            {
-                return option.nextKey;
-            }
-        }
-        throw std::invalid_argument{optionText + " is not an option"};
-    }
+    std::string getKey(std::string const &optionText) const;
 
   private:
     std::string text;
