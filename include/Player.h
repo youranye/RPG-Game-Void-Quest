@@ -14,14 +14,12 @@ private:
 	Religion religion;
 	int sp;
 	const int maxSP;
-	int level;
 public:
-	Player() : Character(), Class_Type(FORGED), religion(NOTHING), sp(0), maxSP(0), level(0) {}
+	Player() : Character(), Class_Type(FORGED), religion(NOTHING), sp(0), maxSP(0) {}
 	Player(string name, SpeciesType species, CharacterType Character_Type, ClassType class_type, Religion Religion_, int health, int maxsp);
 	ClassType get_class();
 	int get_sp();
 	void spend_sp(int amount);
 	void regenerate_sp(int amount);
-	Ability levelup();
 };
 
