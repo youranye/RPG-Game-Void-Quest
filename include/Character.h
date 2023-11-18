@@ -8,7 +8,7 @@ using namespace std;
 //character and enemy shared enums
 enum SpeciesType {HUMAN, ELF, DWARF, GOBLIN, TABAXI, ORC, GOLIATH, CHANGELING, GNOME, VOIDWALKER};
 //utilize to differentiate between player type character and Enemy type character
-enum CharacterType {PLAYER, ENEMY, STORY};
+enum CharacterType {PLAYER, ENEMY, STORY, BOSS};
 
 enum AbilityType {ATTACK, DEFEND, BUFF, DEBUFF, HEAL};
 enum AbilityCondition {ATK, DEF, DEX, SLEEP, CONFUSION, NONE};
@@ -41,9 +41,11 @@ protected:
 	int dexterity;
 	int hp;
 	vector<Ability> abilities;
-	Character() : Name("EMPTYCHARACTER"), Species(VOIDWALKER), type(STORY), maxHP(0) {}
+	Ability ability;
+	Character() : Name("EMPTYCHARACTER"), Species(VOIDWALKER), type(STORY), maxHP(0), ability(Ability()) {}
 public:
-	Character(string name, SpeciesType species, CharacterType Character_Type, int health) : Name(name), Species(species), type(Character_Type), maxHP(health), attack(0), defense(0), dexterity(0), hp(health) 
+	Character(string name, SpeciesType species, CharacterType Character_Type, int health) : 
+	Name(name), Species(species), type(Character_Type), maxHP(health), attack(0), defense(0), dexterity(0), hp(health), ability(Ability()) 
 	{
 		if(name.empty())
 		{
@@ -72,9 +74,12 @@ public:
 	int get_defense();
 	int get_dexterity();
 	int get_hp();
+	const int get_max_hp();
 	void heal(int amount);
 	void take_damage(int amount);
 	bool operator==(const Character& rhs) const;
+	Ability get_ability();
+	string getHpBar();
 };
 // When a function looks for a specific character and doesn't find it, it should return nullCharacter to indicate the character was not found.
 #ifndef NULLCHARACTER

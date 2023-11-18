@@ -1,7 +1,12 @@
 #ifndef BATTLEMANAGER_H
 #define BATTLEMANAGER_H
 
-#include "../include/Character.h"
+#include "Character.h"
+#include "Player.h"
+#include "IOManager.h"
+#include <cstdlib>
+#include <ctime>
+#include <sstream> //nightmare fuel
 
 // Describes result of the battle
 enum BattleOutcome { WIN, DEATH, ONGOING };
@@ -9,25 +14,27 @@ enum BattleOutcome { WIN, DEATH, ONGOING };
 class BattleManager
 {
     public:
-        BattleManager(Character& playerCharacter, Character& enemyCharacter)
-            : player(playerCharacter), enemy(enemyCharacter), result(ONGOING)
+        BattleManager(Player* playerCharacter, Character& enemyCharacter, IOManager& ioManager)
+            : player(playerCharacter), enemy(enemyCharacter), result(ONGOING), ioManager(ioManager)
         {}
         void runBattle();
         BattleOutcome getBattleOutcome();
 
     private:
-        Character& player;
+        Player* player;
         Character& enemy;
         BattleOutcome result;
+        IOManager& ioManager;
 
-        void chooseAction();
-        void attack(Character& attacker, Character& target);
-        void heal(Character& self);
+        int chooseAction();
+        void attack(bool isPlayerAttacker);
+        void specialAttack(bool isPlayer);
+        void heal(bool isPlayer);
         int randNumGenerator(int lowest, int highest);
         int determineAttackSuccess(int accuracy, int dodge);
         int calculateDamage(int attackPower, int attackMod, int targetDefense, int defenseMod, int hitValue);
-        void displayAttack(const Character& attacker, const Character& target, int success, int damage);
-        void displayHeal(const Character& self, int amount);
+        void displayAttack(bool isPlayer, int success, int damage);
+        void displayHeal(bool isPlayer, int amount);
 };
 
 #endif //BATTLEMANAGER_H

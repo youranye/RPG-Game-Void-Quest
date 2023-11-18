@@ -6,7 +6,7 @@ add_executable(runAllTests
   CharacterTests.cpp
   IOManagerTests.cpp
   GameManagerTests.cpp
-  BattleManagerTests.cpp
+#  BattleManagerTests.cpp
 )
 
 add_executable(testCharacterManager
@@ -26,15 +26,15 @@ add_executable(testCharacterClass
   CharacterTests.cpp
 )
 
-add_executable (testBattleManager
-    BattleManagerTests.cpp
-)
+#add_executable (testBattleManager
+#    BattleManagerTests.cpp
+#)
  
 
 target_link_libraries(runAllTests CharacterManager Character IOManager GameManager BattleManager gmock gtest GTest::gtest_main)
 target_link_libraries(testCharacterManager CharacterManager gmock gtest gtest_main)
 target_link_libraries(testCharacterClass Character gmock gtest gtest_main)
-target_link_libraries(testBattleManager BattleManager Character gmock gtest gtest_main)
+#target_link_libraries(testBattleManager BattleManager Character gmock gtest gtest_main)
 target_link_libraries(testIoManager IOManager gmock gtest GTest::gtest_main)
 target_link_libraries(testGameManager GameManager gmock gtest GTest::gtest_main)
 

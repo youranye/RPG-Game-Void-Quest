@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player(string name, SpeciesType species, CharacterType Character_Type, ClassType class_type, Religion Religion_, int health, int maxsp) :
-    Character(name, species, Character_Type, health), Class_Type(class_type), religion(Religion_), sp(maxsp), maxSP(maxsp)
+Player::Player(string name, SpeciesType species, CharacterType Character_Type, ClassType class_type, int health, int maxsp) :
+    Character(name, species, Character_Type, health), Class_Type(class_type), sp(maxsp), maxSP(maxsp)
 {
     //set abilities and stats
     //not all abilities have yet been implemented will need story to be closer to finished before complete implementation
@@ -14,32 +14,11 @@ Player::Player(string name, SpeciesType species, CharacterType Character_Type, C
         attack = 10;
         defense = 10;
         dexterity = 20;
-        //class ability
-        abilities.push_back(Ability("Throw Dagger", ATTACK, "Throw dagger at enemy", NONE, 120, 6, 99));
         break;
     case PALADIN:
         attack = 9;
         defense = 15;
         dexterity = 10;
-        //class ability depends on religion
-        switch (religion)
-        {
-        case TRAVELER:
-
-            break;
-        case SHADOW:
-
-            break;
-        case NOTHING:
-
-            break;
-        case SILVER:
-
-            break;
-        case FORGE:
-            //(Planned) throw some kind of exception
-            break;
-        }
         break;
     case WARLOCK:
         attack = 9;
@@ -86,3 +65,7 @@ void Player::regenerate_sp(int amount)
     }
 }
 
+const int Player::get_max_sp()
+{
+    return maxSP;
+}

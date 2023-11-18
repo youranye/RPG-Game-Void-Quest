@@ -64,3 +64,18 @@ bool Character::operator==(const Character &rhs) const
     }
     return false;
 }
+
+const int Character::get_max_hp()
+{
+    return maxHP;
+}
+
+Ability Character::get_ability()
+{
+    return ability;
+}
+
+string Character::getHpBar()
+{
+    
+}

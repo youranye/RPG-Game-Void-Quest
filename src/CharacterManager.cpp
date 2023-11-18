@@ -19,73 +19,8 @@ Player* CharacterManager::create_player()
 		//prompt Rogue, Paladin, Warlock
 	}
 
-
 	string name = " ";
 	//prompt and get name
-
-	//Prompt Religion if needed
-	Religion religion = FORGE;
-	if (species != HUMAN)
-	{
-		if (species == DWARF)
-		{
-			//no prompt religion is FORGE
-			religion = FORGE;
-		}
-		else if (species == ELF && class_type != PALADIN) //ELF ROGUE OR WARLOCK
-		{
-			//prompt shadow, silver
-			//prompt vague question trickery or wealth depending on answer pick religion
-			bool response = false; //temp placeholder
-			if (response)
-			{
-				religion = SHADOW;
-			}
-			else
-			{
-				religion = SILVER;
-			}
-		}
-		else if (species == ELF)
-		{
-			//no prompt, religion is SILVER
-			religion = SILVER;
-		}
-		else if(class_type != PALADIN) //TABAXI or Goblin ROGUE OR WARLOCK
-		{
-			//no prompt religion is SHADOW
-			religion = SHADOW;
-		}
-		else
-		{
-			//no prompt religion is NOTHING
-			religion = NOTHING;
-		}
-	}
-	else //is human
-	{
-		if (class_type != PALADIN)
-		{
-			//prompt traveler, shadow
-			// prompt pick background traveler, or smuggler
-			//traveler is follower of Traveler
-			//smuggler is follower of SHADOW
-			bool response = false; //temp placeholder
-			if (response)
-			{
-				religion = TRAVELER;
-			}
-			else
-			{
-				religion = SHADOW;
-			}
-		}
-		else
-		{
-			//no prompt religion is traveler
-			religion = TRAVELER;
-		}
-	}
 
 	//create player
 	return new Player(); //returning empty player for now
@@ -93,7 +28,7 @@ Player* CharacterManager::create_player()
 
 CharacterManager::CharacterManager()
 {
-	//insert enemy characters into the Character array & npcs when Enemy and NPC characters are finished
+	//insert enemy characters into the Character array
 
 	player = nullptr; //initialize player pointer to nullpointer
 }
