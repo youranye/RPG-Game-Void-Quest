@@ -1,7 +1,6 @@
 #pragma once
 #include "Character.h"
 #include "Player.h"
-#include "Enemy.h"
 #include "IOManager.h"
 #include <stdexcept>
 #include <vector>
