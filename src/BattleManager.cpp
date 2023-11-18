@@ -13,7 +13,7 @@ void BattleManager::runBattle()
     }
 
     // Player and enemy take turns attacking each other until one is dead or the player flees.
-    while (player.get_hp() >= 0 && enemy.get_hp() >= 0)
+    while (player.get_hp() > 0 && enemy.get_hp() > 0)
     {
         // TODO: give player a choice
         // TODO: implement flee option
