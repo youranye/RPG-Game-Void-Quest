@@ -45,6 +45,7 @@ template <class It, class Se> class SceneParser
     It cur;
     Se end;
 
+    std::string prefix;
     Line curLine;
 
     /// @brief Skip whitespace characters until a non-whitespace or end of input is reached
@@ -61,7 +62,7 @@ template <class It, class Se> class SceneParser
 
     /// @brief Parse a list of options
     /// @return A vector of options
-    std::vector<NarrativeScene::Option> parseOptions();
+    std::vector<NarrativeScene::Option> parseNarrativeOptions();
 
     /// @brief Parse a `NarrativeScene`
     /// @return A unique_ptr to the NarrativeScene
@@ -73,7 +74,7 @@ template <class It, class Se> class SceneParser
     /// @brief Construct a SceneParser over
     /// @param begin Iterator to the start of the text to parse
     /// @param end Iterator to the end of the text to parse
-    SceneParser(It begin, Se end) : cur{begin}, end{end}
+    SceneParser(It begin, Se end, std::string prefix) : cur{begin}, end{end}, prefix{prefix}
     {
         next();
     }

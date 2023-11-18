@@ -28,8 +28,7 @@ class NarrativeScene : public Scene
     }
 
     std::vector<std::string> getOptions() const override;
-
-    std::string getKey(std::string const &optionText) const;
+    std::string getKey(int index) const;
 
   private:
     std::string text;

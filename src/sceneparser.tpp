@@ -91,6 +91,9 @@ template <class It, class Se> void SceneParser<It, Se>::next()
         ++cur;
     }
 
+    // Skip trailing whitespace
+    skipWhitespace();
+
     std::string text{};
 
     // Read into text until the end of the line or end of the input
@@ -109,7 +112,7 @@ template <class It, class Se> void SceneParser<It, Se>::next()
     curLine = {type, attribute, text};
 }
 
-template <class It, class Se> std::vector<NarrativeScene::Option> SceneParser<It, Se>::parseOptions()
+template <class It, class Se> std::vector<NarrativeScene::Option> SceneParser<It, Se>::parseNarrativeOptions()
 {
     take(LineType::H2);
     std::vector<NarrativeScene::Option> options{};
@@ -123,9 +126,16 @@ template <class It, class Se> std::vector<NarrativeScene::Option> SceneParser<It
         }
 
         // Split at ->
-        auto const name = curLine.text.substr(0, idx);
-        auto const optionText = curLine.text.substr(idx + 4);
-        options.push_back(NarrativeScene::Option{name, optionText});
+        auto const optionText = curLine.text.substr(0, idx);
+        std::string key{curLine.text.substr(idx + 4)};
+
+        // Check relative keys
+        if (key.size() > 0 && key[0] == '#')
+        {
+            key = prefix + key;
+        }
+
+        options.push_back(NarrativeScene::Option{optionText, key});
         next();
     }
     return options;
@@ -141,10 +151,9 @@ template <class It, class Se> std::unique_ptr<NarrativeScene> SceneParser<It, Se
         next();
     }
     // Read the options
-    auto const options = parseOptions();
+    auto const options = parseNarrativeOptions();
     return std::make_unique<NarrativeScene>(text, options);
 }
-
 
 template <class It, class Se> std::unique_ptr<BattleScene> SceneParser<It, Se>::parseBattleScene()
 {

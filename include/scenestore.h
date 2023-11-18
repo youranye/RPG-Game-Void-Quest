@@ -3,9 +3,6 @@
 #define SCENESTORE_H
 
 #include <exception>
-#include <filesystem>
-#include <map>
-#include <memory>
 #include <string_view>
 
 #include "scene.h"

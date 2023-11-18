@@ -12,15 +12,8 @@ std::vector<std::string> NarrativeScene::getOptions() const
     return result;
 }
 
-std::string NarrativeScene::getKey(std::string const& optionText) const
+std::string NarrativeScene::getKey(int index) const
 {
     // Search each option for a match
-    for (auto const &option : options)
-    {
-        if (option.text == optionText)
-        {
-            return option.nextKey;
-        }
-    }
-    throw std::invalid_argument{optionText + " is not an option"};
+    return options.at(index).nextKey;
 }

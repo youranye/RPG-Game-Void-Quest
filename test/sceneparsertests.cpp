@@ -5,7 +5,7 @@
 TEST(SceneParserTest, testEmpty)
 {
     std::string text{""};
-    SceneParser parser{std::begin(text), std::end(text)};
+    SceneParser parser{std::begin(text), std::end(text), ""};
 }
 
 TEST(SceneParserTest, testBasic)
@@ -14,7 +14,7 @@ TEST(SceneParserTest, testBasic)
                      "This is some text\n"
                      "## Options\n"};
 
-    SceneParser parser{std::begin(text), std::end(text)};
+    SceneParser parser{std::begin(text), std::end(text), ""};
 
     auto const scenes = parser.parseScenes();
 
@@ -32,7 +32,7 @@ TEST(SceneParserTest, testOptions)
                      " - Option 1 -> #option1\n"
                      " - Option 2 -> #option2"};
 
-    SceneParser parser{std::begin(text), std::end(text)};
+    SceneParser parser{std::begin(text), std::end(text), "test"};
 
     auto const scenes = parser.parseScenes();
 
@@ -43,9 +43,9 @@ TEST(SceneParserTest, testOptions)
     ASSERT_NE(scene, nullptr);
     ASSERT_EQ(scene->getOptions().size(), 2);
     EXPECT_EQ(scene->getOptions()[0], "Option 1");
-    EXPECT_EQ(scene->getKey("Option 1"), "#option1");
+    EXPECT_EQ(scene->getKey(0), "test#option1");
     EXPECT_EQ(scene->getOptions()[1], "Option 2");
-    EXPECT_EQ(scene->getKey("Option 2"), "#option2");
+    EXPECT_EQ(scene->getKey(1), "test#option2");
 }
 
 TEST(SceneParserTest, testMultipleScenes)
@@ -59,7 +59,7 @@ TEST(SceneParserTest, testMultipleScenes)
                      "## Options\n"
                      " - Option 1 -> #option1"};
 
-    SceneParser parser{std::begin(text), std::end(text)};
+    SceneParser parser{std::begin(text), std::end(text), ""};
 
     auto const scenes = parser.parseScenes();
 
@@ -80,11 +80,12 @@ TEST(SceneParserTest, testBattleScene)
                      "## Enemy\n"
                      " - Bear"};
 
-    SceneParser parser{std::begin(text), std::end(text)};
+    SceneParser parser{std::begin(text), std::end(text), ""};
 
     auto const scenes = parser.parseScenes();
 
     ASSERT_EQ(scenes.size(), 1);
+    EXPECT_EQ(scenes[0].first, "Fight");
 
     BattleScene const *scene = dynamic_cast<BattleScene const *>(scenes[0].second.get());
 
