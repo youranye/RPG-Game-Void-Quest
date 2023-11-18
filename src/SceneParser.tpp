@@ -2,8 +2,8 @@
 #ifndef SCENEPARSER_TPP
 #define SCENEPARSER_TPP
 
-#include "narrativescene.h"
-#include "sceneparser.h"
+#include "NarrativeScene.h"
+#include "SceneParser.h"
 
 #include <algorithm>
 

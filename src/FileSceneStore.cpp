@@ -1,6 +1,6 @@
-#include "filescenestore.h"
+#include "FileSceneStore.h"
 
-#include "sceneparser.h"
+#include "SceneParser.h"
 
 #include <fstream>
 

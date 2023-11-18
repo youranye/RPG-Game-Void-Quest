@@ -4,7 +4,7 @@
 
 #include "Enemy.h"
 #include "Player.h"
-#include "scene.h"
+#include "Scene.h"
 
 class BattleScene : public Scene
 {

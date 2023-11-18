@@ -1,8 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "narrativescene.h"
-#include "scenemanager.h"
+#include "NarrativeScene.h"
+#include "SceneManager.h"
 
 class SceneStoreStub : public SceneStore
 {

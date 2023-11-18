@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "sceneparser.h"
+#include "SceneParser.h"
 
 TEST(SceneParserTest, testEmpty)
 {

@@ -2,7 +2,7 @@
 #ifndef NARRATIVESCENE_HPP
 #define NARRATIVESCENE_HPP
 
-#include "scene.h"
+#include "Scene.h"
 
 class NarrativeScene : public Scene
 {

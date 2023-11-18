@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "scenestore.h"
+#include "SceneStore.h"
 
 class SceneManager
 {

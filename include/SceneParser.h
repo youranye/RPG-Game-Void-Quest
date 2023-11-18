@@ -7,9 +7,9 @@
 #include <string>
 #include <vector>
 
-#include "battlescene.h"
-#include "narrativescene.h"
-#include "scene.h"
+#include "BattleScene.h"
+#include "NarrativeScene.h"
+#include "Scene.h"
 
 /// @brief Exception thrown when parser encounters an error
 class SceneParseException : public std::exception
@@ -84,6 +84,6 @@ template <class It, class Se> class SceneParser
     std::vector<std::pair<std::string, std::unique_ptr<Scene>>> parseScenes();
 };
 
-#include "sceneparser.tpp"
+#include "SceneParser.tpp"
 
 #endif

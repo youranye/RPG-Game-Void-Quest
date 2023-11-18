@@ -1,4 +1,4 @@
-#include "narrativescene.h"
+#include "NarrativeScene.h"
 
 #include <stdexcept>
 

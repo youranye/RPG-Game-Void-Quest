@@ -1,4 +1,4 @@
-#include "scenemanager.h"
+#include "SceneManager.h"
 
 void SceneManager::replaceScene(std::string const &key)
 {

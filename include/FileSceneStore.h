@@ -6,7 +6,7 @@
 #include <memory>
 #include <string>
 
-#include "scenestore.h"
+#include "SceneStore.h"
 
 /// @brief Scene repository based on resource files
 class FileSceneStore : public SceneStore

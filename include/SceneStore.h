@@ -5,7 +5,7 @@
 #include <exception>
 #include <string_view>
 
-#include "scene.h"
+#include "Scene.h"
 
 class SceneNotFoundException : public std::exception
 {

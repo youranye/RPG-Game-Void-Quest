@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "scenevisitor.h"
+#include "SceneVisitor.h"
 
 class Scene
 {
