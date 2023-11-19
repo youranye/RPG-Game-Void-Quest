@@ -102,7 +102,7 @@ Note: The H1 line uses the attribute `[battle]` to distinguish it from narrative
 #### Example
 
 ```
-# MyBattleScene
+# [battle] MyBattleScene
 
 ## Enemy
  - Dragon
