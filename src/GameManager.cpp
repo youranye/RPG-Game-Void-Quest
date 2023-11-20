@@ -19,7 +19,7 @@ void GameManager::startGame() {
         switch (option) {
             case 0:
                 startGameLogic();
-                goToNextScene(); // Go to the next scene after starting the game
+                startSceneLogic(); // Go to the next scene after starting the game
                 break;
             case 1:
                 displayCredits();
@@ -112,8 +112,9 @@ void GameManager::handleBattleScene(BattleScene* currentScene) {
     goToNextScene(currentScene->getNextKey());
 }
 
-void GameManager::goToNextScene(const std::string& nextSceneKey) {
+void GameManager::startSceneLogic(const std::string& nextSceneKey) {
     sceneManager.replaceScene(nextSceneKey);
+    
 }
 
 bool GameManager::isFinalSceneReached() {
