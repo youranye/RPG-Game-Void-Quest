@@ -39,7 +39,6 @@ protected:
 	int defense;
 	int dexterity;
 	int hp;
-	vector<Ability> abilities;
 	Ability ability;
 	Character() : Name("EMPTYCHARACTER"), Species(VOIDWALKER), type(STORY), maxHP(0), ability(Ability()) {}
 public:
