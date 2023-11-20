@@ -77,5 +77,20 @@ Ability Character::get_ability()
 //to implement later
 string Character::getHpBar()
 {
-    return "";
+    int bars = hp/5;
+    int totalBars = maxHP/5;
+    std::stringstream ss;
+    ss << "[";
+    for(int i = 0; i < totalBars; i++)
+    {
+        if(i < bars)
+        {
+            ss << ":";
+        } else
+        {
+            ss << " ";
+        }
+    }
+    ss << "]";
+    return ss.str();
 }

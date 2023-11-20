@@ -95,8 +95,8 @@ BattleOutcome BattleManager::getBattleOutcome()
 int BattleManager::chooseAction()
 {
     std::stringstream ss;
-    ss << "Enemy Health: " << enemy.get_hp() << "/" << enemy.get_max_hp() << "\n" <<
-        "Player Health: " << player->get_hp() << "/" << player->get_max_hp() << "\n" <<
+    ss << "Enemy Health: " << enemy.get_hp() << "/" << enemy.get_max_hp() << " " << enemy.getHpBar() << "\n" <<
+        "Player Health: " << player->get_hp() << "/" << player->get_max_hp() << " " << player->getHpBar() << "\n" <<
         "Player SP: " << player->get_sp() << "/" << player->get_max_sp() << "\n" <<
         "Options: " << "\n" <<
         "a) attack Cost: 0 SP" << "\n" <<
