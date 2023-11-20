@@ -1,8 +1,8 @@
-#include "iomanager.h"
+#include "IOManager.h"
 
 void IOManager::write(std::string const &view)
 {
-    os << view;
+    os << view << std::flush;
 }
 
 int IOManager::readOption(int num_options)

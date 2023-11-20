@@ -1,36 +1,36 @@
 #include "Character.h"
 
-string Character::get_name() const
+string Character::getName() const
 {
 	return Name;
 }
 
-SpeciesType Character::get_species() const
+SpeciesType Character::getSpecies() const
 {
 	return Species;
 }
 
-CharacterType Character::get_type() const
+CharacterType Character::getType() const
 {
 	return type;
 }
 
-int Character::get_attack()
+int Character::getAttack()
 {
     return attack;
 }
 
-int Character::get_defense()
+int Character::getDefense()
 {
     return defense;
 }
 
-int Character::get_dexterity()
+int Character::getDexterity()
 {
     return dexterity;
 }
 
-int Character::get_hp()
+int Character::getHP()
 {
     return hp;
 }
@@ -47,7 +47,7 @@ void Character::heal(int amount)
     }
 }
 
-void Character::take_damage(int amount)
+void Character::takeDamage(int amount)
 {
     hp -= amount;
     if (hp < 0)
@@ -58,7 +58,7 @@ void Character::take_damage(int amount)
 
 bool Character::operator==(const Character &rhs) const
 {
-    if(rhs.get_name()==this->Name && rhs.get_species() == this->Species && rhs.get_type() == this->type)
+    if(rhs.getName()==this->Name && rhs.getSpecies() == this->Species && rhs.getType() == this->type)
     {
         return true;
     }

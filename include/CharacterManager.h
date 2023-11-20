@@ -5,6 +5,9 @@
 #include "IOManager.h"
 #include <stdexcept>
 #include <vector>
+#include <sstream>
+#include <iostream>
+#include <string>
 
 
 using namespace std;
@@ -13,11 +16,21 @@ class CharacterManager
 {
 	vector<Character> characters;
 	Player* player;
-	Player* create_player();
+
+	// Create a character according to the user's choices.
+	Player* createPlayer();
 public:
+	// Initialize enemy's and NPC's and put them in the characters vector.
 	CharacterManager();
+
+	// Initialize the player character.
 	void initialize();
+
 	~CharacterManager();
-	Character& get_character(string);
-	Player* get_player();
+
+	// Finds and returns the character whose name matches the parameter. Return nullCharacter if not found.
+	Character& getCharacter(string);
+
+	// Returns a pointer to the player character.
+	Player* getPlayer();
 };

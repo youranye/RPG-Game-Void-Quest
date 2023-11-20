@@ -10,5 +10,5 @@ TEST(CharacterManagerTests, testGetCharacter)
 {
     CharacterManager cManager;
     Character& nCharacter = nullCharacter;
-    EXPECT_EQ(cManager.get_character("null"), nCharacter);
+    EXPECT_EQ(cManager.getCharacter("null"), nCharacter);
 }

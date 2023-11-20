@@ -43,7 +43,7 @@ protected:
 	vector<Ability> abilities;
 	Character() : Name("EMPTYCHARACTER"), Species(VOIDWALKER), type(STORY), maxHP(0) {}
 public:
-	Character(string name, SpeciesType species, CharacterType Character_Type, int health) : Name(name), Species(species), type(Character_Type), maxHP(health), attack(0), defense(0), dexterity(0), hp(health) 
+	Character(string name, SpeciesType species, CharacterType characterType, int health) : Name(name), Species(species), type(characterType), maxHP(health), attack(0), defense(0), dexterity(0), hp(health) 
 	{
 		if(name.empty())
 		{
@@ -54,7 +54,7 @@ public:
 			throw std::invalid_argument("health cannot be less than or equal to zero");
 		}
 	}
-	Character(string name, SpeciesType species, CharacterType Character_Type, int health, int atk, int def, int dex) : Name(name), Species(species), type(Character_Type), maxHP(health), attack(atk), defense(def), dexterity(dex), hp(health) 
+	Character(string name, SpeciesType species, CharacterType characterType, int health, int atk, int def, int dex) : Name(name), Species(species), type(characterType), maxHP(health), attack(atk), defense(def), dexterity(dex), hp(health) 
 	{
 		if(name.empty())
 		{
@@ -65,15 +65,15 @@ public:
 			throw std::invalid_argument("health cannot be less than or equal to zero");
 		}
 	}
-	string get_name() const;
-	SpeciesType get_species() const;
-	CharacterType get_type() const;
-	int get_attack();
-	int get_defense();
-	int get_dexterity();
-	int get_hp();
+	string getName() const;
+	SpeciesType getSpecies() const;
+	CharacterType getType() const;
+	int getAttack();
+	int getDefense();
+	int getDexterity();
+	int getHP();
 	void heal(int amount);
-	void take_damage(int amount);
+	void takeDamage(int amount);
 	bool operator==(const Character& rhs) const;
 };
 // When a function looks for a specific character and doesn't find it, it should return nullCharacter to indicate the character was not found.

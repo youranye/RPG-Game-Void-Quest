@@ -1,7 +1,7 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
-#include "iomanager.h"
+#include "IOManager.h"
 
 class GameManager {
 public:
