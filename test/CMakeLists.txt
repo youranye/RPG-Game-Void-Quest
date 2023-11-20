@@ -7,6 +7,7 @@ add_executable(runAllTests
   IOManagerTests.cpp
   GameManagerTests.cpp
   BattleManagerTests.cpp
+  PlayerClassTests.cpp
 )
 
 add_executable(testCharacterManager
