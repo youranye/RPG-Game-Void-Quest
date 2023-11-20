@@ -12,19 +12,19 @@ Player::Player(string name, SpeciesType species, ClassType class_type, int healt
     switch (class_type)
     {
     case ROGUE:
-        ability = Ability("Sneak Attack", ATTACK, "You call upon The power of the Shadow and stab your foe in the Back", NONE, 200, 5);
+        ability = Ability("Sneak Attack", ATTACK, "You call upon The power of the Shadow and stab your foe in the Back", NONE, 200, 10);
         attack = 25;
         defense = 15;
         dexterity = 20;
         break;
     case PALADIN:
-        ability = Ability("Atk Up", ATTACK, "You raise your sword and call upon the power of the Traveler and you feel power course through your veins as you cut down your enemy", NONE, 150, 5);
+        ability = Ability("Atk Up", ATTACK, "You raise your sword and call upon the power of the Traveler and you feel power course through your veins as you cut down your enemy", NONE, 150, 7);
         attack = 20;
         defense = 25;
         dexterity = 15;
         break;
     case WARLOCK:
-        ability = Ability("FireBall", ATTACK, "You raise your staff and cast fireball", NONE, 150, 5);
+        ability = Ability("FireBall", ATTACK, "You raise your staff and cast fireball", NONE, 150, 8);
         attack = 15;
         defense = 20;
         dexterity = 25;

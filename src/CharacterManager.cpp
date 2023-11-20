@@ -29,7 +29,9 @@ Player* CharacterManager::create_player()
 CharacterManager::CharacterManager()
 {
 	//insert enemy characters into the Character array
-
+	characters.push_back(Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15));
+	characters.push_back(Character("Barry the HobGoblin",GOBLIN,ENEMY,310,20,15,15));
+	characters.push_back(Character("Barry the Orc",ORC,ENEMY,600,35,30,5));
 	player = nullptr; //initialize player pointer to nullpointer
 }
 
