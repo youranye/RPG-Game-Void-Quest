@@ -1,4 +1,4 @@
-#include "../include/BattleManager.h"
+#include "BattleManager.h"
 #include <cmath>
 // Runs the battle using turn-based combat
 void BattleManager::runBattle()
@@ -34,7 +34,7 @@ void BattleManager::runBattle()
                     }
                     break;
                 case 2:
-                    if(player->get_sp() < 5)
+                    if(player->get_sp() < playerAbility.cost)
                     {
                         //cout not enough sp
                         ioManager.write("Not Enough SP to use Special Attack!\n");
@@ -326,7 +326,7 @@ void BattleManager::specialAttack(bool isPlayer)
     displayAttack(true, isPlayer, hitValue, totalDamage);
 }
 
-// heals 10 hp
+// heals hp
 void BattleManager::heal(bool isPlayer)
 {
     int amount = 5;
@@ -348,7 +348,7 @@ void BattleManager::heal(bool isPlayer)
             if(maxHeal <= 5)
             {
                 maxHeal = 10;
-            } //prevent floating point error
+            }
             amount = randNumGenerator(amount, maxHeal);
             player->heal(amount);
             amount = player->get_hp() - initialHP;
@@ -418,11 +418,11 @@ void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, in
                     ss << enemy.get_name() << " Tries to hit you and misses!\n";
                     break;
                 case 1:
-                    ss << enemy.get_name() << " hits you! Dealing "<< damage << " damage to " << player->get_name() << std::endl;
+                    ss << enemyAbility.description << " Dealing "<< damage << " damage to " << player->get_name() << std::endl;
                     break;
                 case 2:
                     ss << "Critical Hit!\n" <<
-                        enemy.get_name() << " hits you! Dealing " << damage << " damage to " << player->get_name() << std::endl;
+                        enemyAbility.description << " Dealing " << damage << " damage to " << player->get_name() << std::endl;
                     break;
             }
         }

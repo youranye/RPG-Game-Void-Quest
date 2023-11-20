@@ -77,5 +77,5 @@ Ability Character::get_ability()
 
 string Character::getHpBar()
 {
-    
+    return "";
 }

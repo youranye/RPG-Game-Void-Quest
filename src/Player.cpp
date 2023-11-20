@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player(string name, SpeciesType species, CharacterType Character_Type, ClassType class_type, int health, int maxsp) :
-    Character(name, species, Character_Type, health), Class_Type(class_type), sp(maxsp), maxSP(maxsp)
+Player::Player(string name, SpeciesType species, ClassType class_type, int health, int maxsp) :
+    Character(name, species, PLAYER, health), Class_Type(class_type), sp(maxsp), maxSP(maxsp)
 {
     if(health <= 0 || maxsp < 0)
     {

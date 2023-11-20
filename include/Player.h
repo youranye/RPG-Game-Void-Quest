@@ -14,7 +14,7 @@ private:
 	const int maxSP;
 public:
 	Player() : Character(), Class_Type(FORGED), sp(0), maxSP(0) {}
-	Player(string name, SpeciesType species, CharacterType Character_Type, ClassType class_type, int health, int maxsp);
+	Player(string name, SpeciesType species, ClassType class_type, int health, int maxsp);
 	ClassType get_class();
 	int get_sp();
 	const int get_max_sp();
