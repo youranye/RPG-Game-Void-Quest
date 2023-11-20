@@ -74,7 +74,7 @@ Ability Character::get_ability()
 {
     return ability;
 }
-//to implement later
+
 string Character::getHpBar()
 {
     int bars = hp/5;

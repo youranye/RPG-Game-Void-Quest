@@ -90,7 +90,6 @@ public:
 	void take_damage(int amount);
 	bool operator==(const Character& rhs) const;
 	Ability get_ability();
-	//to code later
 	string getHpBar();
 };
 // When a function looks for a specific character and doesn't find it, it should return nullCharacter to indicate the character was not found.
