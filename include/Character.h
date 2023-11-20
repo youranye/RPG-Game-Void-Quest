@@ -10,7 +10,10 @@ using namespace std;
 enum SpeciesType {HUMAN, ELF, DWARF, GOBLIN, TABAXI, ORC, GOLIATH, CHANGELING, GNOME, VOIDWALKER};
 //utilize to differentiate between player type character and Enemy type character
 enum CharacterType {PLAYER, ENEMY, STORY, BOSS};
+enum CharacterType {PLAYER, ENEMY, STORY, BOSS};
 
+enum AbilityType {ATTACK, DEBUFF};
+enum AbilityCondition {DEF, DEX, NONE};
 enum AbilityType {ATTACK, DEBUFF};
 enum AbilityCondition {DEF, DEX, NONE};
 //new way of handling attacks
@@ -43,6 +46,8 @@ protected:
 	Ability ability;
 	Character() : Name("EMPTYCHARACTER"), Species(VOIDWALKER), type(STORY), maxHP(0), ability(Ability()) {}
 public:
+	Character(string name, SpeciesType species, CharacterType Character_Type, int health) : 
+	Name(name), Species(species), type(Character_Type), maxHP(health), attack(0), defense(0), dexterity(0), hp(health), ability(Ability()) 
 	Character(string name, SpeciesType species, CharacterType Character_Type, int health) : 
 	Name(name), Species(species), type(Character_Type), maxHP(health), attack(0), defense(0), dexterity(0), hp(health), ability(Ability()) 
 	{
@@ -78,19 +83,20 @@ public:
 		}
 		ability = this->ability;
 	}
-	string get_name() const;
-	SpeciesType get_species() const;
-	CharacterType get_type() const;
-	int get_attack();
-	int get_defense();
-	int get_dexterity();
-	int get_hp();
+	string getName() const;
+	SpeciesType getSpecies() const;
+	CharacterType getType() const;
+	int getAttack();
+	int getDefense();
+	int getDexterity();
+	int getHP();
+	const int getMaxHP();
 	const int get_max_hp();
 	void heal(int amount);
-	void take_damage(int amount);
+	void takeDamage(int amount);
 	bool operator==(const Character& rhs) const;
-	Ability get_ability();
-	string getHpBar();
+	Ability getAbility();
+	string getHPBar();
 };
 // When a function looks for a specific character and doesn't find it, it should return nullCharacter to indicate the character was not found.
 #ifndef NULLCHARACTER

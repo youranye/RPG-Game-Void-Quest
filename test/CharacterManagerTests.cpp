@@ -1,14 +1,17 @@
 #include "gtest/gtest.h"
 #include "../include/CharacterManager.h"
+#include "IOManager.h"
 
 TEST(CharacterManagerTests, testConstructor)
 {
-    EXPECT_NO_THROW(CharacterManager());
+    IOManager ioManager(std::cin, std::cout);
+    EXPECT_NO_THROW(CharacterManager cManager(ioManager));
 }
 
 TEST(CharacterManagerTests, testGetCharacter)
 {
-    CharacterManager cManager;
+    IOManager ioManager(std::cin, std::cout);
+    CharacterManager cManager(ioManager);
     Character& nCharacter = nullCharacter;
-    EXPECT_EQ(cManager.get_character("null"), nCharacter);
+    EXPECT_EQ(cManager.getCharacter("null"), nCharacter);
 }

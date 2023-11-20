@@ -9,5 +9,8 @@ using namespace std;
 
 int main()
 {
+    IOManager iomanager(cin, cout);
+    
+
     return 0;
 }

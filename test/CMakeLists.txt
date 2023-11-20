@@ -22,7 +22,6 @@ add_executable(testGameManager
   GameManagerTests.cpp
 )
 
-
 add_executable(testCharacterClass
   CharacterTests.cpp
 )

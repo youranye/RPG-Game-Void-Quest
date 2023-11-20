@@ -1,6 +1,6 @@
 #pragma once
 #include "Character.h"
-
+#include <string>
 using namespace std;
 
 
@@ -14,11 +14,10 @@ private:
 	const int maxSP;
 public:
 	Player() : Character(), Class_Type(FORGED), sp(0), maxSP(0) {}
-	Player(string name, SpeciesType species, ClassType class_type, int health, int maxsp);
-	ClassType get_class();
-	int get_sp();
-	const int get_max_sp();
-	void spend_sp(int amount);
-	void regenerate_sp(int amount);
+	Player(string name, SpeciesType species, ClassType class_Type, int health, int maxsp);
+	ClassType getClass();
+	int getSP();
+	const int getMaxSP();
+	void spendSP(int amount);
+	void regenerateSP(int amount);
 };
-
