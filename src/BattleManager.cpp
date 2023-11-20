@@ -1,61 +1,181 @@
 #include "../include/BattleManager.h"
-#include <cstdlib>
-#include <ctime>
-#include <iostream>
-
+#include <cmath>
 // Runs the battle using turn-based combat
 void BattleManager::runBattle()
 {
     // If enemy has higher dexterity than the player, they attack first.
-    if (enemy.getDexterity() > player.getDexterity())
+    if (enemy.getDexterity() > player->getDexterity())
     {
-        attack(enemy, player);
+        attack(false);
     }
 
     // Player and enemy take turns attacking each other until one is dead or the player flees.
-    while (player.getHP() > 0 && enemy.getHP() > 0)
+    while (player->getHP() > 0 && enemy.getHP() > 0)
     {
-        // TODO: give player a choice
-        // TODO: implement flee option
-        attack(player, enemy);
-
-        if (enemy.getHP() >= 0)
+        bool playerChoiceValid = false;
+        while(!playerChoiceValid)
         {
-            attack(enemy, player);
+            switch(chooseAction())
+            {
+                case 0:
+                    attack(true);
+                    playerChoiceValid = true;
+                    break;
+                case 1:
+                    if(player->getSP() < 5)
+                    {
+                        //cout not enough sp
+                        ioManager.write("Not Enough SP to case Heal!\n");
+                    }
+                    else
+                    {
+                        heal(true);
+                        playerChoiceValid = true;
+                    }
+                    break;
+                case 2:
+                    if(player->getSP() < 5)
+                    {
+                        //cout not enough sp
+                        ioManager.write("Not Enough SP to use Special Attack!\n");
+                    }
+                    else
+                    {
+                        specialAttack(true);
+                        playerChoiceValid = true;
+                    }
+                    break;
+            }
+        }
+        if(enemy.getHP()==0)
+        {
+            break;
+        }
+
+        if (enemy.getHP() > 0)
+        {
+            int desiretoheal = 0;
+            if(enemy.getHP() < enemy.getMaxHP())
+            {
+                int desiretoheal = randNumGenerator(0, enemy.getMaxHP());
+            }
+            if(enemy.getHP() < desiretoheal)
+            {
+                heal(false);
+            }
+            else if(enemy.getHP() < 5)
+            {
+                specialAttack(false);
+            }
+            else
+            {
+                attack(false);
+            }
         }
     }
 
     // Change result to the outcome of the battle
-    if (player.getHP() <= 0)
+    if (player->getHP() <= 0)
     {
         result = DEATH;
     }
-    else {
+    else 
+    {
         result = WIN;
-    }  
+    }
 }
 
 // Returns outcome of the battle.
-BattleOutcome BattleManager::getBattleOutcome() { return result; }
+BattleOutcome BattleManager::getBattleOutcome() 
+{ 
+    return result; 
+}
 
-// TODO: User chooses their action, either attack or heal.
-void BattleManager::chooseAction()
-{}
+// user chooses action
+int BattleManager::chooseAction()
+{
+    std::stringstream ss;
+    ss << "Enemy Health: " << enemy.getHP() << "/" << enemy.getMaxHP() << "\n" <<
+        "Player Health: " << player->getHP() << "/" << player->getMaxHP() << "\n" <<
+        "Player SP: " << player->getSP() << "/" << player->getMaxSP() << "\n" <<
+        "Options: " << "\n" <<
+        "a) attack Cost: 0 SP" << "\n" <<
+        "b) heal Cost: 5 SP" << "\n" <<
+        "c) " << playerAbility.name << " Cost: " << playerAbility.cost << " SP" << std::endl;
+    ioManager.write(ss.str());
+    return ioManager.readOption(3);
+}
 
 /* Given an attacker and a target, calculates the results of an attack, deals appropriate damage,
    and displays results of the attack to the user. */
-void BattleManager::attack(Character& attacker, Character& target)
+void BattleManager::attack(bool isPlayerAttacker)
 {
+    
     int accuracy = randNumGenerator(1,100);
-    int dodge = target.getDexterity();
-    int atkMod = randNumGenerator(1,10);
-    int defMod = randNumGenerator(1,10);
-    int atkPower = attacker.getAttack();
-    int targetDefense = target.getDefense();
+    int dodge = 0;
+    int atkModMin = 1;
+    int atkModMax = 10;
+    int atkMod = 1;
+    int defMod = 1;
+    int defModMin = 0;
+    int defModMax = 10;
+    int atkPower = 0;
+    int targetDefense = 0;
+
+    if(isPlayerAttacker)
+    {
+        dodge = enemy.getDexterity();
+        atkPower = player->getAttack();
+        targetDefense = enemy.getDefense();
+    }
+    else
+    {
+        dodge = player->getDexterity();
+        atkPower = enemy.getAttack();
+        targetDefense = player->getDefense();
+    }
 
     // Determine whether the attack hits
     int hitValue = determineAttackSuccess(accuracy, dodge);
+    if(isPlayerAttacker && hitValue == 2)
+    {
+        player->regenerateSP(100);
+        player->heal(10);
+    }
+    if(hitValue == 2)
+    {
+        if(atkPower < 30)
+        {
+            atkModMax = 20; //since it is crit it should deal near max damage
+            atkModMin = 10;
+        } else
+        {
+            atkModMax = 8;
+            atkModMin = 5;
+            defModMax = 8;
+        }
+    } 
+    else if(hitValue == 1)
+    {
+        if(atkPower < targetDefense)
+        {
+            atkModMax = 15;
+            defModMax = 8;
+        } 
+        else if(atkPower < 30)
+        {
+            atkModMax = 9;
+            defModMax = 11;
+        } else if(targetDefense < 30)
+        {
+            atkModMax = 5;
+            defModMax = 15;
+        }
+    }
 
+    //calculate atkMod
+    atkMod = randNumGenerator(atkModMin,atkModMax);
+    defMod = randNumGenerator(defModMin,defModMax);
     // Calculate amount of damage the target takes
     int totalDamage = calculateDamage(atkMod, atkPower, defMod, targetDefense, hitValue);
 
@@ -64,12 +184,21 @@ void BattleManager::attack(Character& attacker, Character& target)
     {
         totalDamage = 0;
     }
-    else{
-        target.takeDamage(totalDamage);
+    if(totalDamage == 0 && hitValue >= 1)
+    {
+        totalDamage = 5;
+    }
+    if(isPlayerAttacker)
+    {
+        enemy.takeDamage(totalDamage);
+    }
+    else
+    {
+        player->takeDamage(totalDamage);
     }
 
     // Display result of attack to user
-    displayAttack(attacker, target, hitValue, totalDamage);
+    displayAttack(false, isPlayerAttacker, hitValue, totalDamage);
 }
 
 // Generates random integer with range from lowest to highest inclusive
@@ -81,9 +210,169 @@ int BattleManager::randNumGenerator(int lowest, int highest)
     return (rand() % range) + lowest;
 }
 
-// TODO: Given a target, increases their hitpoints by an amout that depends on their sp.
-void BattleManager::heal(Character& self)
-{}
+void BattleManager::specialAttack(bool isPlayer)
+{
+    int accuracy = randNumGenerator(15,100);
+    int dodge = 0;
+    int atkModMin = 1;
+    int atkModMax = 10;
+    int atkMod = 1;
+    int defMod = 1;
+    int defModMin = 0;
+    int defModMax = 10;
+    int atkPower = 0;
+    int targetDefense = 0;
+    Ability abilityused;
+
+    if(isPlayer)
+    {
+        player->spendSP(playerAbility.cost);
+        dodge = enemy.getDexterity();
+        abilityused = playerAbility;
+        atkPower = player->getAttack();
+        targetDefense = enemy.getDefense();
+    }
+    else
+    {
+        dodge = player->getDexterity();
+        abilityused = enemyAbility;
+        atkPower = enemy.getAttack();
+        targetDefense = player->getDefense();
+    }
+    if(atkPower < targetDefense)
+    {
+        atkModMax = 15;
+        defModMax = 8;
+    } 
+    else if(atkPower < 30)
+    {
+        atkModMax = 9;
+        defModMax = 11;
+    } 
+    else if(targetDefense < 30)
+    {
+        atkModMax = 5;
+        defModMax = 15;
+    }
+    //determine what type of ability is used
+    if(abilityused.name == "InvalidAbility")
+    {
+        attack(isPlayer); //if enemy has no ability or just general error fixing.
+    }
+    if(abilityused.type == ATTACK)
+    {
+        atkPower = std::ceil((atkPower * abilityused.power) / 100.0);
+    }
+    else
+    {
+        //debuff
+        if(abilityused.condition == DEF)
+        {
+            targetDefense = std::ceil((targetDefense * (100 - abilityused.power)) / 100.0);
+        } else
+        {
+            dodge = std::ceil((dodge * (100 - abilityused.power)) / 100.0);
+        }
+    }
+
+    //ability is attack
+    // Determine whether the attack hits
+    int hitValue = determineAttackSuccess(accuracy, dodge);
+    if(isPlayer && hitValue == 2)
+    {
+        player->regenerateSP(100);
+        player->heal(10);
+    }
+    if(hitValue == 2)
+    {
+        if(atkPower < 30 || abilityused.type == ATTACK)
+        {
+            atkModMax = 20; //since it is crit it should deal near max damage
+            atkModMin = 10;
+        } 
+        else
+        {
+            atkModMax = 8;
+            atkModMin = 5;
+            defModMax = 8;
+        }
+    }
+
+    //calculate atkMod
+    atkMod = randNumGenerator(atkModMin,atkModMax);
+    defMod = randNumGenerator(defModMin,defModMax);
+    // Calculate amount of damage the target takes
+    int totalDamage = calculateDamage(atkMod, atkPower, defMod, targetDefense, hitValue);
+
+    // If totalDamage is negative, the target takes 0 damage
+    if (totalDamage < 0)
+    {
+        totalDamage = 0;
+    }
+    if(totalDamage == 0 && hitValue >= 1)
+    {
+        totalDamage = 5;
+    }
+    if(isPlayer)
+    {
+        enemy.takeDamage(totalDamage);
+    }
+    else
+    {
+        player->takeDamage(totalDamage);
+    }
+
+    // Display result of attack to user
+    displayAttack(true, isPlayer, hitValue, totalDamage);
+}
+
+// heals 10 hp
+void BattleManager::heal(bool isPlayer)
+{
+    int amount = 5;
+    if(isPlayer)
+    {
+        if(player->getSP() < 5)
+        {
+            //somehow tell player not enough sp
+        } else
+        {
+            player->spendSP(5);
+            int initialHP = player->getHP();
+            int maxHeal = player->getMaxHP() - initialHP;
+            if(initialHP < 10)
+            {
+                maxHeal = player->getMaxHP() + 30;
+                amount = 30;
+            }
+            if(maxHeal <= 5)
+            {
+                maxHeal = 10;
+            } //prevent floating point error
+            amount = randNumGenerator(amount, maxHeal);
+            player->heal(amount);
+            amount = player->getHP() - initialHP;
+        }
+    } else
+    {
+        int initialHP = enemy.getHP();
+        if(initialHP <= 5)
+        {
+            amount = randNumGenerator(5, 20);
+        } 
+        else if(initialHP <= 50)
+        {
+            amount = randNumGenerator(5, enemy.getHP());
+        } 
+        else
+        {
+            amount = randNumGenerator(5, 50);
+        }
+        enemy.heal(amount);
+        amount = enemy.getHP() - initialHP;
+    }
+    displayHeal(isPlayer,amount);
+}
 
 // Determine if the attack hits. Returns 0 for miss, 1 for hit, 2 for critical hit
 int BattleManager::determineAttackSuccess(int accuracy, int dodge)
@@ -107,9 +396,145 @@ int BattleManager::calculateDamage(int attackPower, int attackMod, int targetDef
     return ((attackPower * attackMod) - (targetDefense * defenseMod)) * hitValue * 0.3;
 }
 // TODO: Helper of attack that displays the results of the attack to the user.
-void BattleManager::displayAttack(const Character& attacker, const Character& target, int success, int damage)
-{}
+void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, int damage)
+{
+    std::stringstream ss;
+    if(isSpecial)
+    {
+        if(isPlayer)
+        {
+            if(success == 2)
+            {
+                ss << "Critical Hit!\n";
+            }
+            ss << playerAbility.description << " dealing " << damage << " damage to " << enemy.getName() << std::endl;
+        }
+        else
+        {
+            //TODO make it look good
+            switch(success)
+            {
+                case 0:
+                    ss << enemy.getName() << " Tries to hit you and misses!\n";
+                    break;
+                case 1:
+                    ss << enemy.getName() << " hits you! Dealing "<< damage << " damage to " << player->getName() << std::endl;
+                    break;
+                case 2:
+                    ss << "Critical Hit!\n" <<
+                        enemy.getName() << " hits you! Dealing " << damage << " damage to " << player->getName() << std::endl;
+                    break;
+            }
+        }
+    } 
+    else if(isPlayer)
+    {
+        switch(player->getClass())
+        {
+            case FORGED:
+                switch(success)
+                {
+                    case 0:
+                        ss << "You try to swing your axe at " << enemy.getName() << 
+                            " and your axe flies right out of your hand\n";
+                        break;
+                    case 1:
+                        ss << "You swing your axe down on " << enemy.getName() << 
+                            " and your axe deals " << damage << " damage to " << enemy.getName() << std::endl;
+                        break;
+                    case 2:
+                        ss << "Critical Hit!\n" <<
+                            "You Hurl your axe at " << enemy.getName() << 
+                            " and your axe deals " << damage << " damage to " << enemy.getName() << "\n";
+                        break;
+                }
+                break;
+            case WARLOCK:
+                switch(success)
+                {
+                    case 0:
+                        ss << "You try to hit " << enemy.getName() << 
+                            " with your staff and you miss completely\n";
+                        break;
+                    case 1:
+                        ss << "You bash " << enemy.getName() << 
+                            " with your staff and deal " << damage << " damage to " << enemy.getName() << std::endl;
+                        break;
+                    case 2:
+                        ss << "Critical Hit!\n" <<
+                            "You try to bash " << enemy.getName() << 
+                            " with your staff and cast a fireball dealing " << damage << " damage to " << enemy.getName() << std::endl;
+                        break;
+                }
+                break;
+            case ROGUE:
+                switch(success)
+                {
+                    case 0:
+                        ss << "You try to plunge your dagger into " << enemy.getName() << 
+                            " and you drop your dagger on the ground\n";
+                        break;
+                    case 1:
+                        ss << "You swing your dagger at " << enemy.getName() << 
+                            " and deal " << damage << " damage to " << enemy.getName() << std::endl;
+                        break;
+                    case 2:
+                        ss << "Critical Hit!\n" <<
+                            "You plunge your dagger into " << enemy.getName() << 
+                            " and deal " << damage << " damage to " << enemy.getName() << std::endl;
+                        break;
+                }
+                break;
+            case PALADIN:
+                switch(success)
+                {
+                    case 0:
+                        ss << "You try to swing your sword at " << enemy.getName() << 
+                            " and your sword flies right out of your hand\n";
+                        break;
+                    case 1:
+                        ss << "You swing your sword at " << enemy.getName() << 
+                            " and you deal " << damage << " damage to " << enemy.getName() << std::endl;
+                        break;
+                    case 2:
+                        ss << "Critical Hit!\n" <<
+                            "You swing your sword at " << enemy.getName() << 
+                            " and you cast fireball dealing " << damage << " damage to " << enemy.getName() << std::endl;
+                        break;
+                }
+                break;
+        }
+    }
+    else
+    {
+        switch(success)
+        {
+            case 0:
+                ss << enemy.getName() << " Tries to hit you and misses!\n";
+                break;
+            case 1:
+                ss << enemy.getName() << " hits you! Dealing "<< damage << " damage to " << player->getName() << std::endl;
+                break;
+            case 2:
+                ss << "Critical Hit!\n" <<
+                    enemy.getName() << " hits you! Dealing " << damage << " damage to " << player->getName() << std::endl;
+                break;
+        }
+    }
+    ioManager.write(ss.str());
+}
 
 // TODO: Helper of heal that displays the results of the heal to the user.
-void BattleManager::displayHeal(const Character& self, int amount)
-{}
+void BattleManager::displayHeal(bool isPlayer, int amount)
+{
+    std::stringstream ss;
+    if(isPlayer)
+    {
+        ss << "you cast Heal and heal " << amount << " hp!\n";
+    }
+    else
+    {
+        ss << enemy.getName() << " casts Heal and heals " << amount << " hp!\n";
+    }
+    ioManager.write(ss.str());
+}

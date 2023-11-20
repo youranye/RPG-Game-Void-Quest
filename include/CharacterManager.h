@@ -16,12 +16,13 @@ class CharacterManager
 {
 	vector<Character> characters;
 	Player* player;
+	IOManager& ioManager;
 
 	// Create a character according to the user's choices.
 	Player* createPlayer();
 public:
 	// Initialize enemy's and NPC's and put them in the characters vector.
-	CharacterManager();
+	CharacterManager(IOManager& ioManager);
 
 	// Initialize the player character.
 	void initialize();

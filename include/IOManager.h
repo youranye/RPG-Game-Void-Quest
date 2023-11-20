@@ -20,6 +20,9 @@ class IOManager
     /// @param text Text to write
     void write(std::string const& text);
 
+    /// Read a string into the input stream
+    std::string read(std::string &text);
+
     /// @brief Have the user select a letter starting from a, up to the number of options available
     /// @param numOptions Number of options for the user to select from, taking from input stream
     /// @return The index of the selected option, starting from 0
