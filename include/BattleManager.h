@@ -6,7 +6,7 @@
 #include "IOManager.h"
 #include <cstdlib>
 #include <ctime>
-#include <sstream> //nightmare fuel
+#include <sstream>
 
 // Describes result of the battle
 enum BattleOutcome { WIN, DEATH, ONGOING };
@@ -16,7 +16,10 @@ class BattleManager
     public:
         BattleManager(Player* playerCharacter, Character& enemyCharacter, IOManager& ioManager)
             : player(playerCharacter), enemy(enemyCharacter), result(ONGOING), ioManager(ioManager)
-        {}
+        {
+            playerAbility = player->get_ability();
+            enemyAbility = enemy.get_ability();
+        }
         void runBattle();
         BattleOutcome getBattleOutcome();
 
@@ -25,6 +28,8 @@ class BattleManager
         Character& enemy;
         BattleOutcome result;
         IOManager& ioManager;
+        Ability playerAbility;
+        Ability enemyAbility;
 
         int chooseAction();
         void attack(bool isPlayerAttacker);
@@ -33,7 +38,7 @@ class BattleManager
         int randNumGenerator(int lowest, int highest);
         int determineAttackSuccess(int accuracy, int dodge);
         int calculateDamage(int attackPower, int attackMod, int targetDefense, int defenseMod, int hitValue);
-        void displayAttack(bool isPlayer, int success, int damage);
+        void displayAttack(bool isSpecial, bool isPlayer, int success, int damage);
         void displayHeal(bool isPlayer, int amount);
 };
 

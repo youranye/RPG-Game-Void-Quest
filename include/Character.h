@@ -10,8 +10,8 @@ enum SpeciesType {HUMAN, ELF, DWARF, GOBLIN, TABAXI, ORC, GOLIATH, CHANGELING, G
 //utilize to differentiate between player type character and Enemy type character
 enum CharacterType {PLAYER, ENEMY, STORY, BOSS};
 
-enum AbilityType {ATTACK, DEFEND, BUFF, DEBUFF, HEAL};
-enum AbilityCondition {ATK, DEF, DEX, SLEEP, CONFUSION, NONE};
+enum AbilityType {ATTACK, DEBUFF};
+enum AbilityCondition {DEF, DEX, NONE};
 //new way of handling attacks
 struct Ability {
 	string name;
@@ -20,10 +20,9 @@ struct Ability {
 	AbilityCondition condition;
 	int power;
 	int cost;
-	int accuracy;
-	Ability() : name("InvalidAbility"), type(DEBUFF), description("EMPTYABILITY"), condition(NONE), power(0), cost(0), accuracy(0) {}
-	Ability(string name, AbilityType type, string desc, AbilityCondition cond, int pow, int cost, int acc) : 
-		name(name), type(type), description(desc), condition(cond), power(pow), cost(cost), accuracy(acc) {}
+	Ability() : name("InvalidAbility"), type(DEBUFF), description("EMPTYABILITY"), condition(NONE), power(0), cost(0) {}
+	Ability(string name, AbilityType type, string desc, AbilityCondition cond, int pow, int cost) : 
+		name(name), type(type), description(desc), condition(cond), power(pow), cost(cost) {}
 };
 //Basic Attack
 //Ability ("Basic Attack", ATTACK, "Attack Enemy", NONE, 90, 0, 99)

@@ -3,31 +3,36 @@
 Player::Player(string name, SpeciesType species, CharacterType Character_Type, ClassType class_type, int health, int maxsp) :
     Character(name, species, Character_Type, health), Class_Type(class_type), sp(maxsp), maxSP(maxsp)
 {
+    if(health <= 0 || maxsp < 0)
+    {
+        throw std::invalid_argument("health and maxsp cannot be negative or zero!");
+    }
     //set abilities and stats
-    //not all abilities have yet been implemented will need story to be closer to finished before complete implementation
-    abilities.push_back(Ability("Basic Attack", ATTACK, "Hit enemy", NONE, 90, 0, 99));
-    abilities.push_back(Ability("Fireball", ATTACK, "Hit enemy with fireball", NONE, 100, 5, 99));
-    abilities.push_back(Ability("Heal", HEAL, "Heal", NONE, 10, 10, 100));
+    
     switch (class_type)
     {
     case ROGUE:
-        attack = 10;
-        defense = 10;
+        ability = Ability("Sneak Attack", ATTACK, "You call upon The power of the Shadow and stab your foe in the Back", NONE, 200, 5);
+        attack = 25;
+        defense = 15;
         dexterity = 20;
         break;
     case PALADIN:
-        attack = 9;
-        defense = 15;
-        dexterity = 10;
-        break;
-    case WARLOCK:
-        attack = 9;
-        defense = 11;
+        ability = Ability("Atk Up", ATTACK, "You raise your sword and call upon the power of the Traveler and you feel power course through your veins as you cut down your enemy", NONE, 150, 5);
+        attack = 20;
+        defense = 25;
         dexterity = 15;
         break;
-    case FORGED:
+    case WARLOCK:
+        ability = Ability("FireBall", ATTACK, "You raise your staff and cast fireball", NONE, 150, 5);
         attack = 15;
-        defense = 15;
+        defense = 20;
+        dexterity = 25;
+        break;
+    case FORGED:
+        ability = Ability("Atk Down", DEBUFF, "You call upon Huldra and she weakens the strength of your foe and you swing your axe", DEF, 75, 5);
+        attack = 30;
+        defense = 30;
         dexterity = 10;
         break;
     }
@@ -46,6 +51,15 @@ int Player::get_sp()
 
 void Player::spend_sp(int amount)
 {
+    sp -= amount;
+    if (sp < 0)
+    {
+        sp = 0;
+    }
+}
+
+void Player::regenerate_sp(int amount)
+{
     if (sp < maxSP)
     {
         sp += amount;
@@ -53,15 +67,6 @@ void Player::spend_sp(int amount)
     if(sp > maxSP)
     {
         sp = maxSP;
-    }
-}
-
-void Player::regenerate_sp(int amount)
-{
-    sp -= amount;
-    if (sp < 0)
-    {
-        sp = 0;
     }
 }
 
