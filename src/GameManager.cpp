@@ -10,7 +10,8 @@ GameManager::~GameManager() {
 }
 
 void GameManager::startGame() {
-    while (true) {
+    bool gameStarted = false;
+    while (!gameStarted) {
         displayStartPage();
         
 
@@ -30,11 +31,6 @@ void GameManager::startGame() {
             default:
                 ioManager.write("Invalid choice. Please try again.\n");
                 break;
-        }
-
-        if (isFinalSceneReached()) {
-            ioManager.write("Reached final scene or game over. Returning to start page.\n");
-            break;
         }
     }
 }
