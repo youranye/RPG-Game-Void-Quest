@@ -2,7 +2,7 @@
 #include "Character.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "IOManager.h"
+#include "iomanager.h"
 #include <stdexcept>
 #include <vector>
 
