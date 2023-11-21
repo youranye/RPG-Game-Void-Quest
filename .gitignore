@@ -21,8 +21,7 @@ test/CMakeFiles/
 test/Makefile
 test/cmake_install.cmake
 test/CTestTestfile.cmake
-
-#ignore build files
-src/libBattleManager.a
-src/libGameManager.a
 src/libIOManager.a
+src/libSceneManager.a
+*.a
+
