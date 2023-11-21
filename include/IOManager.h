@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 class IOManager
 {
@@ -21,7 +22,7 @@ class IOManager
     void write(std::string const& text);
 
     /// Read a string into the input stream
-    std::string read(std::string &text);
+    void read(std::string &text);
 
     /// @brief Have the user select a letter starting from a, up to the number of options available
     /// @param numOptions Number of options for the user to select from, taking from input stream

@@ -1,6 +1,6 @@
 #include "Character.h"
 
-string Character::getName() const
+std::string Character::getName() const
 {
 	return Name;
 }
@@ -74,13 +74,8 @@ Ability Character::getAbility()
 {
     return ability;
 }
-//to implement later
-string Character::getHPBar()
-{
-    return "";
-}
 
-string Character::getHpBar()
+std::string Character::getHPBar()
 {
     int bars = hp/5;
     int totalBars = maxHP/5;

@@ -17,8 +17,8 @@ class BattleManager
         BattleManager(Player* playerCharacter, Character& enemyCharacter, IOManager& ioManager)
             : player(playerCharacter), enemy(enemyCharacter), result(ONGOING), ioManager(ioManager)
         {
-            playerAbility = player->get_ability();
-            enemyAbility = enemy.get_ability();
+            playerAbility = player->getAbility();
+            enemyAbility = enemy.getAbility();
         }
         void runBattle();
         BattleOutcome getBattleOutcome();

@@ -1,5 +1,13 @@
 #include "CharacterManager.h"
 
+CharacterManager::CharacterManager(IOManager& ioManager) : ioManager(ioManager), player(nullptr)
+{
+	//insert enemy characters into the Character array
+	characters.push_back(Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15));
+	characters.push_back(Character("Barry the HobGoblin",GOBLIN,ENEMY,310,20,15,15));
+	characters.push_back(Character("Barry the Orc",ORC,ENEMY,600,35,30,5));	
+}
+
 //create Player character
 Player* CharacterManager::createPlayer()
 {
@@ -78,22 +86,11 @@ Player* CharacterManager::createPlayer()
 	//prompt and get name
 	ss << "Name your character: ";
 	ioManager.write(ss.str());
-	//TODO: add read function to IOManager and use to get string
-	//cin >> name;
+	ioManager.read(name);
 
 	//create player
-	//Player* newplayer = new Player();
-	return new Player(name, species, type, 200, 100);
-	//return newplayer;
-
-}
-
-CharacterManager::CharacterManager(IOManager& ioManager) : ioManager(ioManager), player(nullptr)
-{
-	//insert enemy characters into the Character array
-	characters.push_back(Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15));
-	characters.push_back(Character("Barry the HobGoblin",GOBLIN,ENEMY,310,20,15,15));
-	characters.push_back(Character("Barry the Orc",ORC,ENEMY,600,35,30,5));	
+	Player* newPlayer = new Player(name, species, type, 200, 100);
+	return newPlayer;
 }
 
 void CharacterManager::initialize()
@@ -115,7 +112,7 @@ CharacterManager::~CharacterManager()
 	player = nullptr;
 }
 
-Character& CharacterManager::getCharacter(string name)
+Character& CharacterManager::getCharacter(std::string name)
 {
 	for (int i = 0; i < characters.size(); i++)
 	{

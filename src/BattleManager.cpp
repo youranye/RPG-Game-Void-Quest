@@ -97,7 +97,7 @@ int BattleManager::chooseAction()
 {
     std::stringstream ss;
     ss << "Enemy Health: " << enemy.getHP() << "/" << enemy.getMaxHP() << " " << enemy.getHPBar() << "\n" <<
-        "Player Health: " << player->getHP() << "/" << player->getMaxHP() << " " << player->getHpBar() << "\n" <<
+        "Player Health: " << player->getHP() << "/" << player->getMaxHP() << " " << player->getHPBar() << "\n" <<
         "Player SP: " << player->getSP() << "/" << player->getMaxSP() << "\n" <<
         "Options: " << "\n" <<
         "a) attack Cost: 0 SP" << "\n" <<

@@ -5,9 +5,9 @@ void IOManager::write(std::string const &view)
     os << view << std::flush;
 }
 
-std::string IOManager::read(std::string &text)
+void IOManager::read(std::string &text)
 {
-    getline(is, text);
+    std::getline(is, text);
 }
 
 int IOManager::readOption(int num_options)

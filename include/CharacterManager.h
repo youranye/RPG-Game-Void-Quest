@@ -9,8 +9,6 @@
 #include <string>
 
 
-using namespace std;
-
 class CharacterManager
 {
 	vector<Character> characters;
@@ -29,7 +27,7 @@ public:
 	~CharacterManager();
 
 	// Finds and returns the character whose name matches the parameter. Return nullCharacter if not found.
-	Character& getCharacter(string);
+	Character& getCharacter(std::string);
 
 	// Returns a pointer to the player character.
 	Player* getPlayer();
