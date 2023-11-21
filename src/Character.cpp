@@ -64,3 +64,33 @@ bool Character::operator==(const Character &rhs) const
     }
     return false;
 }
+
+const int Character::get_max_hp()
+{
+    return maxHP;
+}
+
+Ability Character::get_ability()
+{
+    return ability;
+}
+
+string Character::getHpBar()
+{
+    int bars = hp/5;
+    int totalBars = maxHP/5;
+    std::stringstream ss;
+    ss << "[";
+    for(int i = 0; i < totalBars; i++)
+    {
+        if(i < bars)
+        {
+            ss << ":";
+        } else
+        {
+            ss << " ";
+        }
+    }
+    ss << "]";
+    return ss.str();
+}

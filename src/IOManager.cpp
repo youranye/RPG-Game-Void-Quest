@@ -1,4 +1,4 @@
-#include "iomanager.h"
+#include "IOManager.h"
 
 void IOManager::write(std::string const &view)
 {

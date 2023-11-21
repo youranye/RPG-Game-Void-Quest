@@ -2,7 +2,7 @@
 #include "GameManager.h"
 #include "SceneManager.h"
 #include "CharacterManager.h"
-#include "iomanager.h" // Assuming you have an IOManager class
+#include "IOManager.h" // Assuming you have an IOManager class
 
 TEST(StartGame, TestStartGame)
 {

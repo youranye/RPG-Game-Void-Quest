@@ -1,12 +1,12 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
-#include "iomanager.h"
 #include "CharacterManager.h"
 #include "BattleManager.h"
 #include "SceneManager.h"
 #include "NarrativeScene.h"
 #include "BattleScene.h"
+#include "IOManager.h"
 
 class GameManager {
 public:

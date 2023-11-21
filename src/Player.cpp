@@ -1,54 +1,38 @@
 #include "Player.h"
 
-Player::Player(string name, SpeciesType species, CharacterType Character_Type, ClassType class_type, Religion Religion_, int health, int maxsp) :
-    Character(name, species, Character_Type, health), Class_Type(class_type), religion(Religion_), sp(maxsp), maxSP(maxsp), level(1)
+Player::Player(string name, SpeciesType species, ClassType class_type, int health, int maxsp) :
+    Character(name, species, PLAYER, health), Class_Type(class_type), sp(maxsp), maxSP(maxsp)
 {
+    if(health <= 0 || maxsp < 0)
+    {
+        throw std::invalid_argument("health and maxsp cannot be negative or zero!");
+    }
     //set abilities and stats
-    //not all abilities have yet been implemented will need story to be closer to finished before complete implementation
-    abilities.push_back(Ability("Basic Attack", ATTACK, "Hit enemy", NONE, 90, 0, 99));
-    abilities.push_back(Ability("Fireball", ATTACK, "Hit enemy with fireball", NONE, 100, 5, 99));
-    abilities.push_back(Ability("Heal", HEAL, "Heal", NONE, 10, 10, 100));
+    
     switch (class_type)
     {
     case ROGUE:
-        attack = 10;
-        defense = 10;
+        ability = Ability("Sneak Attack", ATTACK, "You call upon The power of the Shadow and stab your foe in the Back", NONE, 200, 10);
+        attack = 25;
+        defense = 15;
         dexterity = 20;
-        //class ability
-        abilities.push_back(Ability("Throw Dagger", ATTACK, "Throw dagger at enemy", NONE, 120, 6, 99));
         break;
     case PALADIN:
-        attack = 9;
-        defense = 15;
-        dexterity = 10;
-        //class ability depends on religion
-        switch (religion)
-        {
-        case TRAVELER:
-
-            break;
-        case SHADOW:
-
-            break;
-        case NOTHING:
-
-            break;
-        case SILVER:
-
-            break;
-        case FORGE:
-            //(Planned) throw some kind of exception
-            break;
-        }
-        break;
-    case WARLOCK:
-        attack = 9;
-        defense = 11;
+        ability = Ability("Atk Up", ATTACK, "You raise your sword and call upon the power of the Traveler and you feel power course through your veins as you cut down your enemy", NONE, 150, 7);
+        attack = 20;
+        defense = 25;
         dexterity = 15;
         break;
-    case FORGED:
+    case WARLOCK:
+        ability = Ability("FireBall", ATTACK, "You raise your staff and cast fireball", NONE, 150, 8);
         attack = 15;
-        defense = 15;
+        defense = 20;
+        dexterity = 25;
+        break;
+    case FORGED:
+        ability = Ability("Atk Down", DEBUFF, "You call upon Huldra and she weakens the strength of your foe and you swing your axe", DEF, 75, 5);
+        attack = 30;
+        defense = 30;
         dexterity = 10;
         break;
     }
@@ -67,6 +51,15 @@ int Player::get_sp()
 
 void Player::spend_sp(int amount)
 {
+    sp -= amount;
+    if (sp < 0)
+    {
+        sp = 0;
+    }
+}
+
+void Player::regenerate_sp(int amount)
+{
     if (sp < maxSP)
     {
         sp += amount;
@@ -77,39 +70,7 @@ void Player::spend_sp(int amount)
     }
 }
 
-void Player::regenerate_sp(int amount)
+const int Player::get_max_sp()
 {
-    sp -= amount;
-    if (sp < 0)
-    {
-        sp = 0;
-    }
-}
-
-//Not yet complete will complete once Story is closer to being finished writing
-Ability Player::levelup()
-{
-    level++;
-    hp = maxHP;
-    sp = maxSP;
-    attack++;
-    defense++;
-    dexterity++;
-    Ability newAbility;
-    switch (level) {
-    case 2:
-
-        break;
-    case 3:
-
-        break;
-    case 4:
-
-        break;
-    case 5:
-
-        break;
-    }
-    abilities.push_back(newAbility);
-    return newAbility;
+    return maxSP;
 }
