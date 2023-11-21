@@ -26,7 +26,7 @@ This project interests us because we all are interested in designing and buildin
 
 This diagram shows a flowchart of the various parts of the program, starting from creating a character to progressing the story, combat, and the end of the game.
 
-![navigation diagram](README_Resources/navigation_diagram.jpg)
+![navigation diagram](README_Resources/navigation_diagram.png)
 
 ### Screen Layouts
 
