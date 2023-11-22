@@ -92,7 +92,7 @@ void GameManager::handleNonBattleScene(NarrativeScene* currentScene) {
 
 void GameManager::handleBattleScene(BattleScene* currentScene) {
     std::string enemyKey = currentScene->getEnemyName();
-    Character* enemy = &characterManager.get_character(enemyKey);
+    Character* enemy = &characterManager.getCharacter(enemyKey);
 
     if (enemy == nullptr) {
         ioManager.write("Error: Enemy not found.\n");
@@ -102,8 +102,8 @@ void GameManager::handleBattleScene(BattleScene* currentScene) {
     ioManager.write("Battle begins with enemy: " + enemyKey);
 
     // Run the battle with the obtained enemy using BattleManager
-    Player* player = characterManager.get_player();
-    BattleManager battleManager(*player, *enemy);
+    Player* player = characterManager.getPlayer();
+    BattleManager battleManager(player, *enemy, ioManager);
     battleManager.runBattle();
     bool playerWon = battleManager.getBattleOutcome();
 

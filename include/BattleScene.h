@@ -2,7 +2,6 @@
 #ifndef BATTLESCENE_H
 #define BATTLESCENE_H
 
-#include "Enemy.h"
 #include "Player.h"
 #include "Scene.h"
 

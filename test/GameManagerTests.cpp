@@ -9,7 +9,7 @@ TEST(StartGame, TestStartGame)
     std::istringstream iss;
     std::ostringstream oss;
     IOManager manager{iss, oss};
-    CharacterManager characterManager{};
+    CharacterManager characterManager{manager};
     SceneManager sceneManager{nullptr};
     GameManager gm(manager, characterManager, sceneManager);
     iss.str("a\n");
