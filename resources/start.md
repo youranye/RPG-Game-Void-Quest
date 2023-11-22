@@ -1,13 +1,22 @@
 # Start
 
+You are at a fork in the road. Two paths unfold before you.
+
 ## Options
- - Go to village -> #village
- - Go to cave -> #cave
+ - Go to village -> village#Entrance
+ - Go to cave -> #Cave
 
 # Cave
 
-## Options
-
-# Village
+You encounter a bear!
 
 ## Options
+ - Fight! -> #Fight
+
+# [battle] Fight
+
+## Enemy
+ - Bear
+
+## Next
+ - #Village

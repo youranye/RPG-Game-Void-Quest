@@ -1,13 +1,17 @@
 #include "gtest/gtest.h"
 #include "GameManager.h"
-#include "iomanager.h" // Assuming you have an IOManager class
+#include "SceneManager.h"
+#include "CharacterManager.h"
+#include "IOManager.h" // Assuming you have an IOManager class
 
 TEST(StartGame, TestStartGame)
 {
     std::istringstream iss;
     std::ostringstream oss;
     IOManager manager{iss, oss};
-    GameManager gm(manager);
+    CharacterManager characterManager{manager};
+    SceneManager sceneManager{nullptr};
+    GameManager gm(manager, characterManager, sceneManager);
     iss.str("a\n");
     EXPECT_NO_THROW(gm.startGame());
 }
