@@ -80,7 +80,7 @@ We applied interface segregation principle to our Character class. Our player ch
 
 * How did you apply it?
 
-This change was from our original UML diagram to the current one. It has already been implementedChanged Character Class to not violate by adding derived Player Class. The solution was to add a Player class that inherits from Character and holds any members that would be specific to a player Character.
+This change was from our original UML diagram to the current one. It has already been implemented. The solution was to add a Player class that inherits from Character and holds any members that would be specific to a player Character.
 
 * How did this change help you write better code?
 
