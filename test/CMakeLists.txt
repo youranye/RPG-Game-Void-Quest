@@ -24,7 +24,6 @@ add_executable(testGameManager
   GameManagerTests.cpp
 )
 
-
 add_executable(testCharacterClass
   CharacterTests.cpp
 )
@@ -41,9 +40,9 @@ add_executable(testSceneParser SceneParserTests.cpp)
 add_executable(testSceneManager SceneManagerTests.cpp)
 
 target_link_libraries(runAllTests CharacterManager Character IOManager GameManager BattleManager SceneManager NarrativeScene gmock gtest GTest::gtest_main)
-target_link_libraries(testCharacterManager CharacterManager gmock gtest gtest_main)
+target_link_libraries(testCharacterManager CharacterManager Character Player IOManager gmock gtest gtest_main)
 target_link_libraries(testCharacterClass Character gmock gtest gtest_main)
-target_link_libraries(testPlayerClass Player gmock gtest gtest_main)
+target_link_libraries(testPlayerClass Player Character gmock gtest gtest_main)
 target_link_libraries(testBattleManager BattleManager Character gmock gtest gtest_main)
 target_link_libraries(testIoManager IOManager gmock gtest GTest::gtest_main)
 target_link_libraries(testGameManager CharacterManager Character IOManager GameManager BattleManager SceneManager NarrativeScene gmock gtest GTest::gtest_main)

@@ -2,7 +2,12 @@
 
 void IOManager::write(std::string const &view)
 {
-    os << view;
+    os << view << std::flush;
+}
+
+void IOManager::read(std::string &text)
+{
+    std::getline(is, text);
 }
 
 int IOManager::readOption(int num_options)

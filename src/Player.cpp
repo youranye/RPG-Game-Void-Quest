@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player(string name, SpeciesType species, ClassType class_type, int health, int maxsp) :
-    Character(name, species, PLAYER, health), Class_Type(class_type), sp(maxsp), maxSP(maxsp)
+Player::Player(string name, SpeciesType species, ClassType class_Type, int health, int maxsp) :
+    Character(name, species, PLAYER, health), Class_Type(class_Type), sp(maxsp), maxSP(maxsp)
 {
     if(health <= 0 || maxsp < 0)
     {
@@ -9,7 +9,7 @@ Player::Player(string name, SpeciesType species, ClassType class_type, int healt
     }
     //set abilities and stats
     
-    switch (class_type)
+    switch (class_Type)
     {
     case ROGUE:
         ability = Ability("Sneak Attack", ATTACK, "You call upon The power of the Shadow and stab your foe in the Back", NONE, 200, 10);
@@ -39,17 +39,17 @@ Player::Player(string name, SpeciesType species, ClassType class_type, int healt
 
 }
 
-ClassType Player::get_class()
+ClassType Player::getClass()
 {
     return Class_Type;
 }
 
-int Player::get_sp()
+int Player::getSP()
 {
     return sp;
 }
 
-void Player::spend_sp(int amount)
+void Player::spendSP(int amount)
 {
     sp -= amount;
     if (sp < 0)
@@ -58,7 +58,7 @@ void Player::spend_sp(int amount)
     }
 }
 
-void Player::regenerate_sp(int amount)
+void Player::regenerateSP(int amount)
 {
     if (sp < maxSP)
     {
@@ -70,7 +70,7 @@ void Player::regenerate_sp(int amount)
     }
 }
 
-const int Player::get_max_sp()
+const int Player::getMaxSP()
 {
     return maxSP;
 }
