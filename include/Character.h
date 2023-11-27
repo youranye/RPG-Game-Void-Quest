@@ -9,7 +9,7 @@ enum SpeciesType {HUMAN, ELF, DWARF, GOBLIN, TABAXI, ORC, GOLIATH, CHANGELING, G
 //utilize to differentiate between player type character and Enemy type character
 enum CharacterType {PLAYER, ENEMY, STORY, BOSS};
 
-enum AbilityType {ATTACK, DEBUFF};
+enum AbilityType {ATTACK, DEBUFF, NULLABILITY};
 enum AbilityCondition {DEF, DEX, NONE};
 
 //new way of handling attacks
@@ -20,7 +20,7 @@ struct Ability {
 	AbilityCondition condition;
 	int power;
 	int cost;
-	Ability() : name("InvalidAbility"), type(DEBUFF), description("EMPTYABILITY"), condition(NONE), power(0), cost(0) {}
+	Ability() : name("InvalidAbility"), type(NULLABILITY), description("EMPTYABILITY"), condition(NONE), power(0), cost(0) {}
 	Ability(std::string name, AbilityType type, std::string desc, AbilityCondition cond, int pow, int cost) : 
 		name(name), type(type), description(desc), condition(cond), power(pow), cost(cost) {}
 };
@@ -40,8 +40,8 @@ protected:
 	int dexterity;
 	int hp;
 	Ability ability;
+	//constructor for pointer and for extension
 	Character() : Name("EMPTYCHARACTER"), Species(VOIDWALKER), type(STORY), maxHP(0), ability(Ability()), attack(0), defense(0), dexterity(0), hp(0) {}
-public:
 	Character(std::string name, SpeciesType species, CharacterType Character_Type, int health) :  
 	Name(name), Species(species), type(Character_Type), maxHP(health), attack(0), defense(0), dexterity(0), hp(health), ability(Ability()) 
 	{
@@ -54,6 +54,7 @@ public:
 			throw std::invalid_argument("health cannot be less than or equal to zero");
 		}
 	}
+public:
 	Character(std::string name, SpeciesType species, CharacterType Character_Type, int health, int atk, int def, int dex) : Name(name), Species(species), type(Character_Type), maxHP(health), attack(atk), defense(def), dexterity(dex), hp(health) 
 	{
 		if(name.empty())

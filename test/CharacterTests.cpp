@@ -8,11 +8,11 @@ class CharacterFixture : public Character {
 TEST(CharacterTest, TestConstructor)
 {
     EXPECT_NO_THROW(CharacterFixture());
-    EXPECT_NO_THROW(Character("Name", VOIDWALKER, STORY, 2));
+    EXPECT_NO_THROW(Character("Name", VOIDWALKER, STORY, 2, 0, 0, 0));
 }
 
 TEST(CharacterTest, testConstructorDeaths)
 {
-    EXPECT_THROW(Character("", VOIDWALKER, STORY, 2),std::invalid_argument);
-    EXPECT_THROW(Character("name", VOIDWALKER, STORY, 0),std::invalid_argument);
+    EXPECT_THROW(Character("", VOIDWALKER, STORY, 2, 0, 0, 0),std::invalid_argument);
+    EXPECT_THROW(Character("name", VOIDWALKER, STORY, 0, 0, 0, 0),std::invalid_argument);
 }
