@@ -1,28 +1,69 @@
 #include "GameManager.h"
+#include "Scene.h"
 
-GameManager::GameManager(IOManager& ioManager, CharacterManager& characterManager, SceneManager& sceneManager)
-    : ioManager(ioManager),characterManager(characterManager), sceneManager(sceneManager) {
+GameManager::GameManager(IOManager& ioManager, CharacterManager& characterManager, SceneManager& sceneManager, BattleManager& battleManager)
+    : ioManager(ioManager),characterManager(characterManager), sceneManager(sceneManager), battleManager(battleManager)
+    {
     // Constructor logic
 }
 
-GameManager::~GameManager() {
+GameManager::~GameManager() 
+{
     // Destructor logic
 }
 
-void GameManager::startGame() {
+void GameManager::startGame() 
+{
     bool gameStarted = false;
-    while (!gameStarted) {
+    while (!gameStarted) 
+    {
         displayStartPage();
-        
 
+        
         int option;
         ioManager.write("Enter 'a' to start the game or 'b' for credits: ");
-        option = ioManager.readOption(2); //A read function need to be added in the IOManager Class
+        option = ioManager.readOption(2); 
+        bool isDead = false;
 
-        switch (option) {
+        switch (option) 
+        {
             case 0:
-                startGameLogic();
-                //startSceneLogic(); // Go to the next scene after starting the game
+                gameStarted = true;
+                characterManager.initialize();
+             
+                // TDOD: add isBattle to Scene, add isFinalScene to Scene
+                
+                while (!isDead) 
+                {
+                    Scene* currentScene = sceneManager.getCurrentScene();
+                    // If current scene is battle scene, run battle
+                    // if (currentScene->isBattle) 
+                    // {
+                    //     battleManager.runBattle();
+                    //     BattleOutcome battleResult = battleManager.getBattleOutcome();
+                    //     // If win, go to next scene
+                    //     if(battleResult = WIN)
+                    //     {
+                    //         sceneManager.replaceScene(currentScene);
+                    //     } 
+                    //     // If die, scene loop terminates
+                    //     else
+                    //     {
+                    //         isDead = true;
+                    //         ioManager.write("Game over. \n")
+                    //     }
+                    // }
+                    // else if(!currentScene->isBattle && !currentScene->isFinalScene)
+                    // {
+                    //     // If it's not a battle scene, replace the scene
+                    //     sceneManager.replaceScene(currentScene);
+                    // }
+                    // else
+                    // {
+                    //     ioManager.write("Congratulations! It is the final scene. \n")
+                    // }
+                    isDead = true;
+                }
                 break;
             case 1:
                 displayCredits();
@@ -31,9 +72,10 @@ void GameManager::startGame() {
             default:
                 ioManager.write("Invalid choice. Please try again.\n");
                 break;
-        }
+        }       
     }
 }
+
 
 void GameManager::displayStartPage() {
     ioManager.write("===== Void Quest =====\n");
@@ -44,14 +86,9 @@ void GameManager::displayStartPage() {
 
 void GameManager::displayCredits() {
     ioManager.write("===== Credits =====\n");
-    ioManager.write("Game developed by Wen Wu Yiang, Youran Ye, Troy Drescher, Simone Laney\n");
+    ioManager.write("Game developed by Wen Wu Yiang, Youran Ye, Troy Drescher, Simone Laney. \n");
 }
 
-void GameManager::startGameLogic() {
-    // Implement your game logic here
-    ioManager.write("Game is starting...\n");
-    // Additional game initialization and logic
-}
 
 void GameManager::waitForAnyChar() {
     // Wait for the user to press any key to continue
