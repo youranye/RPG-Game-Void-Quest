@@ -3,12 +3,13 @@
 You are at a fork in the road. Two paths unfold before you.
 
 ## Options
- - Go to village -> village#Entrance
- - Go to cave -> #Cave
+ - Go to the left -> #Left Path
+ - Go to the right -> #Right Path
 
-# Cave
+# Right Path
 
-You encounter a bear!
+As you travel down the forest path,
+You encounter a Gnome of the Forest!
 
 ## Options
  - Fight! -> #Fight
@@ -16,7 +17,23 @@ You encounter a bear!
 # [battle] Fight
 
 ## Enemy
- - Bear
+ - Gnome of the Forest
 
 ## Next
- - #Village
+ - GrimGardsLair#Entrance
+
+ # Left Path
+
+As you travel down the forest path,
+You encounter The Forest Gnome!
+
+## Options
+ - Fight! -> #Fight
+
+# [battle] Fight
+
+## Enemy
+ - The Forest Gnome
+
+## Next
+ - GrimGardsLair#Entrance
