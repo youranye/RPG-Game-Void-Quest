@@ -25,7 +25,7 @@ You encounter a strange being that you recognize as a VoidWalker!
 
 # Entrance2
 
-After beating the Walker your realize it is probably to dangerous to go back and enter the Cave.
+After beating the Walker your realize it is probably to dangerous to go back and you decide enter the Cave.
 
 ## Options
  - Go into the Cave -> #Room1
