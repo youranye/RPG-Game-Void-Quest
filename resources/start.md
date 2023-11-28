@@ -28,9 +28,9 @@ As you travel down the forest path,
 You encounter The Forest Gnome!
 
 ## Options
- - Fight! -> #Fight
+ - Fight! -> #Fight2
 
-# [battle] Fight
+# [battle] Fight2
 
 ## Enemy
  - The Forest Gnome

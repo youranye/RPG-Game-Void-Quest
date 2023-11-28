@@ -18,7 +18,7 @@ You encounter a strange being that you recognize as a VoidWalker!
 # [battle] Fight
 
 ## Enemy
- - The VoidWaler
+ - The VoidWalker
 
 ## Next
  - #Entrance2
@@ -81,9 +81,9 @@ you enter a room with 4 different colored doors.
 You open the door to a suprise attack!
 
 ## Options
- - Fight! -> #Fight
+ - Fight! -> #Fight1
 
-# [battle] Fight
+# [battle] Fight1
 
 ## Enemy
  - The Dwarf Warrior
@@ -123,7 +123,7 @@ You enter a Blood Red Room with 1 door.
 in this room there is a small key on the floor what do you do?
 
 ## Options
- - Pick it up -> #Room6
+ - Pick it up -> #GrimGards Room
  - Leave it there -> #room4s
 
 # GrimGards Room

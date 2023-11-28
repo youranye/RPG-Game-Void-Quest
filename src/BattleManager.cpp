@@ -70,7 +70,7 @@ void BattleManager::runBattle()
                 enemyDesireCost = 0;
             }
             desiretoheal = randNumGenerator(enemyDesireCost, enemy.getMaxHP());
-            if(enemy.getHP() < desiretoheal)
+            if(enemy.getHP() < desiretoheal && enemy.getHP() < 100)
             {
                 heal(false);
             }

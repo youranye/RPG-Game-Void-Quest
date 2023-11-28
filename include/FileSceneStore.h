@@ -21,6 +21,8 @@ class FileSceneStore : public SceneStore
   public:
     FileSceneStore(std::string const root) : root{root}
     {
+      loadFile("start.md");
+      loadFile("GrimGardsLair.md");
     }
 
     Scene &getScene(std::string_view const) override;

@@ -23,9 +23,9 @@ void CharacterManager::addScriptedCharacters()
 	characters.push_back(Character("The Silvery Figure",ELF,BOSS,200,25,15,20,Ability("Sneak Attack",ATTACK,"calls upon The power of Silverial, Shimmers Brightly for a second; and stabs you in the Back",NONE,200,18)));
 	characters.push_back(Character("The Angry Gnome",GNOME,ENEMY,50,5,5,30,Ability("Ankle Biter",ATTACK,"runs at you and bites your ankles",NONE,200,18)));
 	characters.push_back(Character("The Angry Gnome",GNOME,ENEMY,50,5,5,30,Ability("Ankle Biter",ATTACK,"runs at you and bites your ankles",NONE,200,18)));
-	characters.push_back(Character("Gnome of The Forest",GNOME,ENEMY,50,5,5,30,Ability("Ankle Biter",ATTACK,"runs at you and bites your ankles",NONE,200,18)));
+	characters.push_back(Character("Gnome of the Forest",GNOME,ENEMY,50,5,5,30,Ability("Ankle Biter",ATTACK,"runs at you and bites your ankles",NONE,200,18)));
 	characters.push_back(Character("The Forest Gnome",GNOME,ENEMY,50,7,5,25,Ability("Ankle Biter",ATTACK,"runs at you and bites your ankles",NONE,200,18)));
-	characters.push_back(Character("The Voidwalker",VOIDWALKER,BOSS,1000,50,2,15,Ability("???",ATTACK,"spews forth a uncontrollable volly of spells at you",NONE,150,50)));
+	characters.push_back(Character("The VoidWalker",VOIDWALKER,BOSS,1000,50,2,15,Ability("???",ATTACK,"spews forth a uncontrollable volly of spells at you",NONE,150,50)));
 }
 
 //create Player character
