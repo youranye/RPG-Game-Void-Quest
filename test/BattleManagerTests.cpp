@@ -52,7 +52,7 @@ TEST(BattleManagerTests, TestGetBattleOutcomeWin)
     std::ostringstream oss;
     Player* player = new Player("Elrond very fast",HUMAN,ROGUE,200,100);
     Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,1,0,0,1);
-    for(int i = 0; i < 40; i++) //add A's to input string so it will reach end of fight fast
+    for(int i = 0; i < 400; i++) //add A's to input string so it will reach end of fight fast
     {
         ss << "a\n";
     }

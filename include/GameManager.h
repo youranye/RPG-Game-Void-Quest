@@ -10,7 +10,7 @@
 
 class GameManager {
 public:
-    GameManager(IOManager& ioManager, CharacterManager& characterManager, SceneManager& sceneManager, BattleManager& battleManager);
+    GameManager(IOManager& ioManager, CharacterManager& characterManager, SceneManager& sceneManager);
     ~GameManager();
 
     void startGame();
@@ -19,7 +19,6 @@ private:
     IOManager& ioManager;
     CharacterManager& characterManager;
     SceneManager& sceneManager;
-    BattleManager& battleManager;
     
     void displayStartPage();
     void displayCredits();

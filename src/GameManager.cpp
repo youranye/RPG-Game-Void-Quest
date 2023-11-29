@@ -1,8 +1,8 @@
 #include "GameManager.h"
 #include "Scene.h"
 
-GameManager::GameManager(IOManager& ioManager, CharacterManager& characterManager, SceneManager& sceneManager, BattleManager& battleManager)
-    : ioManager(ioManager),characterManager(characterManager), sceneManager(sceneManager), battleManager(battleManager)
+GameManager::GameManager(IOManager& ioManager, CharacterManager& characterManager, SceneManager& sceneManager)
+    : ioManager(ioManager),characterManager(characterManager), sceneManager(sceneManager)
     {
     // Constructor logic
 }

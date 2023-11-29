@@ -13,8 +13,8 @@ TEST(CharacterTest, TestConstructor)
 
 TEST(CharacterTest, testConstructorDeaths)
 {
-    EXPECT_THROW(Character("", VOIDWALKER, STORY, 2),std::invalid_argument);
-    EXPECT_THROW(Character("name", VOIDWALKER, STORY, 0),std::invalid_argument);
+    EXPECT_THROW(Character("", VOIDWALKER, STORY, 2, 0, 0, 0),std::invalid_argument);
+    EXPECT_THROW(Character("name", VOIDWALKER, STORY, 0, 0, 0, 0),std::invalid_argument);
 }
 
 // There are 2 kinds of characters (with or without ability attribute)
