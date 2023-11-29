@@ -26,6 +26,7 @@ void CharacterManager::addScriptedCharacters()
 	characters.push_back(Character("Gnome of the Forest",GNOME,ENEMY,50,5,5,30,Ability("Ankle Biter",ATTACK,"runs at you and bites your ankles",NONE,200,18)));
 	characters.push_back(Character("The Forest Gnome",GNOME,ENEMY,50,7,5,25,Ability("Ankle Biter",ATTACK,"runs at you and bites your ankles",NONE,200,18)));
 	characters.push_back(Character("The VoidWalker",VOIDWALKER,BOSS,1000,50,2,15,Ability("???",ATTACK,"spews forth a uncontrollable volly of spells at you",NONE,150,50)));
+	characters.push_back(Character("???",VOIDWALKER,BOSS,3000,100,100,90,Ability("???",ATTACK,"hits you",NONE,150,50)));
 }
 
 //create Player character
@@ -115,13 +116,21 @@ Player* CharacterManager::createPlayer()
 
 void CharacterManager::initialize()
 {
+	if(player != nullptr)
+	{
+		if(player->getHP() <= 0) //if player has died, allow for new player to be created
+		{
+			delete player;
+			player = nullptr;
+		}
+	}
 	if(player == nullptr)
 	{
 		player = createPlayer(); //create player and set player pointer to player
 	} else
 	{
 		//exception
-		throw std::logic_error("Cannot call initialize more than once");
+		throw std::logic_error("Cannot call initialize when player is still alive");
 	}
 }
 

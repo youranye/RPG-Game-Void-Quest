@@ -7,6 +7,21 @@ The Words "Beware of GrimGard" are scribbled on a sign in front of the cave.
  - Go into the Cave -> #Room1
  - Go back to the fork in the road -> #Forest Path
 
+# GrimGards Room
+
+You enter a massive room with a towering Figure in the middle.
+
+## Options
+ - There is no escape you must fight -> #FinalFight
+
+# [battle] FinalFight
+
+## Enemy
+ - GrimGard The Goliath
+
+## Next
+ - start#end
+
 # Forest Path
 
 as you try to travel back the way you came,
@@ -123,20 +138,62 @@ You enter a Blood Red Room with 1 door.
 in this room there is a small key on the floor what do you do?
 
 ## Options
- - Pick it up -> #GrimGards Room
+ - Pick it up -> #Room6
  - Leave it there -> #room4s
 
-# GrimGards Room
+# Room6
 
-You enter a massive room with a towering Figure in the middle.
+You enter a dim corridor, lit by a single torch.
+What do you do?
 
 ## Options
- - There is no escape you must fight -> #FinalFight
+ - Take the Torch -> #Room6L
+ - Go into one of the doors of the corridor -> #DarkRoom
 
-# [battle] FinalFight
+# Room6L
+
+The corridor has 2 Doors, What do you do?
+
+## Options
+ - Go through the steel Door -> #DarkRoomL
+ - Go through the red Door -> #GrimGards Room
+
+# DarkRoomL
+
+You Enter the room and the door shuts behind you. causing you to drop the torch, which lands in a puddle of water.
+
+## Options
+ - Try to leave the room -> #DarkRoom3
+ - Try to feel around the room -> #DarkRoom2
+
+# DarkRoom
+
+You enter the room and the door shuts behind you, you cannot see anything in the darkness.
+
+## Options
+ - Try to leave the room -> #DarkRoom3
+ - Try to feel around the room -> #DarkRoom2
+
+# DarkRoom2
+
+You try to feel around your surroundings but cannot feel anything.
+
+## Options
+ - try to leave -> #DarkRoom3
+
+# DarkRoom3
+
+You Try to leave the Room, but can't.  
+A being Attacks you in the Dark!
+
+## Options
+ - Fight -> #DarkRoomFight
+
+# [battle] DarkRoomFight
 
 ## Enemy
- - GrimGard The Goliath
+ - ???
 
 ## Next
- - start#end
+ - #GrimGards Room
+
