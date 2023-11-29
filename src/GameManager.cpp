@@ -60,13 +60,14 @@ void GameManager::waitForAnyChar() {
     input = ioManager.readOption(26); // Read and discard the input
 }
 
-void GameManager::displayScene() {
-    Scene* currentScene = sceneManager.getCurrentScene();
+// void GameManager::displayScene()
+// {
+//     Scene* currentScene = sceneManager.getCurrentScene();
 
-    if (currentScene == nullptr) {
-        ioManager.write("Error: Current scene not found.\n");
-        return;
-    }
+//     if (currentScene == nullptr) {
+//         ioManager.write("Error: Current scene not found.\n");
+//         return;
+//     }
     
     // TDOD: add isBattle to Scene
     // if (!currentScene->isBattle) { 
@@ -76,58 +77,25 @@ void GameManager::displayScene() {
     // }
 
     // handleNonBattleScene(sceneManager.getCurrentScene());
+// }
+
+void GameManager::runScene()
+{
+    sceneManager.runScene();
 }
 
-void GameManager::handleNonBattleScene(NarrativeScene* currentScene) {
-    ioManager.write(currentScene->getText());
-    std::vector<std::string> options = currentScene->getOptions();
-    int userOption = ioManager.readOption(options.size());
-    // Get user option and implement scene transition logic here
-    // Example:
-    // int userChoice = ioManager.readOption(options.size());
-    // Based on userChoice, transition to the next scene
-    // ...
-    goToNextScene(currentScene->getKey(userOption));
-}
+// void GameManager::startSceneLogic(const std::string& nextSceneKey) {
+//     sceneManager.replaceScene(nextSceneKey);
+// }
 
-void GameManager::handleBattleScene(BattleScene* currentScene) {
-    std::string enemyKey = currentScene->getEnemyName();
-    Character* enemy = &characterManager.getCharacter(enemyKey);
-
-    if (enemy == nullptr) {
-        ioManager.write("Error: Enemy not found.\n");
-        return;
-    }
-
-    ioManager.write("Battle begins with enemy: " + enemyKey);
-
-    // Run the battle with the obtained enemy using BattleManager
-    Player* player = characterManager.getPlayer();
-    BattleManager battleManager(player, *enemy, ioManager);
-    battleManager.runBattle();
-    bool playerWon = battleManager.getBattleOutcome();
-
-    if (playerWon) {
-        ioManager.write("You won the battle!\n");
-    } else {
-        ioManager.write("You lost the battle!\n");
-    }
-
-    goToNextScene(currentScene->getNextKey());
-}
-
-void GameManager::startSceneLogic(const std::string& nextSceneKey) {
-    sceneManager.replaceScene(nextSceneKey);
-    
-}
-
-bool GameManager::isFinalSceneReached() {
+bool GameManager::isFinalSceneReached()
+{
     // Logic to check if it's the final scene or game over
     // Replace this with your game over condition or final scene check
     // Example: Check if the current scene is the final scene
     return false;
 }
 
-void GameManager::goToNextScene(const std::string& nextSceneKey){
+// void GameManager::goToNextScene(const std::string& nextSceneKey){
 
-};
+// };
