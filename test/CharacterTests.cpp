@@ -8,7 +8,7 @@ class CharacterFixture : public Character {
 TEST(CharacterTest, TestConstructor)
 {
     EXPECT_NO_THROW(CharacterFixture());
-    EXPECT_NO_THROW(Character("Name", VOIDWALKER, STORY, 2));
+    EXPECT_NO_THROW(Character("Name", VOIDWALKER, STORY, 2, 0, 0, 0));
 }
 
 TEST(CharacterTest, testConstructorDeaths)

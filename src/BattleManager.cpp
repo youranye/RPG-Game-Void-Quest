@@ -3,6 +3,14 @@
 // Runs the battle using turn-based combat
 void BattleManager::runBattle()
 {
+    if(enemy.getType() == BOSS)
+    {
+        //since enemy is a boss player has stats restored.
+        int healed = player->getMaxHP()-player->getHP();
+        player->heal(1000);
+        player->regenerateSP(1000);
+        displayHeal(true,healed);
+    }
     // If enemy has higher dexterity than the player, they attack first.
     if (enemy.getDexterity() > player->getDexterity())
     {
@@ -56,15 +64,17 @@ void BattleManager::runBattle()
         if (enemy.getHP() > 0)
         {
             int desiretoheal = 0;
-            if(enemy.getHP() < enemy.getMaxHP())
+            int enemyDesireCost = enemy.getMaxHP() - enemy.getHP();
+            if(enemyDesireCost <= 0)
             {
-                int desiretoheal = randNumGenerator(0, enemy.getMaxHP());
+                enemyDesireCost = 0;
             }
-            if(enemy.getHP() < desiretoheal)
+            desiretoheal = randNumGenerator(enemyDesireCost, enemy.getMaxHP());
+            if(enemy.getHP() < desiretoheal && enemy.getHP() < 100)
             {
                 heal(false);
             }
-            else if(enemy.getHP() < 5)
+            else if( ( ( enemy.getHP() - desiretoheal ) > enemyAbility.cost ) && (enemy.getAbility().type != NULLABILITY) )
             {
                 specialAttack(false);
             }
@@ -111,8 +121,6 @@ int BattleManager::chooseAction()
    and displays results of the attack to the user. */
 void BattleManager::attack(bool isPlayerAttacker)
 {
-    
-    
     int accuracy = randNumGenerator(1,100);
     int dodge = 0;
     int atkModMin = 1;
@@ -257,9 +265,10 @@ void BattleManager::specialAttack(bool isPlayer)
         defModMax = 15;
     }
     //determine what type of ability is used
-    if(abilityused.name == "InvalidAbility")
+    if(abilityused.type == NULLABILITY) //failsafe for characters with no abilities
     {
         attack(isPlayer); //if enemy has no ability or just general error fixing.
+        return;
     }
     if(abilityused.type == ATTACK)
     {
