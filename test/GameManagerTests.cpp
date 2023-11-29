@@ -4,18 +4,15 @@
 #include "CharacterManager.h"
 #include "IOManager.h" // Assuming you have an IOManager class
 
-// TEST(StartGame, TestStartGame)
-// {
-//     std::istringstream iss;
-//     std::ostringstream oss;
-//     IOManager manager{iss, oss};
-//     CharacterManager characterManager{manager};
-//     SceneManager sceneManager{nullptr};
-//     BattleManager battleManager{} //don't know how to claim battlemanager here
-//     GameManager gm(manager, characterManager, sceneManager, battleManager);
-//     iss.str("a\n");
-//     EXPECT_NO_THROW(gm.startGame());
-// }
+TEST(GameManagerTest, TestConstructor)
+{
+    std::istringstream iss;
+    std::ostringstream oss;
+    IOManager manager{iss, oss};
+    CharacterManager characterManager{manager};
+    SceneManager sceneManager{nullptr};
+    GameManager gm(manager, characterManager, sceneManager);
+}
 
 
 // TEST(DisplayStartPage, TestDisplayStartPage)
