@@ -32,7 +32,7 @@ TEST(CharacterManagerTests, testInitializeElfPaladin)
     EXPECT_EQ(player->getClass(), 1);
 }
 
-TEST(CharacterManagerTests, testInitializeDwarfForged)
+TEST(CharacterManagerTests, testInitializeDwarvenForged)
 {
     std::stringstream mockUser;
     std::stringstream junkOutput;
@@ -62,6 +62,7 @@ TEST(CharacterManagerTests, testInitializeTabaxiWarlock)
     EXPECT_EQ(player->getClass(), 2);
 }
 
+// Test getSpecies
 TEST(CharacterManagerTests, testInitializeHuman)
 {
     std::stringstream mockUser;
@@ -137,3 +138,79 @@ TEST(CharacterManagerTests, testInitializeTabaxi)
     EXPECT_EQ(player->getClass(), 1);
 }
 
+// Test getClass for Dwarf
+TEST(CharacterManagerTests, testInitializeDwarfRogue)
+{
+    std::stringstream mockUser;
+    std::stringstream junkOutput;
+    mockUser << "c" << std::endl << "a" << std::endl << "Elven Paladin" << std::endl;
+    IOManager ioManager(mockUser, junkOutput);
+    CharacterManager myCharacters(ioManager);
+    myCharacters.initialize();
+    Player* player = myCharacters.getPlayer();
+
+    EXPECT_EQ(player->getName(), "Elven Paladin");
+    EXPECT_EQ(player->getSpecies(), 2);
+    EXPECT_EQ(player->getClass(), 0);
+}
+
+TEST(CharacterManagerTests, testInitializeDwarfForged)
+{
+    std::stringstream mockUser;
+    std::stringstream junkOutput;
+    mockUser << "c" << std::endl << "b" << std::endl << "Elven Paladin" << std::endl;
+    IOManager ioManager(mockUser, junkOutput);
+    CharacterManager myCharacters(ioManager);
+    myCharacters.initialize();
+    Player* player = myCharacters.getPlayer();
+
+    EXPECT_EQ(player->getName(), "Elven Paladin");
+    EXPECT_EQ(player->getSpecies(), 2);
+    EXPECT_EQ(player->getClass(), 3);
+}
+
+// Test getClass for non-dwarf species
+TEST(CharacterManagerTests, testInitializeRogue)
+{
+    std::stringstream mockUser;
+    std::stringstream junkOutput;
+    mockUser << "a" << std::endl << "a" << std::endl << "Elven Paladin" << std::endl;
+    IOManager ioManager(mockUser, junkOutput);
+    CharacterManager myCharacters(ioManager);
+    myCharacters.initialize();
+    Player* player = myCharacters.getPlayer();
+
+    EXPECT_EQ(player->getName(), "Elven Paladin");
+    EXPECT_EQ(player->getSpecies(), 0);
+    EXPECT_EQ(player->getClass(), 0);
+}
+
+TEST(CharacterManagerTests, testInitializePaladin)
+{
+    std::stringstream mockUser;
+    std::stringstream junkOutput;
+    mockUser << "a" << std::endl << "b" << std::endl << "Elven Paladin" << std::endl;
+    IOManager ioManager(mockUser, junkOutput);
+    CharacterManager myCharacters(ioManager);
+    myCharacters.initialize();
+    Player* player = myCharacters.getPlayer();
+
+    EXPECT_EQ(player->getName(), "Elven Paladin");
+    EXPECT_EQ(player->getSpecies(), 0);
+    EXPECT_EQ(player->getClass(), 1);
+}
+
+TEST(CharacterManagerTests, testInitializeWarlock)
+{
+    std::stringstream mockUser;
+    std::stringstream junkOutput;
+    mockUser << "a" << std::endl << "c" << std::endl << "Elven Paladin" << std::endl;
+    IOManager ioManager(mockUser, junkOutput);
+    CharacterManager myCharacters(ioManager);
+    myCharacters.initialize();
+    Player* player = myCharacters.getPlayer();
+
+    EXPECT_EQ(player->getName(), "Elven Paladin");
+    EXPECT_EQ(player->getSpecies(), 0);
+    EXPECT_EQ(player->getClass(), 2);
+}
