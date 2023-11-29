@@ -24,39 +24,63 @@ TEST(BattleManagerTests, TestGetBattleOutcomeOngoing)
     EXPECT_EQ(battleStatus, ONGOING);
 }
 
-// runBattle tests TODO: fix for updated class
-/*
+// runBattle tests
 TEST(BattleManagerTests, TestRunBattle)
 {
-    Character player("Abby", HUMAN, PLAYER, 5,25,5,20);
-    Character enemy("Bill", HUMAN, ENEMY, 7,21,1,10);
-    BattleManager testBattle(player, enemy);
+    std::stringstream ss;
+    std::istringstream iss;
+    std::ostringstream oss;
+    Player* player = new Player("Elrond",HUMAN,ROGUE,200,100);
+    Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15);
+    for(int i = 0; i < 40; i++) //add A's to input string so it will reach end of fight
+    {
+        ss << "a\n";
+    }
+    iss.str(ss.str());
+    IOManager ioManager(iss,oss);
+    BattleManager testBattle(player, enemy,ioManager);
 
     EXPECT_NO_THROW(testBattle.runBattle());
+    EXPECT_TRUE( (testBattle.getBattleOutcome() == WIN) || (testBattle.getBattleOutcome() == DEATH) );
 }
-// getBattleOutcome tests
 
+// getBattleOutcome tests
 TEST(BattleManagerTests, TestGetBattleOutcomeWin)
 {
-    Character player("Abby", HUMAN, PLAYER, 15,12,5,20);
-    Character enemy("Bill", HUMAN, ENEMY, 1, 0,0,0);
-    BattleManager testBattle(player, enemy);
+    std::stringstream ss;
+    std::istringstream iss;
+    std::ostringstream oss;
+    Player* player = new Player("Elrond very fast",HUMAN,ROGUE,200,100);
+    Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,1,0,0,1);
+    for(int i = 0; i < 40; i++) //add A's to input string so it will reach end of fight fast
+    {
+        ss << "a\n";
+    }
+    iss.str(ss.str());
+    IOManager ioManager(iss,oss);
+    BattleManager testBattle(player, enemy,ioManager);
 
-    testBattle.runBattle();
-    BattleOutcome result = testBattle.getBattleOutcome();
-
-    EXPECT_EQ(result, WIN);
+    EXPECT_NO_THROW(testBattle.runBattle());
+    //battle should be win since enemy has 0 attack and player has higher dex which means they go first and should hit with min 5 damage
+    EXPECT_TRUE(testBattle.getBattleOutcome() == WIN);
 }
 
 TEST(BattleManagerTests, TestGetBattleOutcomeDeath)
 {
-    Character player("Abby", HUMAN, PLAYER, 1,0,0,0);
-    Character enemy("Bill", HUMAN, ENEMY, 25, 9,5,10);
-    BattleManager testBattle(player, enemy);
+    std::stringstream ss;
+    std::istringstream iss;
+    std::ostringstream oss;
+    Player* player = new Player("glass cannon",HUMAN,ROGUE,1,1000); //high sp so only can cast heal
+    Character enemy = Character("ImpossibletoBeat",GOBLIN,ENEMY,5000,5000,500,90);
+    for(int i = 0; i < 40; i++) //add b's to input string so it will reach end of fight fast
+    {
+        ss << 'b' << endl;
+    }
+    iss.str(ss.str());
+    IOManager ioManager(iss,oss);
+    BattleManager testBattle(player, enemy,ioManager);
 
-    testBattle.runBattle();
-    BattleOutcome result = testBattle.getBattleOutcome();
-
-    EXPECT_EQ(result, DEATH);
+    EXPECT_NO_THROW(testBattle.runBattle());
+    //battle should be Death since player has 1 health and cannot deal damage, also goblin has max stats
+    EXPECT_TRUE(testBattle.getBattleOutcome() == DEATH);
 }
-*/
