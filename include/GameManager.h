@@ -10,7 +10,7 @@
 
 class GameManager {
 public:
-    GameManager(IOManager& ioManager, CharacterManager& characterManager, SceneManager& sceneManager);
+    GameManager(IOManager& ioManager, CharacterManager& characterManager, SceneManager& sceneManager, BattleManager& battleManager);
     ~GameManager();
 
     void startGame();
@@ -19,10 +19,10 @@ private:
     IOManager& ioManager;
     CharacterManager& characterManager;
     SceneManager& sceneManager;
+    BattleManager& battleManager;
     
     void displayStartPage();
     void displayCredits();
-    void startGameLogic();
     void waitForAnyChar(); // Helper function to wait for any key press
     void displayScene();
     void startSceneLogic(const std::string& nextSceneKey);

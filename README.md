@@ -80,7 +80,7 @@ We applied interface segregation principle to our Character class. Our player ch
 
 * How did you apply it?
 
-This change was from our original UML diagram to the current one. It has already been implementedChanged Character Class to not violate by adding derived Player Class. The solution was to add a Player class that inherits from Character and holds any members that would be specific to a player Character.
+This change was from our original UML diagram to the current one. It has already been implemented. The solution was to add a Player class that inherits from Character and holds any members that would be specific to a player Character.
 
 * How did this change help you write better code?
 
@@ -100,6 +100,10 @@ We implemented this design change during the second sprint. The getScene functio
 If there was no SceneStore, SceneManager would rely on the FileSceneStore, which would tie it to a specific storage representation of the Scenes, and it would be difficult to stub/mock for testing. With SceneStore, SceneManager does not rely on any specific implementation for getting scenes. If we ever have a new format of scene that we would want to get, we would not have to modify SceneStore. We would only have to add a child of SceneStore with implementation details specific to that scene.
 
 
+
+## New Class Diagram
+
+![new class diagram](README_Resources/new_class_diagram.png)
  
  > ## Final deliverable
  > All group members will give a demo to the reader during lab time. ou should schedule your demo on Calendly with the same reader who took your second scrum meeting. The reader will check the demo and the project GitHub repository and ask a few questions to all the team members. 
