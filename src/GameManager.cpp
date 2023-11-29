@@ -21,8 +21,8 @@ void GameManager::startGame()
 
         
         int option;
-        ioManager.write("Enter 'a' to start the game or 'b' for credits: ");
-        option = ioManager.readOption(2); 
+        ioManager.write("Enter 'a' to start the game or 'b' for credits or 'c' to exit the game: ");
+        option = ioManager.readOption(3); 
         bool isDead = false;
 
         switch (option) 
@@ -69,6 +69,8 @@ void GameManager::startGame()
                 displayCredits();
                 waitForAnyChar(); // Wait for any character press to return to start page
                 break;
+            case 2:
+                gameStarted = true;
             default:
                 ioManager.write("Invalid choice. Please try again.\n");
                 break;
