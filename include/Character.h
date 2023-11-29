@@ -65,7 +65,7 @@ public:
 			throw std::invalid_argument("health cannot be less than or equal to zero");
 		}
 	}
-	Character(std::string name, SpeciesType species, CharacterType Character_Type, int health, int atk, int def, int dex, Ability ability) : Name(name), Species(species), type(Character_Type), maxHP(health), attack(atk), defense(def), dexterity(dex), hp(health) 
+	Character(std::string name, SpeciesType species, CharacterType Character_Type, int health, int atk, int def, int dex, Ability abil) : Name(name), Species(species), type(Character_Type), maxHP(health), attack(atk), defense(def), dexterity(dex), hp(health) 
 	{
 		if(name.empty())
 		{
@@ -75,7 +75,7 @@ public:
 		{
 			throw std::invalid_argument("health cannot be less than or equal to zero");
 		}
-		ability = this->ability;
+		ability = abil;
 	}
 	std::string getName() const;
 	SpeciesType getSpecies() const;

@@ -133,14 +133,14 @@ TEST(CharacterTest, GetAbility)
     Character character("Harry", SpeciesType::DWARF, CharacterType::PLAYER,10,20,30,40);
     EXPECT_EQ(character.getAbility().name, "InvalidAbility");
 }
-
-// TODO: This test doesn't pass. It returns "InvalidAbility". 
-// TEST(CharacterTest, GetAbilityAb) 
-// {
-//     Character character("Harry", SpeciesType::DWARF, CharacterType::PLAYER,10,20,30,40, 
-//     Ability("Basic Attack", ATTACK, "Attack Enemy", NONE, 90, 0));
-//     EXPECT_EQ(character.getAbility().name, "Basic Attack");
-// }
+ 
+TEST(CharacterTest, GetAbilityAb) 
+{
+    Ability abil = Ability("Basic Attack", ATTACK, "Attack Enemy", NONE, 90, 1);
+    Character character("Harry", SpeciesType::DWARF, CharacterType::ENEMY,10,20,30,40, abil);
+    EXPECT_EQ(abil.name, "Basic Attack");
+    EXPECT_EQ(character.getAbility().name, abil.name);
+}
 
 // Test getHPBar() function
 TEST(CharacterTest, GetHPBarDamageMoreThanHP) 
