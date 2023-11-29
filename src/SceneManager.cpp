@@ -1,5 +1,5 @@
 #include "SceneManager.h"
-
+#include <cassert>
 void SceneManager::runScene()
 {
     if (currentScene == nullptr)
@@ -35,27 +35,27 @@ void SceneManager::handleNonBattleScene(NarrativeScene* nScene) {
 }
 
 void SceneManager::handleBattleScene(BattleScene* bScene) {
-    //std::string enemyKey = currentScene->getEnemyName();
-    // Character* enemy = &characterManager.getCharacter(enemyKey);
+    std::string enemyKey = bScene->getEnemyName();
+    Character* enemy = &characterManager.getCharacter(enemyKey);
 
-    // if (enemy == nullptr) {
-    //     ioManager.write("Error: Enemy not found.\n");
-    //     return;
-    // }
+    if (enemy == nullptr) {
+        ioManager.write("Error: Enemy not found.\n");
+        return;
+    }
 
-    // ioManager.write("Battle begins with enemy: " + enemyKey);
+    ioManager.write("Battle begins with enemy: " + enemyKey);
+    // Run the battle with the obtained enemy using BattleManager
+    Player* player = characterManager.getPlayer();
+    assert(player != nullptr); // TODO: handle this error
+    BattleManager battleManager(player, *enemy, ioManager);
+    battleManager.runBattle();
+    BattleOutcome battleOutcome = battleManager.getBattleOutcome();
 
-    // // Run the battle with the obtained enemy using BattleManager
-    // Player* player = characterManager.getPlayer();
-    // BattleManager battleManager(player, *enemy, ioManager);
-    // battleManager.runBattle();
-    // BattleOutcome battleOutcome = battleManager.getBattleOutcome();
+    if (battleOutcome == WIN) {
+        ioManager.write("You won the battle!\n");
+    } else {
+        ioManager.write("You lost the battle!\n");
+    }
 
-    // if (battleOutcome == WIN) {
-    //     ioManager.write("You won the battle!\n");
-    // } else {
-    //     ioManager.write("You lost the battle!\n");
-    // }
-
-    // replaceScene(currentScene->getNextKey());
+    replaceScene(bScene->getNextKey());
 }
