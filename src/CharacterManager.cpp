@@ -1,6 +1,6 @@
 #include "CharacterManager.h"
 
-CharacterManager::CharacterManager(IOManager& ioManager) : ioManager(ioManager), player(nullptr)
+CharacterManager::CharacterManager(IOManager& ioManager) : player(nullptr), ioManager(ioManager)
 {
 	//insert enemy characters into the Character array
 	characters.push_back(Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15));
@@ -144,7 +144,7 @@ CharacterManager::~CharacterManager()
 
 Character& CharacterManager::getCharacter(std::string name)
 {
-	for (int i = 0; i < characters.size(); i++)
+	for (std::size_t i = 0; i < characters.size(); i++)
 	{
 		if (characters.at(i).getName() == name && characters.at(i).getHP() > 0)
 		{

@@ -41,7 +41,7 @@ protected:
 	int hp;
 	Ability ability;
 	//constructor for pointer and for extension
-	Character() : Name("EMPTYCHARACTER"), Species(VOIDWALKER), type(STORY), maxHP(0), ability(Ability()), attack(0), defense(0), dexterity(0), hp(0) {}
+	Character() : Name("EMPTYCHARACTER"), Species(VOIDWALKER), type(STORY), maxHP(0), attack(0), defense(0), dexterity(0), hp(0), ability(Ability()) {}
 	Character(std::string name, SpeciesType species, CharacterType Character_Type, int health) :  
 	Name(name), Species(species), type(Character_Type), maxHP(health), attack(0), defense(0), dexterity(0), hp(health), ability(Ability()) 
 	{
