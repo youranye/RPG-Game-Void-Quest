@@ -14,7 +14,9 @@ class SceneStoreStub : public SceneStore
         scenes.insert({"scene1", std::make_unique<NarrativeScene>(
                                      "Scene 1", std::vector<NarrativeScene::Option>{{"Go to scene 2", "scene2"}})});
         scenes.insert({"scene2", std::make_unique<NarrativeScene>(
-                                     "Scene 2", std::vector<NarrativeScene::Option>{{"Go to scene 3", "scene3"}})});
+                                     "Scene 2", std::vector<NarrativeScene::Option>{{"Go to sceneBattle", "sceneBattle"}})});
+        scenes.insert({"sceneBattle", std::make_unique<BattleScene>(
+                                     "Barry the Goblin", "scene1" )});
     }
 
     Scene &getScene(std::string_view const key) override
@@ -33,7 +35,11 @@ class SceneStoreStub : public SceneStore
 class SceneManagerTest : public testing::Test
 {
   protected:
-    SceneManager manager{std::make_unique<SceneStoreStub>()};
+    std::stringstream is{};
+    std::stringstream os{};
+    IOManager ioManager{is, os};
+    CharacterManager characterManager{ioManager};
+    SceneManager manager{std::make_unique<SceneStoreStub>(), ioManager, characterManager};
 };
 
 TEST_F(SceneManagerTest, testInitialSceneIsNull)
@@ -57,4 +63,30 @@ TEST_F(SceneManagerTest, testReplaceWithMissingSceneThrowsSceneNotFoundException
 
     // Assert that the scene is unchanged
     EXPECT_EQ(manager.getCurrentScene(), scene);
+}
+
+TEST_F(SceneManagerTest, testRunNarrativeScene)
+{
+    is.str("a\n");
+    manager.replaceScene("scene2");
+    Scene* nextScene = manager.getCurrentScene(); // this is the scene after scene1
+
+    manager.replaceScene("scene1");
+    manager.runScene();
+    
+    EXPECT_EQ(manager.getCurrentScene(), nextScene);
+}
+
+TEST_F(SceneManagerTest, testRunBattleScene)
+{
+    is.str("b\n b\n b\n b\n b\n b\n b\n b\n b\n"); // heal until
+    manager.replaceScene("scene1");
+    Scene* nextScene = manager.getCurrentScene(); // this is the scene after sceneBattle
+
+    manager.replaceScene("sceneBattle");
+    std::cout << "i aboutta runsceeeeene" << std::endl;
+    manager.runScene();
+    std::cout << "I surviiiiive" << std::endl;
+    
+    EXPECT_EQ(manager.getCurrentScene(), nextScene);
 }

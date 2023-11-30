@@ -12,8 +12,8 @@ target_link_libraries(SceneParser INTERFACE NarrativeScene)
 target_link_libraries(Player Character)
 target_link_libraries(CharacterManager Character Player IOManager)
 target_link_libraries(BattleManager Character Player IOManager)
-target_link_libraries(GameManager IOManager BattleManager CharacterManager)
-target_link_libraries(FileSceneStore NarrativeScene)
+target_link_libraries(GameManager IOManager BattleManager CharacterManager SceneManager)
+target_link_libraries(FileSceneStore NarrativeScene SceneVisitor)
 
 add_executable(${CMAKE_PROJECT_NAME}
     main.cpp

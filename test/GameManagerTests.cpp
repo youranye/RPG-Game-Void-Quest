@@ -10,7 +10,7 @@ TEST(GameManagerTest, TestConstructor)
     std::ostringstream oss;
     IOManager manager{iss, oss};
     CharacterManager characterManager{manager};
-    SceneManager sceneManager{nullptr};
+    SceneManager sceneManager{nullptr, manager, characterManager};
     GameManager gm(manager, characterManager, sceneManager);
 }
 
