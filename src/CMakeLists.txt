@@ -8,12 +8,11 @@ add_library(FileSceneStore FileSceneStore.cpp)
 add_library(NarrativeScene NarrativeScene.cpp)
 add_library(SceneManager SceneManager.cpp)
 add_library(SceneParser INTERFACE)
-add_library(SceneVisitor SceneVisitor.cpp)
 target_link_libraries(SceneParser INTERFACE NarrativeScene)
 target_link_libraries(Player Character)
 target_link_libraries(CharacterManager Character Player IOManager)
 target_link_libraries(BattleManager Character Player IOManager)
-target_link_libraries(GameManager IOManager BattleManager CharacterManager SceneManager SceneVisitor)
+target_link_libraries(GameManager IOManager BattleManager CharacterManager SceneManager)
 target_link_libraries(FileSceneStore NarrativeScene SceneVisitor)
 
 add_executable(${CMAKE_PROJECT_NAME}
