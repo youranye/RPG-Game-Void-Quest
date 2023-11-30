@@ -13,10 +13,10 @@ using namespace std;
 
 int main()
 {
-    IOManager manager{cin, cout};
-    CharacterManager characterManager{manager};
-    SceneManager sceneManager(std::make_unique<FileSceneStore>("./resources"));
-    GameManager gm(manager, characterManager, sceneManager);
+    IOManager ioManager{cin, cout};
+    CharacterManager characterManager{ioManager};
+    SceneManager sceneManager(std::make_unique<FileSceneStore>("./resources"), ioManager, characterManager);
+    GameManager gm(ioManager, characterManager, sceneManager);
     gm.startGame();
     return 0;
 }
