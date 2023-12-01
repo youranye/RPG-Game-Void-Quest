@@ -17,18 +17,13 @@ class NarrativeScene : public Scene
     {
     }
 
-    void accept(SceneVisitor &visitor)
-    {
-        visitor.visit(*this);
-    }
-
     std::string getText() const override
     {
         return text;
     }
 
     std::vector<std::string> getOptions() const override;
-    std::string getKey(int index) const;
+    std::string getNextKey(int index) const;
 
   private:
     std::string text;

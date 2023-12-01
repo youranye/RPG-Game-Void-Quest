@@ -12,11 +12,12 @@ target_link_libraries(SceneParser INTERFACE NarrativeScene)
 target_link_libraries(Player Character)
 target_link_libraries(CharacterManager Character Player IOManager)
 target_link_libraries(BattleManager Character Player IOManager)
-target_link_libraries(GameManager IOManager BattleManager CharacterManager)
+target_link_libraries(GameManager IOManager BattleManager CharacterManager SceneManager)
 target_link_libraries(FileSceneStore NarrativeScene)
+target_link_libraries(SceneManager BattleManager)
 
 add_executable(${CMAKE_PROJECT_NAME}
     main.cpp
 )
 
-target_link_libraries(${CMAKE_PROJECT_NAME} GameManager IOManager)
+target_link_libraries(${CMAKE_PROJECT_NAME} CharacterManager Character IOManager GameManager BattleManager SceneManager NarrativeScene FileSceneStore SceneParser)

@@ -12,7 +12,7 @@ std::vector<std::string> NarrativeScene::getOptions() const
     return result;
 }
 
-std::string NarrativeScene::getKey(int index) const
+std::string NarrativeScene::getNextKey(int index) const
 {
     // Search each option for a match
     return options.at(index).nextKey;

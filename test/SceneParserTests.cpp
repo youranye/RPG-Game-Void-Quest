@@ -43,9 +43,9 @@ TEST(SceneParserTest, testOptions)
     ASSERT_NE(scene, nullptr);
     ASSERT_EQ(scene->getOptions().size(), 2);
     EXPECT_EQ(scene->getOptions()[0], "Option 1");
-    EXPECT_EQ(scene->getKey(0), "test#option1");
+    EXPECT_EQ(scene->getNextKey(0), "test#option1");
     EXPECT_EQ(scene->getOptions()[1], "Option 2");
-    EXPECT_EQ(scene->getKey(1), "test#option2");
+    EXPECT_EQ(scene->getNextKey(1), "test#option2");
 }
 
 TEST(SceneParserTest, testMultipleScenes)

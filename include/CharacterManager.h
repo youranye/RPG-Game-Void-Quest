@@ -11,12 +11,13 @@
 
 class CharacterManager
 {
+protected:
 	vector<Character> characters;
 	Player* player;
 	IOManager& ioManager;
-
 	// Create a character according to the user's choices.
 	Player* createPlayer();
+	void addScriptedCharacters();
 public:
 	// Initialize enemy's and NPC's and put them in the characters vector.
 	CharacterManager(IOManager& ioManager);

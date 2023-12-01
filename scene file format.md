@@ -1,6 +1,6 @@
 # Scene File Format
 
-The scene format is a restricted subset of Markdown, used to define the scenes in the game's story, including story text and battle scenes. The format is described in BNF notation below, as well as with provided examples.
+The scene format is a restricted subset of Markdown, used to define the scenes in the game's story, including story text and battle scenes. The format is described in BNF notation below, as well as with provided examples. 
 
 ## Terminology
 
@@ -29,7 +29,7 @@ The name of a scene is
 
 ### Key
 
-The key of a scene is a string which uniquely identifies the scene. In the case of files, this consists of the path of the file relative to the root of the resource directory without the `.md` extension, followed by a `#`, followed by the name of the scene.
+The key of a scene is a string which uniquely identifies the scene. In the case of files, this consists of the path of the file relative to the root of the resource directory without the `.md` extension, followed by a `#`, followed by the name of the scene. The First Scene Key would be `start#Start`, and last scene key to signify no more scenes is `start#end`.
 
 #### Example
 

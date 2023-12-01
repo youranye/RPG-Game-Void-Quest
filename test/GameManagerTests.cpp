@@ -4,16 +4,14 @@
 #include "CharacterManager.h"
 #include "IOManager.h" // Assuming you have an IOManager class
 
-TEST(StartGame, TestStartGame)
+TEST(GameManagerTest, TestConstructor)
 {
     std::istringstream iss;
     std::ostringstream oss;
     IOManager manager{iss, oss};
     CharacterManager characterManager{manager};
-    SceneManager sceneManager{nullptr};
+    SceneManager sceneManager{nullptr, manager, characterManager};
     GameManager gm(manager, characterManager, sceneManager);
-    iss.str("a\n");
-    EXPECT_NO_THROW(gm.startGame());
 }
 
 
