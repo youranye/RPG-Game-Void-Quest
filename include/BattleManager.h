@@ -22,8 +22,8 @@ class BattleManager
         }
         void runBattle();
         BattleOutcome getBattleOutcome();
-
-    private:
+        //Protected for easier testing
+    protected:
         Player* player;
         Character& enemy;
         BattleOutcome result;
@@ -31,12 +31,12 @@ class BattleManager
         Ability playerAbility;
         Ability enemyAbility;
 
-        int chooseAction();
+        virtual int chooseAction();
         void attack(bool isPlayerAttacker);
-        void specialAttack(bool isPlayer);
+        virtual void specialAttack(bool isPlayer); //virtual because if someone wanted to do special attacks differently they can override this.
         void heal(bool isPlayer);
-        int randNumGenerator(int lowest, int highest);
-        int determineAttackSuccess(int accuracy, int dodge);
+        virtual int randNumGenerator(int lowest, int highest); //virtual since it is random, and to test this code, easy to override.
+        virtual int determineAttackSuccess(int accuracy, int dodge); //virtual if someone wanted to override the success rate of a attack
         int calculateDamage(int attackPower, int attackMod, int targetDefense, int defenseMod, int hitValue);
         void displayAttack(bool isSpecial, bool isPlayer, int success, int damage);
         void displayHeal(bool isPlayer, int amount);
