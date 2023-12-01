@@ -17,11 +17,6 @@ class NarrativeScene : public Scene
     {
     }
 
-    void accept(SceneVisitor &visitor)
-    {
-        visitor.visit(*this);
-    }
-
     std::string getText() const override
     {
         return text;

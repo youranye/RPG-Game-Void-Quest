@@ -8,7 +8,6 @@
 #include "BattleManager.h"
 #include "NarrativeScene.h"
 #include "BattleScene.h"
-#include "SceneVisitor.h"
 
 
 class SceneManager

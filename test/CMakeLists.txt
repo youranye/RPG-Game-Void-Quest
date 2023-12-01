@@ -30,7 +30,6 @@ add_executable(testCodeCoverage
   ../src/SceneManager.cpp
   ../src/FileSceneStore.cpp
   ../src/NarrativeScene.cpp
-  ../src/SceneVisitor.cpp
 )
 
 add_executable(testCharacterManager

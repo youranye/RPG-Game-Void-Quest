@@ -16,11 +16,6 @@ class BattleScene : public Scene
     {
     }
 
-    void accept(SceneVisitor &visitor) override
-    {
-        visitor.visit(*this);
-    }
-
     virtual std::string getText() const override
     {
         // TODO: Actually add the battle information
