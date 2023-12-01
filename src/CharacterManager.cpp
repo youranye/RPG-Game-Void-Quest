@@ -84,8 +84,8 @@ Player* CharacterManager::createPlayer()
 	else
 	{
 		//prompt Rogue, Paladin, Warlock
-		ss << "Choose your class. \n\t a. Rogue: sly trickster with very good dexterity \n\t"
-		   << "b. Paladin: shining knight with good defense"
+		ss << "Choose your class. \n\ta. Rogue: sly trickster with very good dexterity \n\t"
+		   << "b. Paladin: shining knight with good defense\n\t"
 		   << "c. Warlock: powerful spellcaster with good aim\n";
 		ioManager.write(ss.str());
 		choice = ioManager.readOption(3);
@@ -145,7 +145,7 @@ Character& CharacterManager::getCharacter(std::string name)
 {
 	for (int i = 0; i < characters.size(); i++)
 	{
-		if (characters.at(i).getName() == name)
+		if (characters.at(i).getName() == name && characters.at(i).getHP() > 0)
 		{
 			return characters.at(i);
 		}
