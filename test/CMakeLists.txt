@@ -27,7 +27,6 @@ add_executable(testCodeCoverage
   ../src/GameManager.cpp
   ../src/BattleManager.cpp
   ../src/Player.cpp
-  ../src/SceneParser.tpp
   ../src/SceneManager.cpp
   ../src/FileSceneStore.cpp
   ../src/NarrativeScene.cpp
