@@ -21,6 +21,7 @@ class SceneStoreStub : public SceneStore
         scenes.insert({"sceneBattleWin", std::make_unique<BattleScene>("dead meat", "scene1")});
         scenes.insert({"sceneBattleLose", std::make_unique<BattleScene>("overpowered meat", "scene1")});
         scenes.insert({"sceneBattleEmpty", std::make_unique<BattleScene>("missing meat", "scene1")});
+        scenes.insert({"sceneBattleBoss", std::make_unique<BattleScene>("big boss", "scene1")});
         scenes.insert({"scene3", std::make_unique<NarrativeScene>(
                                      "Scene 3", std::vector<NarrativeScene::Option>{{"Go to scene 4", "scene4"}})});
         scenes.insert({"scene4", std::make_unique<NarrativeScene>(
@@ -40,16 +41,26 @@ class SceneStoreStub : public SceneStore
     }
 };
 
-class CharacterManagerStub : public CharacterManager
+class CharacterManagerMock : public CharacterManager
 {
   public:
-    CharacterManagerStub(IOManager &io, Player *player) : CharacterManager{io}
+    CharacterManagerMock(IOManager &io, Player *player) : CharacterManager{io}
     {
         this->player = player;
         this->characters.emplace_back("dead meat", SpeciesType::VOIDWALKER, CharacterType::ENEMY, 1, 0, 0, 0);
         this->characters.emplace_back("overpowered meat", SpeciesType::VOIDWALKER, CharacterType::ENEMY, 999'999,
                                       999'999, 999'999, 999'999);
+        this->characters.emplace_back("big boss", SpeciesType::VOIDWALKER, CharacterType::BOSS, 1, 0, 0, 0);
+
+        ON_CALL(*this, initialize()).WillByDefault([this]() { this->fakeInitialize(); });
     }
+
+    void fakeInitialize()
+    {
+        this->player = new Player{"DEV_PLAYER", SpeciesType::HUMAN, ClassType::ROGUE, 1, 0};
+    }
+
+    MOCK_METHOD(void, initialize, (), (override));
 };
 
 class SceneManagerTest : public testing::Test
@@ -114,7 +125,7 @@ TEST_F(SceneManagerTest, testRunBattleSceneWin)
     std::istream is{&generatorbuf};
     std::stringstream os{};
     IOManager ioManager{is, os};
-    CharacterManagerStub characterManager{ioManager,
+    CharacterManagerMock characterManager{ioManager,
                                           new Player{"DEV_PLAYER", SpeciesType::HUMAN, ClassType::ROGUE, 999'999, 0}};
 
     SceneManager manager{std::make_unique<SceneStoreStub>(), ioManager, characterManager};
@@ -134,7 +145,7 @@ TEST_F(SceneManagerTest, testRunBattleSceneLose)
     std::istream is{&generatorbuf};
     std::stringstream os{};
     IOManager ioManager{is, os};
-    CharacterManagerStub characterManager{ioManager,
+    CharacterManagerMock characterManager{ioManager,
                                           new Player{"DEV_PLAYER", SpeciesType::HUMAN, ClassType::ROGUE, 1, 0}};
 
     SceneManager manager{std::make_unique<SceneStoreStub>(), ioManager, characterManager};
@@ -143,6 +154,21 @@ TEST_F(SceneManagerTest, testRunBattleSceneLose)
     manager.runScene();
 
     EXPECT_EQ(manager.getCurrentScene(), nullptr);
+}
+
+TEST_F(SceneManagerTest, testRunBattleSceneBoss)
+{
+    loopinputbuf generatorbuf{};
+    std::istream is{&generatorbuf};
+    std::stringstream os{};
+    IOManager ioManager{is, os};
+    CharacterManagerMock characterManager{ioManager,
+                                          new Player{"DEV_PLAYER", SpeciesType::HUMAN, ClassType::ROGUE, 1, 0}};
+
+    SceneManager manager{std::make_unique<SceneStoreStub>(), ioManager, characterManager};
+
+    manager.replaceScene("sceneBattleBoss");
+    manager.runScene();
 }
 
 TEST_F(SceneManagerTest, testRunNullScene)
@@ -161,4 +187,20 @@ TEST_F(SceneManagerTest, testBattleSceneNoEnemy)
     manager.runScene();
 
     ASSERT_EQ(manager.getCurrentScene(), nextScene);
+}
+
+TEST_F(SceneManagerTest, testRunSceneWithoutPlayerCausesInitialization)
+{
+    using ::testing::Return;
+
+    std::istringstream is{};
+    std::ostringstream os{};
+    IOManager ioManager{is, os};
+    CharacterManagerMock characterManager{ioManager, nullptr};
+    SceneManager manager{std::make_unique<SceneStoreStub>(), ioManager, characterManager};
+    manager.replaceScene("sceneBattleLose");
+
+    EXPECT_CALL(characterManager, initialize());
+
+    manager.runScene();
 }

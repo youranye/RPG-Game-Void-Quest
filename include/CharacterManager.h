@@ -23,7 +23,7 @@ public:
 	CharacterManager(IOManager& ioManager);
 
 	// Initialize the player character.
-	void initialize();
+	virtual void initialize();
 
 	virtual ~CharacterManager();
 
