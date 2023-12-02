@@ -6,6 +6,9 @@
 #include "NarrativeScene.h"
 #include "SceneManager.h"
 
+namespace
+{
+
 class SceneStoreStub : public SceneStore
 {
     std::map<std::string, std::unique_ptr<Scene>, std::less<>> scenes{};
@@ -62,6 +65,8 @@ class CharacterManagerMock : public CharacterManager
 
     MOCK_METHOD(void, initialize, (), (override));
 };
+
+} // namespace
 
 class SceneManagerTest : public testing::Test
 {
