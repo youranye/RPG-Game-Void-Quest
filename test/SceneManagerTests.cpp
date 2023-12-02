@@ -144,3 +144,21 @@ TEST_F(SceneManagerTest, testRunBattleSceneLose)
 
     EXPECT_EQ(manager.getCurrentScene(), nullptr);
 }
+
+TEST_F(SceneManagerTest, testRunNullScene)
+{
+    assert(manager.getCurrentScene() == nullptr);
+    manager.runScene();
+    ASSERT_EQ(manager.getCurrentScene(), nullptr);
+}
+
+TEST_F(SceneManagerTest, testBattleSceneNoEnemy)
+{
+    manager.replaceScene("scene1");
+    Scene *nextScene = manager.getCurrentScene(); // this is the scene after sceneBattle
+
+    manager.replaceScene("sceneBattleEmpty");
+    manager.runScene();
+
+    ASSERT_EQ(manager.getCurrentScene(), nextScene);
+}
