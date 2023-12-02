@@ -137,8 +137,8 @@ void SceneManager::goToNextScene(const std::string& nextSceneKey)
 {
     if(isFinalSceneReached(nextSceneKey))
     {
+        this->currentScene = nullptr;
         return;
     }
     replaceScene(nextSceneKey);
-    runScene();
 }
