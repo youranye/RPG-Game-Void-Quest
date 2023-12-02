@@ -37,8 +37,8 @@ void GameManager::startGame()
             gameFinished = true;
             break;
         default:
-            ioManager.write("Invalid choice. Please try again.\n");
-            break;
+            // Should not ever occur because ioManager checks for validity
+            throw std::runtime_error{"Unreachable"};
         }
     }
 }
