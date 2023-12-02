@@ -53,7 +53,7 @@ void SceneManager::handleBattleScene(BattleScene* bScene)
     {
         ioManager.write("Error: Enemy not found.\n");
         ioManager.write("Skipping Fight\n");
-        replaceScene(bScene->getNextKey());
+        goToNextScene(bScene->getNextKey());
         return;
     }
 

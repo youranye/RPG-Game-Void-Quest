@@ -46,8 +46,8 @@ void GameManager::startGame()
 
 void GameManager::displayStartPage() 
 {
-    ioManager.write("===== GrimGard's Lair =====\n");
-    ioManager.write("Welcome to GrimGard's Lair, a text-based fantasy RPG! To play, enter the letter of the option you want to choose. \n");
+    ioManager.write("===== VoidQuest =====\n");
+    ioManager.write("Welcome to VoidQuest, a text-based fantasy RPG! To play, enter the letter of the option you want to choose. \n");
     ioManager.write("a) Start game\n");
     ioManager.write("b) View credits.\n");
     ioManager.write("c) quit.\n");

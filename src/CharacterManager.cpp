@@ -122,6 +122,7 @@ void CharacterManager::initialize()
 		{
 			delete player;
 			player = nullptr;
+			addScriptedCharacters();
 		}
 	}
 	if(player == nullptr)
