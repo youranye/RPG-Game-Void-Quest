@@ -18,7 +18,9 @@ class SceneStoreStub : public SceneStore
         scenes.insert(
             {"scene2", std::make_unique<NarrativeScene>(
                            "Scene 2", std::vector<NarrativeScene::Option>{{"Go to sceneBattle", "sceneBattle"}})});
-        scenes.insert({"sceneBattle", std::make_unique<BattleScene>("Barry the Goblin", "scene1")});
+        scenes.insert({"sceneBattleWin", std::make_unique<BattleScene>("dead meat", "scene1")});
+        scenes.insert({"sceneBattleLose", std::make_unique<BattleScene>("overpowered meat", "scene1")});
+        scenes.insert({"sceneBattleEmpty", std::make_unique<BattleScene>("missing meat", "scene1")});
         scenes.insert({"scene3", std::make_unique<NarrativeScene>(
                                      "Scene 3", std::vector<NarrativeScene::Option>{{"Go to scene 4", "scene4"}})});
         scenes.insert({"scene4", std::make_unique<NarrativeScene>(
@@ -35,6 +37,18 @@ class SceneStoreStub : public SceneStore
         {
             throw SceneNotFoundException{key};
         }
+    }
+};
+
+class CharacterManagerStub : public CharacterManager
+{
+  public:
+    CharacterManagerStub(IOManager &io, Player *player) : CharacterManager{io}
+    {
+        this->player = player;
+        this->characters.emplace_back("dead meat", SpeciesType::VOIDWALKER, CharacterType::ENEMY, 1, 0, 0, 0);
+        this->characters.emplace_back("overpowered meat", SpeciesType::VOIDWALKER, CharacterType::ENEMY, 999'999,
+                                      999'999, 999'999, 999'999);
     }
 };
 
@@ -94,20 +108,39 @@ class loopinputbuf : public std::streambuf
     }
 };
 
-TEST_F(SceneManagerTest, testRunBattleScene)
+TEST_F(SceneManagerTest, testRunBattleSceneWin)
 {
     loopinputbuf generatorbuf{};
     std::istream is{&generatorbuf};
     std::stringstream os{};
     IOManager ioManager{is, os};
-    CharacterManager characterManager{ioManager};
+    CharacterManagerStub characterManager{ioManager,
+                                          new Player{"DEV_PLAYER", SpeciesType::HUMAN, ClassType::ROGUE, 999'999, 0}};
+
     SceneManager manager{std::make_unique<SceneStoreStub>(), ioManager, characterManager};
 
     manager.replaceScene("scene1");
     Scene *nextScene = manager.getCurrentScene(); // this is the scene after sceneBattle
 
-    manager.replaceScene("sceneBattle");
+    manager.replaceScene("sceneBattleWin");
     manager.runScene();
 
-    // EXPECT_EQ(manager.getCurrentScene(), nextScene);
+    EXPECT_EQ(manager.getCurrentScene(), nextScene);
+}
+
+TEST_F(SceneManagerTest, testRunBattleSceneLose)
+{
+    loopinputbuf generatorbuf{};
+    std::istream is{&generatorbuf};
+    std::stringstream os{};
+    IOManager ioManager{is, os};
+    CharacterManagerStub characterManager{ioManager,
+                                          new Player{"DEV_PLAYER", SpeciesType::HUMAN, ClassType::ROGUE, 1, 0}};
+
+    SceneManager manager{std::make_unique<SceneStoreStub>(), ioManager, characterManager};
+
+    manager.replaceScene("sceneBattleLose");
+    manager.runScene();
+
+    EXPECT_EQ(manager.getCurrentScene(), nullptr);
 }
