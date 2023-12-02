@@ -93,11 +93,7 @@ void SceneManager::handleBattleScene(BattleScene* bScene)
 
 bool SceneManager::isFinalSceneReached(string sceneKey = "")
 {
-    if (currentScene == nullptr)
-    {
-        ioManager.write("Error: Current scene not found.\n");
-        return false;
-    }
+    assert(currentScene != nullptr && "Current scene is null when checking if final scene reached");
     if(!sceneKey.empty())
     {
         if(sceneKey == "start#end")
