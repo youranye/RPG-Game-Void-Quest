@@ -60,6 +60,13 @@ void SceneManager::handleBattleScene(BattleScene* bScene)
     ioManager.write("Battle begins with enemy: " + enemyKey);
     // Run the battle with the obtained enemy using BattleManager
     Player* player = characterManager.getPlayer();
+    if(player == nullptr)
+    {
+        ioManager.write("hmm, it seems you haven't told me your name yet.\n");
+        ioManager.write("Now, would you tell me who you are?\n");
+        characterManager.initialize();
+        player = characterManager.getPlayer();
+    }
     assert(player != nullptr); // TODO: handle this error
     BattleManager battleManager(player, enemy, ioManager);
     if(enemy.getType() == BOSS)

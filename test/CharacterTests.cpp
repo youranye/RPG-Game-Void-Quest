@@ -162,7 +162,7 @@ TEST(CharacterTest, GetHPBar)
 {
     Character character("Ivy", SpeciesType::HUMAN, CharacterType::PLAYER,50,20,30,40);
     character.takeDamage(25); 
-    EXPECT_EQ(character.getHPBar(), "[:::::     ]"); 
+    EXPECT_EQ(character.getHPBar(), "[\033[38:5:202m:::::\033[1;0m     ]"); 
 }
 
 TEST(CharacterTest, GetHPBarAb) 
@@ -170,7 +170,7 @@ TEST(CharacterTest, GetHPBarAb)
     Character character("Ivy", SpeciesType::HUMAN, CharacterType::PLAYER,50,20,30,40, 
     Ability("Basic Attack", ATTACK, "Attack Enemy", NONE, 90, 0));
     character.takeDamage(25); 
-    EXPECT_EQ(character.getHPBar(), "[:::::     ]"); 
+    EXPECT_EQ(character.getHPBar(), "[\033[38:5:202m:::::\033[1;0m     ]"); 
 }
 
 // Test operator== function
