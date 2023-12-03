@@ -65,7 +65,7 @@ bool Character::operator==(const Character &rhs) const
     return false;
 }
 
-const int Character::getMaxHP()
+int Character::getMaxHP()
 {
     return maxHP;
 }

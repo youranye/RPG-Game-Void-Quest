@@ -85,7 +85,7 @@ public:
 	int getDefense();
 	int getDexterity();
 	int getHP();
-	const int getMaxHP();
+	int getMaxHP();
 	void heal(int amount);
 	void takeDamage(int amount);
 	bool operator==(const Character& rhs) const;

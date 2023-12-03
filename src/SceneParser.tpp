@@ -48,7 +48,7 @@ template <class It, class Se> void SceneParser<It, Se>::next()
 
     if (cur == end)
     {
-        curLine = {LineType::None, {}};
+        curLine = {LineType::None, {}, {}};
         return;
     }
 
