@@ -36,9 +36,11 @@ void GameManager::startGame()
             ioManager.write("GoodBye!\n");
             gameFinished = true;
             break;
+// LCOV_EXCL_START
         default:
             // Should not ever occur because ioManager checks for validity
             throw std::runtime_error{"Unreachable"};
+// LCOV_EXCL_STOP
         }
     }
 }
