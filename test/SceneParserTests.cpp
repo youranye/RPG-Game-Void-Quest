@@ -95,3 +95,56 @@ TEST(SceneParserTest, testBattleScene)
     EXPECT_EQ(scene->getEnemyName(), "Bear");
     EXPECT_EQ(scene->getNextKey(), "test#next");
 }
+
+TEST(SceneParserTest, testNarrativeSceneOptionsMissingThrows)
+{
+    std::string text{"# Name\n"
+                     " - Option 1\n"};
+
+    EXPECT_THROW(({
+                     SceneParser parser{std::begin(text), std::end(text), "test"};
+                     parser.parseScenes();
+                 }),
+                 SceneParseException);
+}
+
+TEST(SceneParserTest, testNarrativeSceneOptionMissingNextKeyThrows)
+{
+    std::string text{"# Name\n"
+                     "## Options\n"
+                     " - Option 1\n"};
+
+    EXPECT_THROW(({
+                     SceneParser parser{std::begin(text), std::end(text), "test"};
+                     parser.parseScenes();
+                 }),
+                 SceneParseException);
+}
+
+TEST(SceneParserTest, testNarrativeSceneOptionEmptyKeyThrows)
+{
+    std::string text{"# Name\n"
+                     "## Options\n"
+                     " - Option 1 -> \n"};
+
+    EXPECT_THROW(({
+                     SceneParser parser{std::begin(text), std::end(text), "test"};
+                     parser.parseScenes();
+                 }),
+                 SceneParseException);
+}
+
+TEST(SceneParserTest, testAttributeMissingClosingBracketThrows)
+{
+    std::string text{"# [battle Fight\n"
+                     "## Enemy\n"
+                     " - Bear\n"
+                     "## Next\n"
+                     " - #next"};
+
+    EXPECT_THROW(({
+                     SceneParser parser{std::begin(text), std::end(text), "test"};
+                     parser.parseScenes();
+                 }),
+                 SceneParseException);
+}
