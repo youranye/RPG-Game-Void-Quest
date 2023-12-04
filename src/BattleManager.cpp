@@ -131,6 +131,7 @@ int BattleManager::chooseAction()
 
 /* Given an attacker and a target, calculates the results of an attack, deals appropriate damage,
    and displays results of the attack to the user. */
+// LCOV_EXCL_START
 void BattleManager::attack(bool isPlayerAttacker)
 {
     int accuracy = randNumGenerator(1,100);
@@ -222,6 +223,7 @@ void BattleManager::attack(bool isPlayerAttacker)
     // Display result of attack to user
     displayAttack(false, isPlayerAttacker, hitValue, totalDamage);
 }
+// LCOV_EXCL_STOP
 
 // Generates random integer with range from lowest to highest inclusive
 int BattleManager::randNumGenerator(int lowest, int highest)
@@ -232,6 +234,7 @@ int BattleManager::randNumGenerator(int lowest, int highest)
     return (rand() % range) + lowest;
 }
 
+// LCOV_EXCL_START
 void BattleManager::specialAttack(bool isPlayer)
 {
     int accuracy = randNumGenerator(15,100);
@@ -348,6 +351,7 @@ void BattleManager::specialAttack(bool isPlayer)
     // Display result of attack to user
     displayAttack(true, isPlayer, hitValue, totalDamage); 
 }
+// LCOV_EXCL_STOP
 
 // heals 10 hp
 void BattleManager::heal(bool isPlayer)

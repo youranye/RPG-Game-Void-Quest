@@ -176,8 +176,78 @@ TEST(BattleManagerTests, TestFixtureChooseActionSpecialAttack)
     player = nullptr;
 }
 
+// Test the user choosing an action they do not have enough SP for
+TEST(BattleManagerTests, TestFixtureChooseActionHealInsufficientSP)
+{
+    Player* player = new Player("Elrond",HUMAN,ROGUE,200,4);
+    Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15);
+    std::stringstream ss;
+    std::istringstream iss;
+    std::ostringstream oss;
 
+    // Set user input and expected output
+    iss.str("b\na\n");
+    ss << "Enemy Health: " << enemy.getHP() << "/" << enemy.getMaxHP() << " " << enemy.getHPBar() << "\n" <<
+            "Player Health: " << player->getHP() << "/" << player->getMaxHP() << " " << player->getHPBar() << "\n" <<
+            "Player SP: " << player->getSP() << "/" << player->getMaxSP() << "\n" <<
+            "Options: " << "\n" <<
+            "a) attack Cost: 0 SP" << "\n" <<
+            "b) heal Cost: 5 SP" << "\n" <<
+            "c) " << player->getAbility().name << " Cost: " << player->getAbility().cost << " SP" << "\n";
+    ss << "Not Enough SP to case Heal!\n";
+    ss << "Enemy Health: " << enemy.getHP() << "/" << enemy.getMaxHP() << " " << enemy.getHPBar() << "\n" <<
+                "Player Health: " << player->getHP() << "/" << player->getMaxHP() << " " << player->getHPBar() << "\n" <<
+                "Player SP: " << player->getSP() << "/" << player->getMaxSP() << "\n" <<
+                "Options: " << "\n" <<
+                "a) attack Cost: 0 SP" << "\n" <<
+                "b) heal Cost: 5 SP" << "\n" <<
+                "c) " << player->getAbility().name << " Cost: " << player->getAbility().cost << " SP" << "\n";
 
+    IOManager ioManager(iss,oss);
+    BattleManagerFixture testBattle(player, enemy,ioManager);
+    testBattle.pubChooseAction();
+
+    EXPECT_EQ(oss.str(), ss.str());
+
+    delete player;
+    player = nullptr;
+}
+
+TEST(BattleManagerTests, TestFixtureChooseActionSpecialAttackInsufficientSP)
+{
+    Player* player = new Player("Elrond",HUMAN,ROGUE,200,9);
+    Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15);
+    std::stringstream ss;
+    std::istringstream iss;
+    std::ostringstream oss;
+
+    // Set user input and expected output
+    iss.str("c\na\n");
+    ss << "Enemy Health: " << enemy.getHP() << "/" << enemy.getMaxHP() << " " << enemy.getHPBar() << "\n" <<
+            "Player Health: " << player->getHP() << "/" << player->getMaxHP() << " " << player->getHPBar() << "\n" <<
+            "Player SP: " << player->getSP() << "/" << player->getMaxSP() << "\n" <<
+            "Options: " << "\n" <<
+            "a) attack Cost: 0 SP" << "\n" <<
+            "b) heal Cost: 5 SP" << "\n" <<
+            "c) " << player->getAbility().name << " Cost: " << player->getAbility().cost << " SP" << "\n";
+    ss << "Not Enough SP to use Special Attack!\n";
+    ss << "Enemy Health: " << enemy.getHP() << "/" << enemy.getMaxHP() << " " << enemy.getHPBar() << "\n" <<
+                "Player Health: " << player->getHP() << "/" << player->getMaxHP() << " " << player->getHPBar() << "\n" <<
+                "Player SP: " << player->getSP() << "/" << player->getMaxSP() << "\n" <<
+                "Options: " << "\n" <<
+                "a) attack Cost: 0 SP" << "\n" <<
+                "b) heal Cost: 5 SP" << "\n" <<
+                "c) " << player->getAbility().name << " Cost: " << player->getAbility().cost << " SP" << "\n";
+
+    IOManager ioManager(iss,oss);
+    BattleManagerFixture testBattle(player, enemy,ioManager);
+    testBattle.pubChooseAction();
+
+    EXPECT_EQ(oss.str(), ss.str());
+
+    delete player;
+    player = nullptr;
+}
 
 // Test the determination of attack success
 TEST(BattleManagerTests, TestFixtureDetermineAttackSuccessAccurracyLessThanDodge)
@@ -219,7 +289,7 @@ TEST(BattleManagerTests, TestFixtureDetermineAttackSuccessCritical)
     player = nullptr;
 }
 
-// test damage calculation
+// Test damage calculation
 TEST(BattleManagerTests, TestFixtureCalculateDamage)
 {
     Player* player = new Player("Elrond",HUMAN,ROGUE,200,100);
@@ -473,7 +543,7 @@ TEST(BattleManagerTests, TestFixtureDisplaySpecialAttackPlayerForged)
     delete player;
     player = nullptr;
 }
-
+ 
 // uses a fixed value that can be set in place of a randomly generated number
 class BattleManagerFixtureRandFixedValTest : public BattleManager 
 {
@@ -565,7 +635,7 @@ TEST(BattleManagerTests, TestFixtureGetBattleOutcomeWin)
 
 TEST(BattleManagerTests, TestFixtureGetBattleOutcomeDeath)
 {
-    Player* player = new Player("glass cannon",HUMAN,ROGUE,1,1000); //high sp so only can cast heal
+    Player* player = new Player("glass cannon",HUMAN,ROGUE,1000,1000); //high sp so only can cast heal
     Character enemy = Character("ImpossibletoBeat",GOBLIN,ENEMY,5000,5000,500,90);
     std::istringstream iss;
     std::ostringstream oss;
