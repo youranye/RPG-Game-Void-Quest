@@ -20,40 +20,17 @@ void BattleManager::runBattle()
     // Player and enemy take turns attacking each other until one is dead or the player flees.
     while (player->getHP() > 0 && enemy.getHP() > 0)
     {
-        bool playerChoiceValid = false;
-        while(!playerChoiceValid)
+        int userChoice = chooseAction();
+        switch(userChoice)
         {
-            switch(chooseAction())
-            {
-                case 0:
-                    attack(true);
-                    playerChoiceValid = true;
-                    break;
-                case 1:
-                    if(player->getSP() < 5)
-                    {
-                        //cout not enough sp
-                        ioManager.write("Not Enough SP to case Heal!\n");
-                    }
-                    else
-                    {
-                        heal(true);
-                        playerChoiceValid = true;
-                    }
-                    break;
-                case 2:
-                    if(player->getSP() < playerAbility.cost)
-                    {
-                        //cout not enough sp
-                        ioManager.write("Not Enough SP to use Special Attack!\n");
-                    }
-                    else
-                    {
-                        specialAttack(true);
-                        playerChoiceValid = true;
-                    }
-                    break;
-            }
+            case 0:
+                attack(true);
+                break;
+            case 1:
+                heal(true);
+                break;
+            case 2:
+                specialAttack(true);
         }
 
         if(enemy.getHP()==0)
@@ -65,10 +42,7 @@ void BattleManager::runBattle()
         {
             int desiretoheal = 0;
             int enemyDesireCost = enemy.getMaxHP() - enemy.getHP();
-            if(enemyDesireCost <= 0)
-            {
-                enemyDesireCost = 0;
-            }
+            
             desiretoheal = randNumGenerator(enemyDesireCost, enemy.getMaxHP());
             if(enemy.getHP() < desiretoheal && enemy.getHP() < 100)
             {
@@ -105,16 +79,54 @@ BattleOutcome BattleManager::getBattleOutcome()
 // user chooses action
 int BattleManager::chooseAction()
 {
-    std::stringstream ss;
-    ss << "Enemy Health: " << enemy.getHP() << "/" << enemy.getMaxHP() << " " << enemy.getHPBar() << "\n" <<
-        "Player Health: " << player->getHP() << "/" << player->getMaxHP() << " " << player->getHPBar() << "\n" <<
-        "Player SP: " << player->getSP() << "/" << player->getMaxSP() << "\n" <<
-        "Options: " << "\n" <<
-        "a) attack Cost: 0 SP" << "\n" <<
-        "b) heal Cost: 5 SP" << "\n" <<
-        "c) " << playerAbility.name << " Cost: " << playerAbility.cost << " SP" << "\n";
-    ioManager.write(ss.str());
-    return ioManager.readOption(3);
+    bool playerChoiceValid = false;
+    int userChoice = 0;
+    while(!playerChoiceValid)
+    { 
+        // Prompt the user with their action choices
+        std::stringstream ss;
+        ss << "Enemy Health: " << enemy.getHP() << "/" << enemy.getMaxHP() << " " << enemy.getHPBar() << "\n" <<
+            "Player Health: " << player->getHP() << "/" << player->getMaxHP() << " " << player->getHPBar() << "\n" <<
+            "Player SP: " << player->getSP() << "/" << player->getMaxSP() << "\n" <<
+            "Options: " << "\n" <<
+            "a) attack Cost: 0 SP" << "\n" <<
+            "b) heal Cost: 5 SP" << "\n" <<
+            "c) " << playerAbility.name << " Cost: " << playerAbility.cost << " SP" << "\n";
+        ioManager.write(ss.str());
+        userChoice = ioManager.readOption(3);
+
+        // Validate the user's choice
+        switch(userChoice)
+        {
+            case 0:
+                playerChoiceValid = true;
+                break;
+            case 1:
+                if(player->getSP() < 5)
+                {
+                    //cout not enough sp
+                    ioManager.write("Not Enough SP to case Heal!\n");
+                }
+                else
+                {
+                    playerChoiceValid = true;
+                }
+                break;
+            case 2:
+                if(player->getSP() < playerAbility.cost)
+                {
+                    //cout not enough sp
+                    ioManager.write("Not Enough SP to use Special Attack!\n");
+                }
+                else
+                {
+                    playerChoiceValid = true;
+                }
+                break;
+        }
+    }
+
+    return userChoice;
 }
 
 /* Given an attacker and a target, calculates the results of an attack, deals appropriate damage,
