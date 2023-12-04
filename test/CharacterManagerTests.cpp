@@ -31,6 +31,22 @@ TEST(CharacterManagerTests, testGetCharacter)
 //     EXPECT_EQ(player->getClass(), 1);
 // }
 
+// TEST_F(CharacterManagerCreatePlayerTest, CreatesValidPlayerCharacter) 
+// {
+//     // Mock user input for the test
+//     // Replace these input lines with the actual simulated user input for species and class selection
+//     std::istringstream simulatedInput("b\na\nJohn\n");
+//     ioManager = IOManager(simulatedInput, std::cout);
+//     characterManager = CharacterManager(ioManager);
+
+//     Player* player = characterManager.createPlayer();
+//     ASSERT_NE(player, nullptr); // Check if the player character is created successfully
+
+//     EXPECT_EQ(player->getName(), "John"); // Replace "John" with the expected name
+//     EXPECT_EQ(player->getSpecies(), ELF); // Replace ELF with the expected species
+//     EXPECT_EQ(player->getClass(), ROGUE); // Replace ROGUE with the expected class
+// }
+
 TEST(CharacterManagerTests, testInitializeElfPaladin)
 {
     std::stringstream mockUser;

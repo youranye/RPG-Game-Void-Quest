@@ -49,34 +49,70 @@ TEST(PlayerTest, testConstructorForged)
 }
 
 // Test getClass() method
-TEST(PlayerTest, GetClass) {
+TEST(PlayerTest, GetClass) 
+{
     Player player("TestPlayer", SpeciesType::HUMAN, ClassType::ROGUE, 200, 100);
     EXPECT_EQ(player.getClass(), ClassType::ROGUE);
     // Add more assertions as needed for other classes
 }
 
-// Test getSP(), spendSP(), and regenerateSP() methods
-TEST(PlayerTest, SPManipulation) {
+// Test getSP() method
+TEST(PlayerTest, GetSP) 
+{
+    Player player("TestPlayer", SpeciesType::HUMAN, ClassType::ROGUE, 200, 100);
+    EXPECT_EQ(player.getSP(), 100); // Initial SP
+}
+
+// Test spendSP() method
+TEST(PlayerTest, SpendSP) 
+{
     Player player("TestPlayer", SpeciesType::HUMAN, ClassType::ROGUE, 200, 100);
 
-    EXPECT_EQ(player.getSP(), 100); // Initial SP
+    player.spendSP(50); // Spend 50 SP
+    EXPECT_EQ(player.getSP(), 50); // SP after spending
+
+    player.spendSP(1000); // Spend more than available SP
+    EXPECT_EQ(player.getSP(), 0); // SP should be zero
+}
+
+// Test regenerateSP() method
+TEST(PlayerTest, RegenerateSP) 
+{
+    Player player("TestPlayer", SpeciesType::HUMAN, ClassType::ROGUE, 200, 100);
+
+    player.regenerateSP(50); // Regenerate more than the maximum SP
+    EXPECT_EQ(player.getSP(), 100); // SP should not exceed the maximum value
+}
+
+TEST(PlayerTest, SPManipulation) 
+{
+    Player player("TestPlayer", SpeciesType::HUMAN, ClassType::ROGUE, 200, 100);
 
     player.spendSP(50); // Spend 50 SP
     EXPECT_EQ(player.getSP(), 50); // SP after spending
 
     player.regenerateSP(30); // Regenerate 30 SP
     EXPECT_EQ(player.getSP(), 80); // SP after regeneration
+}
 
+TEST(PlayerTest, RegenerateMoreThanMaxSP) 
+{
+    Player player("TestPlayer", SpeciesType::HUMAN, ClassType::ROGUE, 200, 100);
+
+    player.spendSP(50); // Spend 50 SP
+    EXPECT_EQ(player.getSP(), 50); // SP after spending
+
+    player.regenerateSP(30); // Regenerate 30 SP
+    EXPECT_EQ(player.getSP(), 80); // SP after regeneration
     // Test SP limits
-    player.spendSP(1000); // Spend more than available SP
-    EXPECT_EQ(player.getSP(), 0); // SP should be zero
 
-    player.regenerateSP(50); // Regenerate more than the maximum SP
+    player.regenerateSP(1000); // Regenerate more than the maximum SP
     EXPECT_EQ(player.getSP(), 100); // SP should not exceed the maximum value
 }
 
 // Test getMaxSP() method
-TEST(PlayerTest, GetMaxSP) {
+TEST(PlayerTest, GetMaxSP) 
+{
     Player player("TestPlayer", SpeciesType::HUMAN, ClassType::ROGUE, 200, 100);
     EXPECT_EQ(player.getMaxSP(), 100);
     // Add more assertions as needed for different maximum SP values
