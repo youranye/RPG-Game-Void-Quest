@@ -5,13 +5,33 @@
 #include <iostream>
 
 // Constructor tests
-TEST(BattleManagerTests, TestConstructor)
+TEST(BattleManagerTests, TestValidConstructor)
 {
     Player* player = new Player("Elrond",HUMAN,ROGUE,200,100);
     Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15);
     IOManager ioManager(cin,cout);
 
     EXPECT_NO_THROW(BattleManager(player, enemy,ioManager));
+    delete player;
+    player = nullptr;
+}
+
+TEST(BattleManagerTests, TestNoPlayerConstructor)
+{
+    Player* player = nullptr;
+    Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15);
+    IOManager ioManager(cin,cout);
+
+    EXPECT_THROW(BattleManager(player, enemy,ioManager), std::invalid_argument);
+}
+
+TEST(BattleManagerTests, TestNoEnemyConstructor)
+{
+    Player* player = new Player("Elrond",HUMAN,ROGUE,200,100);
+    Character enemy = nullCharacter;
+    IOManager ioManager(cin,cout);
+
+    EXPECT_THROW(BattleManager(player, enemy,ioManager), std::invalid_argument);
     delete player;
     player = nullptr;
 }
