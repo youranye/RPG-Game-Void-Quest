@@ -420,6 +420,8 @@ int BattleManager::calculateDamage(int attackPower, int attackMod, int targetDef
 void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, int damage)
 {
     std::stringstream ss;
+    
+    // Attack with ability
     if(isSpecial)
     {
         if(isPlayer)
@@ -432,18 +434,17 @@ void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, in
         }
         else
         {
-            //TODO make it look good
             switch(success)
             {
                 case 0:
                     ss << enemy.getName() << " Tries to hit you and misses!\n";
                     break;
                 case 1:
-                    ss << enemy.getName() << " hits you! Dealing "<< damage << " damage to " << player->getName() << "\n";
+                    ss << enemy.getName() << enemyAbility.description << " Dealing " << damage << " damage to " << player->getName() << "\n";
                     break;
                 case 2:
                     ss << "Critical Hit!\n" <<
-                        enemy.getName() << " hits you! Dealing " << damage << " damage to " << player->getName() << "\n";
+                        enemy.getName() << enemyAbility.description << " Dealing " << damage << " damage to " << player->getName() << "\n";
                     break;
             }
         }

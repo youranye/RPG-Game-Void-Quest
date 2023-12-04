@@ -51,7 +51,7 @@ TEST(BattleManagerTests, TestGetBattleOutcomeOngoing)
     player = nullptr;
 }
 
-// Rand Tests
+// Test random number generation
 class BattleManagerFixtureRandTest : public BattleManager 
 {
 public:
@@ -361,7 +361,7 @@ TEST(BattleManagerTests, TestFixtureCalculateDamageOnCritical)
     player = nullptr;
 }
 
-// test display of the results of different actions
+// Test displayHeal
 TEST(BattleManagerTests, TestFixtureDisplayHealPlayer)
 {
     Player* player = new Player("Elrond",HUMAN,ROGUE,200,100);
@@ -396,6 +396,7 @@ TEST(BattleManagerTests, TestFixtureDisplayHealEnemy)
     player = nullptr;
 }
 
+// Test displayAttack for normal attacks
 TEST(BattleManagerTests, TestFixtureDisplayAttackPlayerRogue)
 {
     Player* player = new Player("Elrond",HUMAN,ROGUE,200,100);
@@ -480,6 +481,7 @@ TEST(BattleManagerTests, TestFixtureDisplayAttackPlayerForged)
     player = nullptr;
 }
 
+// Test displayAttack for special attacks
 TEST(BattleManagerTests, TestFixtureDisplaySpecialAttackPlayerRogue)
 {
     Player* player = new Player("Elrond",HUMAN,ROGUE,200,100);
@@ -564,7 +566,7 @@ TEST(BattleManagerTests, TestFixtureDisplaySpecialAttackPlayerForged)
     player = nullptr;
 }
  
-// uses a fixed value that can be set in place of a randomly generated number
+// Uses a fixed value that can be set in place of a randomly generated number
 class BattleManagerFixtureRandFixedValTest : public BattleManager 
 {
 public:
@@ -593,7 +595,93 @@ public:
     }
 };
 
-// Testing Battle with preset action for Player to allow for testing runBattle
+// Test heal on players and enemies at different hitpoint amounts
+TEST(BattleManagerTests, healPlayerAtLessThanTenHealth)
+{
+    Player* player = new Player("Elrond",DWARF,FORGED,50,100);
+    Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15);
+    std::istringstream iss;
+    std::ostringstream oss;
+    std::stringstream ss;
+    IOManager ioManager(iss,oss);
+    BattleManagerFixtureRandFixedValTest testBattle(player, enemy,ioManager);
+    testBattle.setRandNum(30);
+    player->takeDamage(41); // health will now be 9
+
+    testBattle.pubHeal(true);
+
+    EXPECT_EQ(oss.str(), "you cast Heal and heal 30 hp!\n");
+}
+
+TEST(BattleManagerTests, healPlayerMissingFiveHealth)
+{
+    Player* player = new Player("Elrond",DWARF,FORGED,50,100);
+    Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15);
+    std::istringstream iss;
+    std::ostringstream oss;
+    std::stringstream ss;
+    IOManager ioManager(iss,oss);
+    BattleManagerFixtureRandFixedValTest testBattle(player, enemy,ioManager);
+    testBattle.setRandNum(5);
+    player->takeDamage(5); // maxHeal is now 5
+
+    testBattle.pubHeal(true);
+
+    EXPECT_EQ(oss.str(), "you cast Heal and heal 5 hp!\n");
+}
+
+TEST(BattleManagerTests, healEnemyAtFiveHealth)
+{
+    Player* player = new Player("Elrond",DWARF,FORGED,200,100);
+    Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,50,15,10,15);
+    std::istringstream iss;
+    std::ostringstream oss;
+    std::stringstream ss;
+    IOManager ioManager(iss,oss);
+    BattleManagerFixtureRandFixedValTest testBattle(player, enemy,ioManager);
+    testBattle.setRandNum(10);
+    enemy.takeDamage(45); // health will now be 5
+
+    testBattle.pubHeal(false);
+
+    EXPECT_EQ(oss.str(), "Barry the Goblin casts Heal and heals 10 hp!\n");
+}
+
+TEST(BattleManagerTests, healEnemyAtFiftyHealth)
+{
+    Player* player = new Player("Elrond",DWARF,FORGED,200,100);
+    Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,100,15,10,15);
+    std::istringstream iss;
+    std::ostringstream oss;
+    std::stringstream ss;
+    IOManager ioManager(iss,oss);
+    BattleManagerFixtureRandFixedValTest testBattle(player, enemy,ioManager);
+    testBattle.setRandNum(30);
+    enemy.takeDamage(50); // health will now be 50
+
+    testBattle.pubHeal(false);
+
+    EXPECT_EQ(oss.str(), "Barry the Goblin casts Heal and heals 30 hp!\n");
+}
+
+TEST(BattleManagerTests, healEnemyAtEightyHealth)
+{
+    Player* player = new Player("Elrond",DWARF,FORGED,200,100);
+    Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,100,15,10,15);
+    std::istringstream iss;
+    std::ostringstream oss;
+    std::stringstream ss;
+    IOManager ioManager(iss,oss);
+    BattleManagerFixtureRandFixedValTest testBattle(player, enemy,ioManager);
+    testBattle.setRandNum(30);
+    enemy.takeDamage(20); // health will now be 80
+
+    testBattle.pubHeal(false);
+
+    EXPECT_EQ(oss.str(), "Barry the Goblin casts Heal and heals 20 hp!\n");
+}
+
+// Test with preset action for Player to allow for testing runBattle
 class BattleManagerFixtureRunBattleTest : public BattleManager 
 {
 protected:
@@ -626,6 +714,20 @@ TEST(BattleManagerTests, TestFixtureRunBattleOnlyAttack)
     EXPECT_TRUE( (testBattle.getBattleOutcome() == WIN) || (testBattle.getBattleOutcome() == DEATH) );
 }
 
+TEST(BattleManagerTests, TestFixtureRunBattleOnlyHeal)
+{
+    Player* player = new Player("Elrond",HUMAN,ROGUE,200,100);
+    Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15);
+    std::istringstream iss;
+    std::ostringstream oss;
+    IOManager ioManager(iss,oss);
+    BattleManagerFixtureRunBattleTest testBattle(player, enemy,ioManager);
+    testBattle.setAction(1);
+
+    EXPECT_NO_THROW(testBattle.runBattle());
+    EXPECT_TRUE( (testBattle.getBattleOutcome() == WIN) || (testBattle.getBattleOutcome() == DEATH) );
+}
+
 TEST(BattleManagerTests, TestFixtureRunBattleOnlySpecialAttack)
 {
     Player* player = new Player("Elrond",HUMAN,ROGUE,2000,1000);
@@ -635,6 +737,7 @@ TEST(BattleManagerTests, TestFixtureRunBattleOnlySpecialAttack)
     IOManager ioManager(iss,oss);
     BattleManagerFixtureRunBattleTest testBattle(player, enemy,ioManager);
     testBattle.setAction(2);
+    
     EXPECT_NO_THROW(testBattle.runBattle());
     EXPECT_TRUE( (testBattle.getBattleOutcome() == WIN) || (testBattle.getBattleOutcome() == DEATH) );
 }
@@ -655,7 +758,7 @@ TEST(BattleManagerTests, TestFixtureGetBattleOutcomeWin)
 
 TEST(BattleManagerTests, TestFixtureGetBattleOutcomeDeath)
 {
-    Player* player = new Player("glass cannon",HUMAN,ROGUE,1000,1000); //high sp so only can cast heal
+    Player* player = new Player("glass cannon",HUMAN,ROGUE,10,1000); //high sp so only can cast heal
     Character enemy = Character("ImpossibletoBeat",GOBLIN,ENEMY,5000,5000,500,90);
     std::istringstream iss;
     std::ostringstream oss;
