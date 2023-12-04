@@ -16,6 +16,20 @@ TEST(CharacterManagerTests, testGetCharacter)
     EXPECT_EQ(cManager.getCharacter("null"), nCharacter);
 }
 
+// TEST(CharacterManagerTests, testCreatePlayer)
+// {
+//     std::stringstream mockUser;
+//     std::stringstream junkOutput;
+//     mockUser << "b" << std::endl << "b" << std::endl << "Elven Paladin" << std::endl;
+//     IOManager ioManager(mockUser, junkOutput);
+//     CharacterManager myCharacters(ioManager);
+//     myCharacters.initialize();
+//     Player* player = myCharacters.getPlayer();
+
+//     EXPECT_EQ(player->getName(), "Elven Paladin");
+//     EXPECT_EQ(player->getSpecies(), 1);
+//     EXPECT_EQ(player->getClass(), 1);
+// }
 
 TEST(CharacterManagerTests, testInitializeElfPaladin)
 {

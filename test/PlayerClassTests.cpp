@@ -47,3 +47,37 @@ TEST(PlayerTest, testConstructorForged)
     EXPECT_EQ(Elrond.getDefense(),30);
     EXPECT_EQ(Elrond.getDexterity(),10);
 }
+
+// Test getClass() method
+TEST(PlayerTest, GetClass) {
+    Player player("TestPlayer", SpeciesType::HUMAN, ClassType::ROGUE, 200, 100);
+    EXPECT_EQ(player.getClass(), ClassType::ROGUE);
+    // Add more assertions as needed for other classes
+}
+
+// Test getSP(), spendSP(), and regenerateSP() methods
+TEST(PlayerTest, SPManipulation) {
+    Player player("TestPlayer", SpeciesType::HUMAN, ClassType::ROGUE, 200, 100);
+
+    EXPECT_EQ(player.getSP(), 100); // Initial SP
+
+    player.spendSP(50); // Spend 50 SP
+    EXPECT_EQ(player.getSP(), 50); // SP after spending
+
+    player.regenerateSP(30); // Regenerate 30 SP
+    EXPECT_EQ(player.getSP(), 80); // SP after regeneration
+
+    // Test SP limits
+    player.spendSP(1000); // Spend more than available SP
+    EXPECT_EQ(player.getSP(), 0); // SP should be zero
+
+    player.regenerateSP(50); // Regenerate more than the maximum SP
+    EXPECT_EQ(player.getSP(), 100); // SP should not exceed the maximum value
+}
+
+// Test getMaxSP() method
+TEST(PlayerTest, GetMaxSP) {
+    Player player("TestPlayer", SpeciesType::HUMAN, ClassType::ROGUE, 200, 100);
+    EXPECT_EQ(player.getMaxSP(), 100);
+    // Add more assertions as needed for different maximum SP values
+}
