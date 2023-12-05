@@ -416,7 +416,8 @@ int BattleManager::calculateDamage(int attackPower, int attackMod, int targetDef
 {
     return ((attackPower * attackMod) - (targetDefense * defenseMod)) * hitValue * 0.3;
 }
-// TODO: Helper of attack that displays the results of the attack to the user.
+
+// Helper of attack that displays the results of the attack to the user.
 void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, int damage)
 {
     std::stringstream ss;
@@ -443,12 +444,13 @@ void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, in
                     ss << enemy.getName() << enemyAbility.description << " Dealing " << damage << " damage to " << player->getName() << "\n";
                     break;
                 case 2:
-                    ss << "Critical Hit!\n" <<
-                        enemy.getName() << enemyAbility.description << " Dealing " << damage << " damage to " << player->getName() << "\n";
+                    ss << "Critical Hit!\n";
+                    ss << enemy.getName() << enemyAbility.description << " Dealing " << damage << " damage to " << player->getName() << "\n";
                     break;
             }
         }
-    } 
+    }
+    // Normal player attack
     else if(isPlayer)
     {
         switch(player->getClass())
@@ -457,17 +459,17 @@ void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, in
                 switch(success)
                 {
                     case 0:
-                        ss << "You try to swing your axe at " << enemy.getName() << 
-                            " and your axe flies right out of your hand\n";
+                        ss << "You try to swing your axe at " << enemy.getName();
+                        ss << " and your axe flies right out of your hand\n";
                         break;
                     case 1:
-                        ss << "You swing your axe down on " << enemy.getName() << 
-                            " and your axe deals " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "You swing your axe down on " << enemy.getName(); 
+                        ss << " and your axe deals " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                     case 2:
-                        ss << "Critical Hit!\n" <<
-                            "You Hurl your axe at " << enemy.getName() << 
-                            " and your axe deals " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "Critical Hit!\n";
+                        ss << "You Hurl your axe at " << enemy.getName();
+                        ss <<  " and your axe deals " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                 }
                 break;
@@ -475,17 +477,17 @@ void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, in
                 switch(success)
                 {
                     case 0:
-                        ss << "You try to hit " << enemy.getName() << 
-                            " with your staff and you miss completely\n";
+                        ss << "You try to hit " << enemy.getName();
+                        ss << " with your staff and you miss completely\n";
                         break;
                     case 1:
-                        ss << "You bash " << enemy.getName() << 
-                            " with your staff and deal " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "You bash " << enemy.getName();
+                        ss << " with your staff and deal " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                     case 2:
-                        ss << "Critical Hit!\n" <<
-                            "You try to bash " << enemy.getName() << 
-                            " with your staff and cast a fireball dealing " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "Critical Hit!\n";
+                        ss << "You try to bash " << enemy.getName();
+                        ss << " with your staff and cast a fireball dealing " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                 }
                 break;
@@ -493,17 +495,17 @@ void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, in
                 switch(success)
                 {
                     case 0:
-                        ss << "You try to plunge your dagger into " << enemy.getName() << 
-                            " and you drop your dagger on the ground\n";
+                        ss << "You try to plunge your dagger into " << enemy.getName();
+                        ss << " and you drop your dagger on the ground\n";
                         break;
                     case 1:
-                        ss << "You swing your dagger at " << enemy.getName() << 
-                            " and deal " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "You swing your dagger at " << enemy.getName(); 
+                        ss << " and deal " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                     case 2:
-                        ss << "Critical Hit!\n" <<
-                            "You plunge your dagger into " << enemy.getName() << 
-                            " and deal " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "Critical Hit!\n";
+                        ss << "You plunge your dagger into " << enemy.getName(); 
+                        ss << " and deal " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                 }
                 break;
@@ -511,22 +513,23 @@ void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, in
                 switch(success)
                 {
                     case 0:
-                        ss << "You try to swing your sword at " << enemy.getName() << 
-                            " and your sword flies right out of your hand\n";
+                        ss << "You try to swing your sword at " << enemy.getName();
+                        ss << " and your sword flies right out of your hand\n";
                         break;
                     case 1:
-                        ss << "You swing your sword at " << enemy.getName() << 
-                            " and you deal " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "You swing your sword at " << enemy.getName();
+                        ss << " and you deal " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                     case 2:
-                        ss << "Critical Hit!\n" <<
-                            "You swing your sword at " << enemy.getName() << 
-                            " and you cast fireball dealing " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "Critical Hit!\n";
+                        ss << "You swing your sword at " << enemy.getName();
+                        ss << " and you cast fireball dealing " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                 }
                 break;
         }
     }
+    // Normal enemy attack
     else
     {
         switch(success)

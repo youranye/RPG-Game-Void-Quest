@@ -396,7 +396,7 @@ TEST(BattleManagerTests, TestFixtureDisplayHealEnemy)
     player = nullptr;
 }
 
-// Test displayAttack for normal attacks
+// Test displayAttack for normal attacks by player
 TEST(BattleManagerTests, TestFixtureDisplayAttackPlayerRogue)
 {
     Player* player = new Player("Elrond",HUMAN,ROGUE,200,100);
@@ -481,7 +481,7 @@ TEST(BattleManagerTests, TestFixtureDisplayAttackPlayerForged)
     player = nullptr;
 }
 
-// Test displayAttack for special attacks
+// Test displayAttack for special attacks by player
 TEST(BattleManagerTests, TestFixtureDisplaySpecialAttackPlayerRogue)
 {
     Player* player = new Player("Elrond",HUMAN,ROGUE,200,100);
@@ -560,6 +560,52 @@ TEST(BattleManagerTests, TestFixtureDisplaySpecialAttackPlayerForged)
     testBattle.pubDisplayAttack(1,1,0,0);
     testBattle.pubDisplayAttack(1,1,1,1);
     testBattle.pubDisplayAttack(1,1,2,2);
+    EXPECT_EQ(oss.str(),ss.str());
+
+    delete player;
+    player = nullptr;
+}
+
+// Test displayAttack for normal attack by enemy
+TEST(BattleManagerTests, TestFixtureDisplayAttackEnemy)
+{
+    Player* player = new Player("Elrond",DWARF,FORGED,200,100);
+    Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15, Ability("Bang!",ATTACK,"throws a grenade",NONE,200,18));
+    std::stringstream ss;
+    std::istringstream iss;
+    std::ostringstream oss;
+    ss << enemy.getName() << " Tries to hit you and misses!\n";
+    ss << enemy.getName() << " hits you! Dealing "<< 1 << " damage to " << player->getName() << "\n";
+    ss << "Critical Hit!\n";
+    ss << enemy.getName() << " hits you! Dealing " << 2 << " damage to " << player->getName() << "\n";
+    IOManager ioManager(iss,oss);
+    BattleManagerFixture testBattle(player, enemy,ioManager);
+    testBattle.pubDisplayAttack(0,0,0,0);
+    testBattle.pubDisplayAttack(0,0,1,1);
+    testBattle.pubDisplayAttack(0,0,2,2);
+    EXPECT_EQ(oss.str(),ss.str());
+
+    delete player;
+    player = nullptr;
+}
+
+// Test displayAttack for special attack by enemy
+TEST(BattleManagerTests, TestFixtureDisplaySpecialAttackEnemy)
+{
+    Player* player = new Player("Elrond",DWARF,FORGED,200,100);
+    Character enemy = Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15, Ability("Bang!",ATTACK,"throws a grenade",NONE,200,18));
+    std::stringstream ss;
+    std::istringstream iss;
+    std::ostringstream oss;
+    ss << enemy.getName() << " Tries to hit you and misses!\n";
+    ss << enemy.getName() << enemy.getAbility().description << " Dealing " << 1 << " damage to " << player->getName() << "\n";
+    ss << "Critical Hit!\n";
+    ss << enemy.getName() << enemy.getAbility().description << " Dealing " << 2 << " damage to " << player->getName() << "\n";
+    IOManager ioManager(iss,oss);
+    BattleManagerFixture testBattle(player, enemy,ioManager);
+    testBattle.pubDisplayAttack(1,0,0,0);
+    testBattle.pubDisplayAttack(1,0,1,1);
+    testBattle.pubDisplayAttack(1,0,2,2);
     EXPECT_EQ(oss.str(),ss.str());
 
     delete player;
@@ -737,7 +783,6 @@ TEST(BattleManagerTests, TestFixtureRunBattleOnlySpecialAttack)
     IOManager ioManager(iss,oss);
     BattleManagerFixtureRunBattleTest testBattle(player, enemy,ioManager);
     testBattle.setAction(2);
-    
     EXPECT_NO_THROW(testBattle.runBattle());
     EXPECT_TRUE( (testBattle.getBattleOutcome() == WIN) || (testBattle.getBattleOutcome() == DEATH) );
 }
