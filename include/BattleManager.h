@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <sstream>
+#include <stdexcept>
 
 // Describes result of the battle
 enum BattleOutcome { WIN, DEATH, ONGOING };
@@ -17,6 +18,10 @@ class BattleManager
         BattleManager(Player* playerCharacter, Character& enemyCharacter, IOManager& ioManager)
             : player(playerCharacter), enemy(enemyCharacter), result(ONGOING), ioManager(ioManager)
         {
+            if(player == nullptr || enemyCharacter == nullCharacter)
+            {
+                throw std::invalid_argument("Invalid BattleManager constructor.");
+            }
             playerAbility = player->getAbility();
             enemyAbility = enemy.getAbility();
         }

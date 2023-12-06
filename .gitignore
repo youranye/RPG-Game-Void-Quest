@@ -28,3 +28,5 @@ src/libSceneManager.a
 # Code Coverage Files
 CODE_COVERAGE
 gtest_coverage.info
+
+release
