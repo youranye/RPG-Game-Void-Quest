@@ -20,40 +20,17 @@ void BattleManager::runBattle()
     // Player and enemy take turns attacking each other until one is dead or the player flees.
     while (player->getHP() > 0 && enemy.getHP() > 0)
     {
-        bool playerChoiceValid = false;
-        while(!playerChoiceValid)
+        int userChoice = chooseAction();
+        switch(userChoice)
         {
-            switch(chooseAction())
-            {
-                case 0:
-                    attack(true);
-                    playerChoiceValid = true;
-                    break;
-                case 1:
-                    if(player->getSP() < 5)
-                    {
-                        //cout not enough sp
-                        ioManager.write("Not Enough SP to case Heal!\n");
-                    }
-                    else
-                    {
-                        heal(true);
-                        playerChoiceValid = true;
-                    }
-                    break;
-                case 2:
-                    if(player->getSP() < playerAbility.cost)
-                    {
-                        //cout not enough sp
-                        ioManager.write("Not Enough SP to use Special Attack!\n");
-                    }
-                    else
-                    {
-                        specialAttack(true);
-                        playerChoiceValid = true;
-                    }
-                    break;
-            }
+            case 0:
+                attack(true);
+                break;
+            case 1:
+                heal(true);
+                break;
+            case 2:
+                specialAttack(true);
         }
 
         if(enemy.getHP()==0)
@@ -65,10 +42,7 @@ void BattleManager::runBattle()
         {
             int desiretoheal = 0;
             int enemyDesireCost = enemy.getMaxHP() - enemy.getHP();
-            if(enemyDesireCost <= 0)
-            {
-                enemyDesireCost = 0;
-            }
+            
             desiretoheal = randNumGenerator(enemyDesireCost, enemy.getMaxHP());
             if(enemy.getHP() < desiretoheal && enemy.getHP() < 100)
             {
@@ -105,20 +79,59 @@ BattleOutcome BattleManager::getBattleOutcome()
 // user chooses action
 int BattleManager::chooseAction()
 {
-    std::stringstream ss;
-    ss << "Enemy Health: " << enemy.getHP() << "/" << enemy.getMaxHP() << " " << enemy.getHPBar() << "\n" <<
-        "Player Health: " << player->getHP() << "/" << player->getMaxHP() << " " << player->getHPBar() << "\n" <<
-        "Player SP: " << player->getSP() << "/" << player->getMaxSP() << "\n" <<
-        "Options: " << "\n" <<
-        "a) attack Cost: 0 SP" << "\n" <<
-        "b) heal Cost: 5 SP" << "\n" <<
-        "c) " << playerAbility.name << " Cost: " << playerAbility.cost << " SP" << "\n";
-    ioManager.write(ss.str());
-    return ioManager.readOption(3);
+    bool playerChoiceValid = false;
+    int userChoice = 0;
+    while(!playerChoiceValid)
+    { 
+        // Prompt the user with their action choices
+        std::stringstream ss;
+        ss << "Enemy Health: " << enemy.getHP() << "/" << enemy.getMaxHP() << " " << enemy.getHPBar() << "\n" <<
+            "Player Health: " << player->getHP() << "/" << player->getMaxHP() << " " << player->getHPBar() << "\n" <<
+            "Player SP: " << player->getSP() << "/" << player->getMaxSP() << "\n" <<
+            "Options: " << "\n" <<
+            "a) attack Cost: 0 SP" << "\n" <<
+            "b) heal Cost: 5 SP" << "\n" <<
+            "c) " << playerAbility.name << " Cost: " << playerAbility.cost << " SP" << "\n";
+        ioManager.write(ss.str());
+        userChoice = ioManager.readOption(3);
+
+        // Validate the user's choice
+        switch(userChoice)
+        {
+            case 0:
+                playerChoiceValid = true;
+                break;
+            case 1:
+                if(player->getSP() < 5)
+                {
+                    //cout not enough sp
+                    ioManager.write("Not Enough SP to case Heal!\n");
+                }
+                else
+                {
+                    playerChoiceValid = true;
+                }
+                break;
+            case 2:
+                if(player->getSP() < playerAbility.cost)
+                {
+                    //cout not enough sp
+                    ioManager.write("Not Enough SP to use Special Attack!\n");
+                }
+                else
+                {
+                    playerChoiceValid = true;
+                }
+                break;
+        }
+    }
+
+    return userChoice;
 }
 
 /* Given an attacker and a target, calculates the results of an attack, deals appropriate damage,
    and displays results of the attack to the user. */
+// LCOV_EXCL_START
 void BattleManager::attack(bool isPlayerAttacker)
 {
     int accuracy = randNumGenerator(1,100);
@@ -210,6 +223,7 @@ void BattleManager::attack(bool isPlayerAttacker)
     // Display result of attack to user
     displayAttack(false, isPlayerAttacker, hitValue, totalDamage);
 }
+// LCOV_EXCL_STOP
 
 // Generates random integer with range from lowest to highest inclusive
 int BattleManager::randNumGenerator(int lowest, int highest)
@@ -220,6 +234,7 @@ int BattleManager::randNumGenerator(int lowest, int highest)
     return (rand() % range) + lowest;
 }
 
+// LCOV_EXCL_START
 void BattleManager::specialAttack(bool isPlayer)
 {
     int accuracy = randNumGenerator(15,100);
@@ -336,6 +351,7 @@ void BattleManager::specialAttack(bool isPlayer)
     // Display result of attack to user
     displayAttack(true, isPlayer, hitValue, totalDamage); 
 }
+// LCOV_EXCL_STOP
 
 // heals 10 hp
 void BattleManager::heal(bool isPlayer)
@@ -400,10 +416,13 @@ int BattleManager::calculateDamage(int attackPower, int attackMod, int targetDef
 {
     return ((attackPower * attackMod) - (targetDefense * defenseMod)) * hitValue * 0.3;
 }
-// TODO: Helper of attack that displays the results of the attack to the user.
+
+// Helper of attack that displays the results of the attack to the user.
 void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, int damage)
 {
     std::stringstream ss;
+    
+    // Attack with ability
     if(isSpecial)
     {
         if(isPlayer)
@@ -416,22 +435,22 @@ void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, in
         }
         else
         {
-            //TODO make it look good
             switch(success)
             {
                 case 0:
                     ss << enemy.getName() << " Tries to hit you and misses!\n";
                     break;
                 case 1:
-                    ss << enemy.getName() << " hits you! Dealing "<< damage << " damage to " << player->getName() << "\n";
+                    ss << enemy.getName() << enemyAbility.description << " Dealing " << damage << " damage to " << player->getName() << "\n";
                     break;
                 case 2:
-                    ss << "Critical Hit!\n" <<
-                        enemy.getName() << " hits you! Dealing " << damage << " damage to " << player->getName() << "\n";
+                    ss << "Critical Hit!\n";
+                    ss << enemy.getName() << enemyAbility.description << " Dealing " << damage << " damage to " << player->getName() << "\n";
                     break;
             }
         }
-    } 
+    }
+    // Normal player attack
     else if(isPlayer)
     {
         switch(player->getClass())
@@ -440,17 +459,17 @@ void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, in
                 switch(success)
                 {
                     case 0:
-                        ss << "You try to swing your axe at " << enemy.getName() << 
-                            " and your axe flies right out of your hand\n";
+                        ss << "You try to swing your axe at " << enemy.getName();
+                        ss << " and your axe flies right out of your hand\n";
                         break;
                     case 1:
-                        ss << "You swing your axe down on " << enemy.getName() << 
-                            " and your axe deals " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "You swing your axe down on " << enemy.getName(); 
+                        ss << " and your axe deals " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                     case 2:
-                        ss << "Critical Hit!\n" <<
-                            "You Hurl your axe at " << enemy.getName() << 
-                            " and your axe deals " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "Critical Hit!\n";
+                        ss << "You Hurl your axe at " << enemy.getName();
+                        ss <<  " and your axe deals " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                 }
                 break;
@@ -458,17 +477,17 @@ void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, in
                 switch(success)
                 {
                     case 0:
-                        ss << "You try to hit " << enemy.getName() << 
-                            " with your staff and you miss completely\n";
+                        ss << "You try to hit " << enemy.getName();
+                        ss << " with your staff and you miss completely\n";
                         break;
                     case 1:
-                        ss << "You bash " << enemy.getName() << 
-                            " with your staff and deal " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "You bash " << enemy.getName();
+                        ss << " with your staff and deal " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                     case 2:
-                        ss << "Critical Hit!\n" <<
-                            "You try to bash " << enemy.getName() << 
-                            " with your staff and cast a fireball dealing " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "Critical Hit!\n";
+                        ss << "You try to bash " << enemy.getName();
+                        ss << " with your staff and cast a fireball dealing " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                 }
                 break;
@@ -476,17 +495,17 @@ void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, in
                 switch(success)
                 {
                     case 0:
-                        ss << "You try to plunge your dagger into " << enemy.getName() << 
-                            " and you drop your dagger on the ground\n";
+                        ss << "You try to plunge your dagger into " << enemy.getName();
+                        ss << " and you drop your dagger on the ground\n";
                         break;
                     case 1:
-                        ss << "You swing your dagger at " << enemy.getName() << 
-                            " and deal " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "You swing your dagger at " << enemy.getName(); 
+                        ss << " and deal " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                     case 2:
-                        ss << "Critical Hit!\n" <<
-                            "You plunge your dagger into " << enemy.getName() << 
-                            " and deal " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "Critical Hit!\n";
+                        ss << "You plunge your dagger into " << enemy.getName(); 
+                        ss << " and deal " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                 }
                 break;
@@ -494,22 +513,23 @@ void BattleManager::displayAttack(bool isSpecial, bool isPlayer, int success, in
                 switch(success)
                 {
                     case 0:
-                        ss << "You try to swing your sword at " << enemy.getName() << 
-                            " and your sword flies right out of your hand\n";
+                        ss << "You try to swing your sword at " << enemy.getName();
+                        ss << " and your sword flies right out of your hand\n";
                         break;
                     case 1:
-                        ss << "You swing your sword at " << enemy.getName() << 
-                            " and you deal " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "You swing your sword at " << enemy.getName();
+                        ss << " and you deal " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                     case 2:
-                        ss << "Critical Hit!\n" <<
-                            "You swing your sword at " << enemy.getName() << 
-                            " and you cast fireball dealing " << damage << " damage to " << enemy.getName() << "\n";
+                        ss << "Critical Hit!\n";
+                        ss << "You swing your sword at " << enemy.getName();
+                        ss << " and you cast fireball dealing " << damage << " damage to " << enemy.getName() << "\n";
                         break;
                 }
                 break;
         }
     }
+    // Normal enemy attack
     else
     {
         switch(success)

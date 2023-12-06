@@ -79,17 +79,3 @@ TEST_F(SceneManagerTest, testRunNarrativeScene)
     manager.runScene();
     EXPECT_EQ(manager.getCurrentScene(), nextScene);
 }
-
-/*
-TEST_F(SceneManagerTest, testRunBattleScene)
-{
-    is.str("b\n b\n b\n b\n b\n b\n b\n b\n b\n"); // heal until
-    manager.replaceScene("scene1");
-    Scene* nextScene = manager.getCurrentScene(); // this is the scene after sceneBattle
-
-    manager.replaceScene("sceneBattle");
-    manager.runScene();
-    
-    EXPECT_EQ(manager.getCurrentScene(), nextScene);
-}
-*/
