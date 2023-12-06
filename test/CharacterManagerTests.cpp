@@ -8,7 +8,7 @@ TEST(CharacterManagerTests, testConstructor)
     EXPECT_NO_THROW(CharacterManager cManager(ioManager));
 }
 
-TEST(CharacterManagerTests, testGetCharacter)
+TEST(CharacterManagerTests, testGetCharacterNull)
 {
     IOManager ioManager(std::cin, std::cout);
     CharacterManager cManager(ioManager);
@@ -60,21 +60,25 @@ TEST(CharacterManagerTests, testInitializeMultipleTimes)
     EXPECT_THROW(myCharacters.initialize(), std::logic_error);
 }
 
-// TEST(CharacterManagerTests, testInitializeAgain)
-// {
-//     std::stringstream mockUser;
-//     std::stringstream junkOutput;
-//     mockUser << "a" << std::endl << "a" << std::endl << "Elven Paladin" << std::endl;
-//     IOManager ioManager(mockUser, junkOutput);
-//     CharacterManager myCharacters(ioManager);
-//     myCharacters.initialize();
-//     Character& character = myCharacters.getCharacter("Elven Paladin");
-//     character.takeDamage(10000);
-//     mockUser << "a" << std::endl << "a" << std::endl << "Elven Paladin" << std::endl;
-    
-    
-//     EXPECT_NO_THROW(myCharacters.initialize());
-// }
+TEST(CharacterManagerTests, testInitializeAgain)
+{
+    std::stringstream mockUser;
+    std::stringstream junkOutput;
+    mockUser << "a" << std::endl << "a" << std::endl << "Elven Paladin" << std::endl;
+    IOManager ioManager(mockUser, junkOutput);
+    CharacterManager myCharacters(ioManager);
+    myCharacters.initialize();
+    Player* player = myCharacters.getPlayer();
+    Character& character = myCharacters.getCharacter("Elven Paladin");
+    player->takeDamage(300);
+
+    EXPECT_EQ(player->getHP(), 0);
+
+    mockUser << "a" << std::endl << "a" << std::endl << "Elven Paladin" << std::endl;
+
+    EXPECT_NO_THROW(myCharacters.initialize());
+}
+
 
 TEST(CharacterManagerTests, testInitializeElfPaladin)
 {
@@ -273,3 +277,15 @@ TEST(CharacterManagerTests, testInitializeWarlock)
     EXPECT_EQ(player->getSpecies(), 0);
     EXPECT_EQ(player->getClass(), 2);
 }
+
+TEST(CharacterManagerTests, testGetCharacter)
+{   
+    IOManager ioManager(std::cin, std::cout);
+    CharacterManager myCharacters(ioManager);
+    EXPECT_NO_THROW(myCharacters.getCharacter("The Dwarf Warrior"));
+
+    Character& character = myCharacters.getCharacter("The Dwarf Warrior");
+
+    EXPECT_EQ(character.getName(),"The Dwarf Warrior");
+}
+
