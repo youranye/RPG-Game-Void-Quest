@@ -47,6 +47,35 @@ TEST(CharacterManagerTests, testGetCharacter)
 //     EXPECT_EQ(player->getClass(), ROGUE); // Replace ROGUE with the expected class
 // }
 
+TEST(CharacterManagerTests, testInitializeMultipleTimes)
+{
+    std::stringstream mockUser;
+    std::stringstream junkOutput;
+    mockUser << "b" << std::endl << "b" << std::endl << "Elven Paladin" << std::endl;
+    mockUser << "b" << std::endl << "b" << std::endl << "Elven Paladin" << std::endl;
+    IOManager ioManager(mockUser, junkOutput);
+    CharacterManager myCharacters(ioManager);
+    myCharacters.initialize();
+    
+    EXPECT_THROW(myCharacters.initialize(), std::logic_error);
+}
+
+// TEST(CharacterManagerTests, testInitializeAgain)
+// {
+//     std::stringstream mockUser;
+//     std::stringstream junkOutput;
+//     mockUser << "a" << std::endl << "a" << std::endl << "Elven Paladin" << std::endl;
+//     IOManager ioManager(mockUser, junkOutput);
+//     CharacterManager myCharacters(ioManager);
+//     myCharacters.initialize();
+//     Character& character = myCharacters.getCharacter("Elven Paladin");
+//     character.takeDamage(10000);
+//     mockUser << "a" << std::endl << "a" << std::endl << "Elven Paladin" << std::endl;
+    
+    
+//     EXPECT_NO_THROW(myCharacters.initialize());
+// }
+
 TEST(CharacterManagerTests, testInitializeElfPaladin)
 {
     std::stringstream mockUser;
