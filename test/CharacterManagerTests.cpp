@@ -278,14 +278,43 @@ TEST(CharacterManagerTests, testInitializeWarlock)
     EXPECT_EQ(player->getClass(), 2);
 }
 
-TEST(CharacterManagerTests, testGetCharacter)
+TEST(CharacterManagerTests, testGetCharacterDwarf)
 {   
     IOManager ioManager(std::cin, std::cout);
     CharacterManager myCharacters(ioManager);
+
+    // Character("The Dwarf Warrior",DWARF,ENEMY,100,15,10,10)
+
     EXPECT_NO_THROW(myCharacters.getCharacter("The Dwarf Warrior"));
 
     Character& character = myCharacters.getCharacter("The Dwarf Warrior");
 
     EXPECT_EQ(character.getName(),"The Dwarf Warrior");
+    EXPECT_EQ(character.getSpecies(),DWARF);
+    EXPECT_EQ(character.getType(),ENEMY);
+    EXPECT_EQ(character.getAttack(), 15);
+    EXPECT_EQ(character.getDefense(), 10);
+    EXPECT_EQ(character.getDexterity(), 10);
 }
+
+TEST(CharacterManagerTests, testGetCharacterBarryTheGoblin)
+{   
+    IOManager ioManager(std::cin, std::cout);
+    CharacterManager myCharacters(ioManager);
+
+    // Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15)
+
+    EXPECT_NO_THROW(myCharacters.getCharacter("Barry the Goblin"));
+
+    Character& character = myCharacters.getCharacter("Barry the Goblin");
+
+    EXPECT_EQ(character.getName(),"Barry the Goblin");
+    EXPECT_EQ(character.getSpecies(),GOBLIN);
+    EXPECT_EQ(character.getType(),ENEMY);
+    EXPECT_EQ(character.getAttack(), 15);
+    EXPECT_EQ(character.getDefense(), 10);
+    EXPECT_EQ(character.getDexterity(), 15);
+}
+
+
 
