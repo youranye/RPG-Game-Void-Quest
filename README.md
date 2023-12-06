@@ -4,16 +4,14 @@ Authors: [Wen Wu Yiang](https://github.com/W2YUCR), [Youran Ye](https://github.c
 
 ## Project Description
 
-Void Quest is a text based RPG written in C++ that takes place in the Stitch, a world bustling with Humans, Orcs, Elves, Dwarves, Goblins, and Giants.
+Void Quest is a text based RPG written in C++ that takes place in the Stitch, a world bustling with Humans, Orcs, Elves, Dwarves, Goblins, and Giants. In this game, the player explores GrimGard's Lair, a winding cave system full of hidden dangers.
 
 Features of our RPG:
 
-* Character customization: Players can customize their character by choosing their name, attributes, and class, which affects their character stats and abilities.
+* Character customization: Players can customize their character by choosing their name, species, and class, which affects their character stats and abilities.
 * Extendible world: The world is set up using data files, which means that new content can be added by simply adding more files.
-* Branching plotline: Player choices affect the game state, which changes what the user finds in the world.
+* Player choice: The player's choices affect their movement through the cave system.
 * Combat system: Players are able to fight enemies throughout their journey, and upgrade their equipment.
-* NPCs: NPCs can give out quests to players who will be rewarded for completing objectives
-* Game saving and loading: Players can save and load games to continue playing later.
 
 Output: Scenes are text-based, and printed out to the console. It shows the narrative text, status such as health, and options for progression.
 Input: Each option shown is lettered a, b, c, etc.. Users can select one of the options shown by typing the corresponding letter. 
@@ -31,12 +29,11 @@ This diagram shows a flowchart of the various parts of the program, starting fro
 ### Screen Layouts
 
 Screens will contain text that relates to the story of the game. They will give the user a list of lettered options and prompt the user to select the letter of the option they desire. The user will select an option by typing the corresponding letter into the terminal and hitting enter. The expected input is one of the listed letters. In the case of character creation, a string is expected for the character's name. The game will include the following screens:
-* Home/Start: Displays the title of the game. The user enters ‘a’ to start the game or ‘b’ to see the credits.
+* Home/Start: Displays the title of the game. The user enters ‘a’ to start the game, ‘b’ to see the credits, or 'c' to quit.
 * Credits: Displays the credits. The user enters any letter to return to the home/start screen.
 * Story: Narrates a scene in the story. Explains a scenario to the user and asks them to choose what they will do next. Displays a list of options, each labeled with a letter. The user inputs the letter of the option they wish to choose.
-* Combat help: Displays an explanation of combat mechanics. The user enters any letter to return to the story.
-* Game over: Displays a message that the player character has died. The user enters any letter to return to the home/start screen.
-* Win: Displays a message the user has won the game. The user enters any letter to return to the home/start screen.
+* Game over: Displays a message that the player character has died and the credits. The user enters any letter to return to the home/start screen.
+* Win: Displays a message the user has won the game and the credits. The user enters any letter to return to the home/start screen.
 
 ![screen layout](README_Resources/screen_layout.jpg)
 
@@ -44,17 +41,17 @@ Screens will contain text that relates to the story of the game. They will give 
 
  ![class diagram](README_Resources/class_diagram.png)
 
-This Diagram describes the planned layout of our Project, GameManager is a class that manages the Game, it handles the story and connecting the backend of the game with the frontend. The Character Class is what stores character information and stats, ClassType and SpeciesType are enumerations, The CharacterManager Class stores and manages the characters. Scene is the Abstract Base Class for storing Text options and prompts. SceneStore Stores and Manages these Scenes. BattleManager manages battles and fights. Handles damage calculations, battle menus, everything related to battles. IOManager handles UserInput and verifying that it is valid before passing to other classes and parts of the program.
+This Diagram describes the planned layout of our Project, GameManager is a class that manages the Game, it handles the story and connecting the backend of the game with the frontend. The Character Class is what stores character information and stats. ClassType and SpeciesType are enumerations. The CharacterManager Class stores and manages the characters. Scene is the Abstract Base Class for storing Text options and prompts. SceneStore stores these Scenes and SceneManager manages them. BattleManager manages battles and fights. It handles damage calculations, battle menus, everything related to battles. IOManager handles UserInput and verifying that it is valid before passing to other classes and parts of the program.
  
 ## Phase III
 
 * What principles did you apply?
   
-We applied the single responsibility principle to our GameManager class. GameManager violates Single Responsibility, since it coordinates between the sceneManager, BattleManager, and CharacterManager and also coordinates how to treat Battle and Narrative scenes. It should not implement any logic related to scenes.
+We applied the single responsibility principle to our GameManager class. GameManager violates Single Responsibility, since it coordinates between the SceneManager, BattleManager, and CharacterManager and also coordinates how to treat Battle and Narrative scenes. It should not implement any logic related to scenes.
 
 * How did you apply it?
   
-To fix it, we will add a runScene function to sceneManager and a SceneVisitor function. The SceneVisitor function will treat a scene differently depending on what type of scene it is. SceneManager will handle the logic of running the scene in the runScene function.
+To fix it, we will add a runScene function to SceneManager. The runScene function will treat a scene differently depending on what type of scene it is. SceneManager will handle the logic of running the scene in the runScene function.
 
 * How did this help us write better code? 
   
