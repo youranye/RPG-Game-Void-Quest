@@ -162,7 +162,7 @@ TEST(CharacterTest, GetHPBar)
 {
     Character character("Ivy", SpeciesType::HUMAN, CharacterType::PLAYER,50,20,30,40);
     character.takeDamage(25); 
-    EXPECT_EQ(character.getHPBar(), "[:::::     ]"); 
+    EXPECT_EQ(character.getHPBar(), "[\033[38:5:202m:::::\033[1;0m     ]"); 
 }
 
 TEST(CharacterTest, GetHPBarAb) 
@@ -170,7 +170,7 @@ TEST(CharacterTest, GetHPBarAb)
     Character character("Ivy", SpeciesType::HUMAN, CharacterType::PLAYER,50,20,30,40, 
     Ability("Basic Attack", ATTACK, "Attack Enemy", NONE, 90, 0));
     character.takeDamage(25); 
-    EXPECT_EQ(character.getHPBar(), "[:::::     ]"); 
+    EXPECT_EQ(character.getHPBar(), "[\033[38:5:202m:::::\033[1;0m     ]"); 
 }
 
 // Test operator== function
@@ -191,4 +191,21 @@ TEST(CharacterTest, OperatorEqualsAb) {
     Character character3("John", SpeciesType::HUMAN, CharacterType::PLAYER,10,20,30,40, 
     Ability("Basic Attack", ATTACK, "Attack Enemy", NONE, 90, 0));
     EXPECT_FALSE(character1 == character3);
+}
+
+TEST(CharacterTest, HealHpDownByOne) 
+{
+    Character character("Ivy", SpeciesType::HUMAN, CharacterType::PLAYER,50,20,30,40, 
+    Ability("Basic Attack", ATTACK, "Attack Enemy", NONE, 90, 0));
+    character.takeDamage(1); 
+    character.heal(100);
+    EXPECT_EQ(character.getHP(),50); 
+}
+
+TEST(CharacterTest, HPBarGreaterThan1000) 
+{
+    Character character("Ivy", SpeciesType::HUMAN, CharacterType::PLAYER,1500,20,30,40, 
+    Ability("Basic Attack", ATTACK, "Attack Enemy", NONE, 90, 0));
+    //one hundred dots with the coloring string attachments
+    EXPECT_EQ(character.getHPBar(),"[\x1B[1;32m::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\x1B[1;0m]"); 
 }

@@ -10,7 +10,6 @@ class GameManager {
 public:
     GameManager(IOManager& ioManager, CharacterManager& characterManager, SceneManager& sceneManager);
     ~GameManager();
-
     void startGame();
 
 private:
@@ -21,11 +20,8 @@ private:
     void displayStartPage();
     void displayCredits();
     void waitForAnyChar(); // Helper function to wait for any key press
-    //void displayScene();
-    //void startSceneLogic(const std::string& nextSceneKey);
-    void runScene();
-    //void goToNextScene(const std::string& nextSceneKey);
-    bool isFinalSceneReached(); // Helper function to check if it's the final scene
+    void startGameLogic();
+    void startSceneLogic(const std::string& nextSceneKey);
 };
 
 #endif // GAMEMANAGER_H

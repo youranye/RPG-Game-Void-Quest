@@ -17,6 +17,10 @@ class SceneStoreStub : public SceneStore
                                      "Scene 2", std::vector<NarrativeScene::Option>{{"Go to sceneBattle", "sceneBattle"}})});
         scenes.insert({"sceneBattle", std::make_unique<BattleScene>(
                                      "Barry the Goblin", "scene1" )});
+        scenes.insert({"scene3", std::make_unique<NarrativeScene>(
+                                     "Scene 3", std::vector<NarrativeScene::Option>{{"Go to scene 4", "scene4"}})});
+        scenes.insert({"scene4", std::make_unique<NarrativeScene>(
+                                     "Scene 4", std::vector<NarrativeScene::Option>{{"Go to End", "start#end"}})});
     }
 
     Scene &getScene(std::string_view const key) override
@@ -67,13 +71,12 @@ TEST_F(SceneManagerTest, testReplaceWithMissingSceneThrowsSceneNotFoundException
 
 TEST_F(SceneManagerTest, testRunNarrativeScene)
 {
-    is.str("a\n");
-    manager.replaceScene("scene2");
+    is.str("a\na\n");
+    manager.replaceScene("scene4");
     Scene* nextScene = manager.getCurrentScene(); // this is the scene after scene1
 
-    manager.replaceScene("scene1");
+    manager.replaceScene("scene3");
     manager.runScene();
-    
     EXPECT_EQ(manager.getCurrentScene(), nextScene);
 }
 
