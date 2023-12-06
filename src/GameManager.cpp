@@ -67,8 +67,7 @@ void GameManager::waitForAnyChar()
 {
     // Wait for the user to press any key to continue
     ioManager.write("Press any character to continue...");
-    int input;
-    input = ioManager.readOption(26); // Read and discard the input
+    (void)ioManager.readOption(26); // Read and discard the input
 }
 
 void GameManager::startGameLogic()

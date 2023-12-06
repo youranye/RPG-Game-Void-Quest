@@ -35,7 +35,7 @@ void SceneManager::handleNonBattleScene(NarrativeScene *nScene)
     std::stringstream ss;
     ss << "Options: "
        << "\n";
-    for (int i = 0; i < options.size(); i++)
+    for (std::size_t i = 0; i < options.size(); i++)
     {
         char letter = 'a' + i;
         ss << letter << ") " << options.at(i) << "\n";

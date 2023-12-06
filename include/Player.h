@@ -17,7 +17,7 @@ public:
 	Player(string name, SpeciesType species, ClassType class_Type, int health, int maxsp);
 	ClassType getClass();
 	int getSP();
-	const int getMaxSP();
+	int getMaxSP();
 	void spendSP(int amount);
 	void regenerateSP(int amount);
 };
