@@ -8,12 +8,75 @@ TEST(CharacterManagerTests, testConstructor)
     EXPECT_NO_THROW(CharacterManager cManager(ioManager));
 }
 
-TEST(CharacterManagerTests, testGetCharacter)
+TEST(CharacterManagerTests, testGetCharacterNull)
 {
     IOManager ioManager(std::cin, std::cout);
     CharacterManager cManager(ioManager);
     Character& nCharacter = nullCharacter;
     EXPECT_EQ(cManager.getCharacter("null"), nCharacter);
+}
+
+// TEST(CharacterManagerTests, testCreatePlayer)
+// {
+//     std::stringstream mockUser;
+//     std::stringstream junkOutput;
+//     mockUser << "b" << std::endl << "b" << std::endl << "Elven Paladin" << std::endl;
+//     IOManager ioManager(mockUser, junkOutput);
+//     CharacterManager myCharacters(ioManager);
+//     myCharacters.initialize();
+//     Player* player = myCharacters.getPlayer();
+
+//     EXPECT_EQ(player->getName(), "Elven Paladin");
+//     EXPECT_EQ(player->getSpecies(), 1);
+//     EXPECT_EQ(player->getClass(), 1);
+// }
+
+// TEST_F(CharacterManagerCreatePlayerTest, CreatesValidPlayerCharacter) 
+// {
+//     // Mock user input for the test
+//     // Replace these input lines with the actual simulated user input for species and class selection
+//     std::istringstream simulatedInput("b\na\nJohn\n");
+//     ioManager = IOManager(simulatedInput, std::cout);
+//     characterManager = CharacterManager(ioManager);
+
+//     Player* player = characterManager.createPlayer();
+//     ASSERT_NE(player, nullptr); // Check if the player character is created successfully
+
+//     EXPECT_EQ(player->getName(), "John"); // Replace "John" with the expected name
+//     EXPECT_EQ(player->getSpecies(), ELF); // Replace ELF with the expected species
+//     EXPECT_EQ(player->getClass(), ROGUE); // Replace ROGUE with the expected class
+// }
+
+TEST(CharacterManagerTests, testInitializeMultipleTimes)
+{
+    std::stringstream mockUser;
+    std::stringstream junkOutput;
+    mockUser << "b" << std::endl << "b" << std::endl << "Elven Paladin" << std::endl;
+    mockUser << "b" << std::endl << "b" << std::endl << "Elven Paladin" << std::endl;
+    IOManager ioManager(mockUser, junkOutput);
+    CharacterManager myCharacters(ioManager);
+    myCharacters.initialize();
+    
+    EXPECT_THROW(myCharacters.initialize(), std::logic_error);
+}
+
+TEST(CharacterManagerTests, testInitializeAgain)
+{
+    std::stringstream mockUser;
+    std::stringstream junkOutput;
+    mockUser << "a" << std::endl << "a" << std::endl << "Elven Paladin" << std::endl;
+    IOManager ioManager(mockUser, junkOutput);
+    CharacterManager myCharacters(ioManager);
+    myCharacters.initialize();
+    Player* player = myCharacters.getPlayer();
+    Character& character = myCharacters.getCharacter("Elven Paladin");
+    player->takeDamage(300);
+
+    EXPECT_EQ(player->getHP(), 0);
+
+    mockUser << "a" << std::endl << "a" << std::endl << "Elven Paladin" << std::endl;
+
+    EXPECT_NO_THROW(myCharacters.initialize());
 }
 
 
@@ -214,3 +277,44 @@ TEST(CharacterManagerTests, testInitializeWarlock)
     EXPECT_EQ(player->getSpecies(), 0);
     EXPECT_EQ(player->getClass(), 2);
 }
+
+TEST(CharacterManagerTests, testGetCharacterDwarf)
+{   
+    IOManager ioManager(std::cin, std::cout);
+    CharacterManager myCharacters(ioManager);
+
+    // Character("The Dwarf Warrior",DWARF,ENEMY,100,15,10,10)
+
+    EXPECT_NO_THROW(myCharacters.getCharacter("The Dwarf Warrior"));
+
+    Character& character = myCharacters.getCharacter("The Dwarf Warrior");
+
+    EXPECT_EQ(character.getName(),"The Dwarf Warrior");
+    EXPECT_EQ(character.getSpecies(),DWARF);
+    EXPECT_EQ(character.getType(),ENEMY);
+    EXPECT_EQ(character.getAttack(), 15);
+    EXPECT_EQ(character.getDefense(), 10);
+    EXPECT_EQ(character.getDexterity(), 10);
+}
+
+TEST(CharacterManagerTests, testGetCharacterBarryTheGoblin)
+{   
+    IOManager ioManager(std::cin, std::cout);
+    CharacterManager myCharacters(ioManager);
+
+    // Character("Barry the Goblin",GOBLIN,ENEMY,110,15,10,15)
+
+    EXPECT_NO_THROW(myCharacters.getCharacter("Barry the Goblin"));
+
+    Character& character = myCharacters.getCharacter("Barry the Goblin");
+
+    EXPECT_EQ(character.getName(),"Barry the Goblin");
+    EXPECT_EQ(character.getSpecies(),GOBLIN);
+    EXPECT_EQ(character.getType(),ENEMY);
+    EXPECT_EQ(character.getAttack(), 15);
+    EXPECT_EQ(character.getDefense(), 10);
+    EXPECT_EQ(character.getDexterity(), 15);
+}
+
+
+

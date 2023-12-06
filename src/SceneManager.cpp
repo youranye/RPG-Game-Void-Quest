@@ -8,8 +8,8 @@ void SceneManager::runScene()
         return;
     }
 
-    BattleScene* bScene = dynamic_cast<BattleScene*>(currentScene);
-    NarrativeScene* nScene = dynamic_cast<NarrativeScene*>(currentScene);
+    BattleScene *bScene = dynamic_cast<BattleScene *>(currentScene);
+    NarrativeScene *nScene = dynamic_cast<NarrativeScene *>(currentScene);
 
     if (bScene != nullptr)
     {
@@ -26,36 +26,94 @@ void SceneManager::replaceScene(std::string const &key)
     currentScene = &(store->getScene(key));
 }
 
-void SceneManager::handleNonBattleScene(NarrativeScene* nScene) {
+void SceneManager::handleNonBattleScene(NarrativeScene *nScene)
+{
+    assert(nScene != nullptr);
     ioManager.write(nScene->getText());
+    ioManager.write("\n");
     std::vector<std::string> options = nScene->getOptions();
-    int userOption = ioManager.readOption(options.size()); 
-    //Based on userChoice, transition to the next scene
-    replaceScene(nScene->getNextKey(userOption));
+    std::stringstream ss;
+    ss << "Options: "
+       << "\n";
+    for (std::size_t i = 0; i < options.size(); i++)
+    {
+        char letter = 'a' + i;
+        ss << letter << ") " << options.at(i) << "\n";
+    }
+    ioManager.write(ss.str());
+    int userOption = ioManager.readOption(options.size());
+    // Based on userChoice, transition to the next scene
+    goToNextScene(nScene->getNextKey(userOption));
 }
 
-void SceneManager::handleBattleScene(BattleScene* bScene) {
+void SceneManager::handleBattleScene(BattleScene *bScene)
+{
+    assert(bScene != nullptr);
     std::string enemyKey = bScene->getEnemyName();
-    Character* enemy = &characterManager.getCharacter(enemyKey);
+    Character &enemy = characterManager.getCharacter(enemyKey);
 
-    if (enemy == nullptr) {
+    if (enemy == nullCharacter)
+    {
         ioManager.write("Error: Enemy not found.\n");
+        ioManager.write("Skipping Fight\n");
+        goToNextScene(bScene->getNextKey());
         return;
     }
 
     ioManager.write("Battle begins with enemy: " + enemyKey);
     // Run the battle with the obtained enemy using BattleManager
-    Player* player = characterManager.getPlayer();
+    Player *player = characterManager.getPlayer();
+    if (player == nullptr)
+    {
+        ioManager.write("hmm, it seems you haven't told me your name yet.\n");
+        ioManager.write("Now, would you tell me who you are?\n");
+        characterManager.initialize();
+        player = characterManager.getPlayer();
+    }
     assert(player != nullptr); // TODO: handle this error
-    BattleManager battleManager(player, *enemy, ioManager);
+    BattleManager battleManager(player, enemy, ioManager);
+    if (enemy.getType() == BOSS)
+    {
+        ioManager.write("\nYour HP and SP have Been Restored!");
+    }
+    ioManager.write("\n");
     battleManager.runBattle();
     BattleOutcome battleOutcome = battleManager.getBattleOutcome();
+    string nextSceneKey = bScene->getNextKey();
 
-    if (battleOutcome == WIN) {
+    if (battleOutcome == WIN)
+    {
         ioManager.write("You won the battle!\n");
-    } else {
+    }
+    else
+    {
         ioManager.write("You lost the battle!\n");
+        ioManager.write("Game Over!\n");
+        nextSceneKey = "start#end";
     }
 
-    replaceScene(bScene->getNextKey());
+    goToNextScene(nextSceneKey);
+}
+
+bool SceneManager::isFinalSceneReached(string sceneKey)
+{
+    assert(currentScene != nullptr && "Current scene is null when checking if final scene reached");
+    if (sceneKey == "start#end")
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void SceneManager::goToNextScene(const std::string &nextSceneKey)
+{
+    if (isFinalSceneReached(nextSceneKey))
+    {
+        this->currentScene = nullptr;
+        return;
+    }
+    replaceScene(nextSceneKey);
 }

@@ -21,3 +21,28 @@ add_executable(${CMAKE_PROJECT_NAME}
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME} CharacterManager Character IOManager GameManager BattleManager SceneManager NarrativeScene FileSceneStore SceneParser)
+
+#specifying dirs for making the release executable
+set(RESOURCES_SOURCE_DIR "${PROJECT_SOURCE_DIR}/resources")
+set(RESOURCES_DESTINATION_DIR "${PROJECT_SOURCE_DIR}/release/resources")
+set(VOIDQUEST_EXECUTABLE_SOURCE_DIR "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/VoidQuest")
+set(VOIDQUEST_EXECUTABLE_DESTINATION_DIR "${PROJECT_SOURCE_DIR}/release")
+
+# Add custom commands to copy the folder and file to release directory
+add_custom_command(
+    TARGET ${CMAKE_PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${RESOURCES_SOURCE_DIR}
+    ${RESOURCES_DESTINATION_DIR}
+)
+add_custom_command(
+    TARGET ${CMAKE_PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+    ${VOIDQUEST_EXECUTABLE_SOURCE_DIR}
+    ${VOIDQUEST_EXECUTABLE_DESTINATION_DIR}
+)
+
+# Add a custom target to make sure the copy is executed after building
+add_custom_target(CopyFolderTarget ALL DEPENDS ${CMAKE_PROJECT_NAME})

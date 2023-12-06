@@ -40,6 +40,8 @@ class SceneManager
 
     void handleNonBattleScene(NarrativeScene* nScene);
     void handleBattleScene(BattleScene* bScene);
+    bool isFinalSceneReached(string); // Helper function to check if it's the final scene
+    void goToNextScene(const std::string& nextSceneKey);
 };
 
 #endif

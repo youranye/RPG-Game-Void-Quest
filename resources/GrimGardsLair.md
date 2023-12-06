@@ -69,7 +69,7 @@ in this room there is a small key on the floor what do you do?
 
 ## Options
  - Pick it up -> #Room1s
- - Leave it there -> #room1
+ - Leave it there -> #Room1
 
 # Room1s
 
@@ -139,7 +139,7 @@ in this room there is a small key on the floor what do you do?
 
 ## Options
  - Pick it up -> #Room6
- - Leave it there -> #room4s
+ - Leave it there -> #Room4s
 
 # Room6
 

@@ -70,7 +70,7 @@ void Player::regenerateSP(int amount)
     }
 }
 
-const int Player::getMaxSP()
+int Player::getMaxSP()
 {
     return maxSP;
 }

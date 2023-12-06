@@ -23,9 +23,9 @@ public:
 	CharacterManager(IOManager& ioManager);
 
 	// Initialize the player character.
-	void initialize();
+	virtual void initialize();
 
-	~CharacterManager();
+	virtual ~CharacterManager();
 
 	// Finds and returns the character whose name matches the parameter. Return nullCharacter if not found.
 	Character& getCharacter(std::string);
