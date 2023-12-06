@@ -115,10 +115,10 @@ If there was no SceneStore, SceneManager would rely on the FileSceneStore, which
  > Instructions on installing and running your application
  ## Testing
  ### Building, running tests, and evaluating test coverage
-* Ensure that --coverage (or equivalently, -fprofile-arcs -ftest-coverage) is passed to CMAKE_CXX_FLAGS. For instance, include -DCMAKE_CXX_FLAGS=”--coverage” when running the cmake configuration command.
+* Ensure that `--coverage` (or equivalently, `-fprofile-arcs -ftest-coverage`) is passed to CMAKE_CXX_FLAGS. For instance, include `-DCMAKE_CXX_FLAGS=”--coverage”` when running the cmake configuration command.
 * Build the project and run the runAllTests executable (located in the bin subdirectory of the build directory)
-** Ensure all tests pass
-** Valgrind runAllTests with leak-check=full to ensure no leaks occur
+    Ensure all tests pass
+    Valgrind runAllTests with `leak-check=full` to ensure no leaks occur
 * lcov the build directory and output into gtest_coverage.info (ignored by gitignore)
 * genhtml, outputting into a CODE_COVERAGE directory (ignored by gitignore)
 
