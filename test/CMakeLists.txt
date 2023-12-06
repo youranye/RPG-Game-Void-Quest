@@ -10,6 +10,7 @@ add_executable(runAllTests
   PlayerClassTests.cpp
   SceneParserTests.cpp
   SceneManagerTests.cpp
+  FileSceneStoreTests.cpp
 )
 
 add_executable(testCodeCoverage
@@ -58,8 +59,9 @@ add_executable (testBattleManager
 
 add_executable(testSceneParser SceneParserTests.cpp)
 add_executable(testSceneManager SceneManagerTests.cpp)
+add_executable(testFileSceneStore FileSceneStoreTests.cpp)
 
-target_link_libraries(runAllTests CharacterManager Character IOManager GameManager BattleManager SceneManager NarrativeScene gmock gtest GTest::gtest_main)
+target_link_libraries(runAllTests CharacterManager Character IOManager GameManager BattleManager SceneManager NarrativeScene FileSceneStore gmock gtest GTest::gtest_main)
 target_link_libraries(testCodeCoverage CharacterManager Character IOManager GameManager BattleManager SceneManager NarrativeScene gmock gtest GTest::gtest_main)
 target_link_libraries(testCharacterManager CharacterManager Character Player IOManager gmock gtest gtest_main)
 target_link_libraries(testCharacterClass Character gmock gtest gtest_main)
@@ -69,5 +71,5 @@ target_link_libraries(testIoManager IOManager gmock gtest GTest::gtest_main)
 target_link_libraries(testGameManager CharacterManager Character IOManager GameManager SceneManager BattleManager NarrativeScene gmock gtest GTest::gtest_main)
 target_link_libraries(testSceneParser SceneParser gmock gtest GTest::gtest_main)
 target_link_libraries(testSceneManager SceneManager NarrativeScene IOManager CharacterManager BattleManager gmock gtest GTest::gtest_main)
-
+target_link_libraries(testFileSceneStore FileSceneStore gtest GTest::gtest_main)
 include(GoogleTest)

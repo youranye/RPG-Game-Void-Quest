@@ -25,3 +25,8 @@ src/libIOManager.a
 src/libSceneManager.a
 *.a
 
+# Code Coverage Files
+CODE_COVERAGE
+gtest_coverage.info
+
+release
