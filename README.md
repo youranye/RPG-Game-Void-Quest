@@ -110,10 +110,11 @@ If there was no SceneStore, SceneManager would rely on the FileSceneStore, which
  > * Make sure your README file and Project board are up-to-date reflecting the current status of your project (e.g. any changes that you have made during the project such as changes to your class diagram). Previous versions should still be visible through your commit history. 
  
  ## Screenshots
- It would be impractical to include screenshots of the whole game. Here are screenshots of the character creation process, the beginning of the game, and the end of the game.
-
+ It would be impractical to include screenshots of every scene in the game. Here is a screenshot of the start of a game, including the creation of a character, choices for the player to make, and a battle.
  ![character creation](README_Resources/character_creation.jpg)
  ![game beginning](README_Resources/first_battle.jpg)
+
+ Here is a screenshot of the end of a game, including the credits and the option to quit or start a new game.
  ![game end](README_Resources/game_end.jpg)
  
  ## Installation/Usage
@@ -134,6 +135,6 @@ We reached 100% code coverage with our tests.
 ![code coverage](README_Resources/code_coverage.jpg)
 
 ### Exceptions to testing
-Some non-deterministic functions have been excluded from testing due to tests not being able to be reproducible. This specifically affects attack and specialAttack. The outcomes of these functions rely on multiple randomly generated numbers. In the future, we could test these by providing an interface to generate random numbers which would be passed into classes requiring randomness, allowing us to deterministically mock the random interface.
+Some non-deterministic functions have been excluded from testing due to tests not being able to be reproducible. This specifically affects the attack and specialAttack functions in BattleManager. The outcomes of these functions rely on multiple randomly generated numbers. The behavior of these functions has been verified by other tests that call these functions and by thorough playtesting. In the future, we could test these by providing an interface to generate random numbers which would be passed into classes requiring randomness, allowing us to deterministically mock the random interface.
 
  
