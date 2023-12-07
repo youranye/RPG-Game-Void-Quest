@@ -110,7 +110,12 @@ If there was no SceneStore, SceneManager would rely on the FileSceneStore, which
  > * Make sure your README file and Project board are up-to-date reflecting the current status of your project (e.g. any changes that you have made during the project such as changes to your class diagram). Previous versions should still be visible through your commit history. 
  
  ## Screenshots
- > Screenshots of the input/output after running your application
+ It would be impractical to include screenshots of the whole game. Here are screenshots of the character creation process, the beginning of the game, and the end of the game.
+
+ ![character creation](README_Resources/character_creation.jpg)
+ ![game beginning](README_Resources/first_battle.jpg)
+ ![game end](README_Resources/game_end.jpg)
+ 
  ## Installation/Usage
  > Instructions on installing and running your application
  ## Testing
