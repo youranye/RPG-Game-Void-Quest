@@ -4,16 +4,14 @@ Authors: [Wen Wu Yiang](https://github.com/W2YUCR), [Youran Ye](https://github.c
 
 ## Project Description
 
-Void Quest is a text based RPG written in C++ that takes place in the Stitch, a world bustling with Humans, Orcs, Elves, Dwarves, Goblins, and Giants.
+Void Quest is a text based RPG written in C++ that takes place in the Stitch, a world bustling with Humans, Orcs, Elves, Dwarves, Goblins, and Giants. In this game, the player explores GrimGard's Lair, a winding cave system full of hidden dangers.
 
 Features of our RPG:
 
-* Character customization: Players can customize their character by choosing their name, attributes, and class, which affects their character stats and abilities.
+* Character customization: Players can customize their character by choosing their name, species, and class, which affects their character stats and abilities.
 * Extendible world: The world is set up using data files, which means that new content can be added by simply adding more files.
-* Branching plotline: Player choices affect the game state, which changes what the user finds in the world.
-* Combat system: Players are able to fight enemies throughout their journey, and upgrade their equipment.
-* NPCs: NPCs can give out quests to players who will be rewarded for completing objectives
-* Game saving and loading: Players can save and load games to continue playing later.
+* Player choice: The player's choices affect their movement through the cave system.
+* Combat system: Players are able to fight enemies throughout their journey.
 
 Output: Scenes are text-based, and printed out to the console. It shows the narrative text, status such as health, and options for progression.
 Input: Each option shown is lettered a, b, c, etc.. Users can select one of the options shown by typing the corresponding letter. 
@@ -31,12 +29,11 @@ This diagram shows a flowchart of the various parts of the program, starting fro
 ### Screen Layouts
 
 Screens will contain text that relates to the story of the game. They will give the user a list of lettered options and prompt the user to select the letter of the option they desire. The user will select an option by typing the corresponding letter into the terminal and hitting enter. The expected input is one of the listed letters. In the case of character creation, a string is expected for the character's name. The game will include the following screens:
-* Home/Start: Displays the title of the game. The user enters ‘a’ to start the game or ‘b’ to see the credits.
+* Home/Start: Displays the title of the game. The user enters ‘a’ to start the game, ‘b’ to see the credits, or 'c' to quit.
 * Credits: Displays the credits. The user enters any letter to return to the home/start screen.
 * Story: Narrates a scene in the story. Explains a scenario to the user and asks them to choose what they will do next. Displays a list of options, each labeled with a letter. The user inputs the letter of the option they wish to choose.
-* Combat help: Displays an explanation of combat mechanics. The user enters any letter to return to the story.
-* Game over: Displays a message that the player character has died. The user enters any letter to return to the home/start screen.
-* Win: Displays a message the user has won the game. The user enters any letter to return to the home/start screen.
+* Game over: Displays a message that the player character has died and the credits. The user enters any letter to return to the home/start screen.
+* Win: Displays a message the user has won the game and the credits. The user enters any letter to return to the home/start screen.
 
 ![screen layout](README_Resources/screen_layout.jpg)
 
@@ -44,17 +41,17 @@ Screens will contain text that relates to the story of the game. They will give 
 
  ![class diagram](README_Resources/class_diagram.png)
 
-This Diagram describes the planned layout of our Project, GameManager is a class that manages the Game, it handles the story and connecting the backend of the game with the frontend. The Character Class is what stores character information and stats, ClassType and SpeciesType are enumerations, The CharacterManager Class stores and manages the characters. Scene is the Abstract Base Class for storing Text options and prompts. SceneStore Stores and Manages these Scenes. BattleManager manages battles and fights. Handles damage calculations, battle menus, everything related to battles. IOManager handles UserInput and verifying that it is valid before passing to other classes and parts of the program.
+This Diagram describes the planned layout of our Project, GameManager is a class that manages the Game, it handles the story and connecting the backend of the game with the frontend. The Character Class is what stores character information and stats. ClassType and SpeciesType are enumerations. The CharacterManager Class stores and manages the characters. Scene is the Abstract Base Class for storing Text options and prompts. SceneStore stores these Scenes and SceneManager manages them. BattleManager manages battles and fights. It handles damage calculations, battle menus, everything related to battles. IOManager handles UserInput and verifying that it is valid before passing to other classes and parts of the program.
  
 ## Phase III
 
 * What principles did you apply?
   
-We applied the single responsibility principle to our GameManager class. GameManager violates Single Responsibility, since it coordinates between the sceneManager, BattleManager, and CharacterManager and also coordinates how to treat Battle and Narrative scenes. It should not implement any logic related to scenes.
+We applied the single responsibility principle to our GameManager class. GameManager violates Single Responsibility, since it coordinates between the SceneManager, BattleManager, and CharacterManager and also coordinates how to treat Battle and Narrative scenes. It should not implement any logic related to scenes.
 
 * How did you apply it?
   
-To fix it, we will add a runScene function to sceneManager and a SceneVisitor function. The SceneVisitor function will treat a scene differently depending on what type of scene it is. SceneManager will handle the logic of running the scene in the runScene function.
+To fix it, we will add a runScene function to SceneManager. The runScene function will treat a scene differently depending on what type of scene it is. SceneManager will handle the logic of running the scene in the runScene function.
 
 * How did this help us write better code? 
   
@@ -105,17 +102,43 @@ If there was no SceneStore, SceneManager would rely on the FileSceneStore, which
 
 ![new class diagram](README_Resources/new_class_diagram.png)
  
- > ## Final deliverable
- > All group members will give a demo to the reader during lab time. ou should schedule your demo on Calendly with the same reader who took your second scrum meeting. The reader will check the demo and the project GitHub repository and ask a few questions to all the team members. 
- > Before the demo, you should do the following:
- > * Complete the sections below (i.e. Screenshots, Installation/Usage, Testing)
- > * Plan one more sprint (that you will not necessarily complete before the end of the quarter). Your In-progress and In-testing columns should be empty (you are not doing more work currently) but your TODO column should have a full sprint plan in it as you have done before. This should include any known bugs (there should be some) or new features you would like to add. These should appear as issues/cards on your Project board.
- > * Make sure your README file and Project board are up-to-date reflecting the current status of your project (e.g. any changes that you have made during the project such as changes to your class diagram). Previous versions should still be visible through your commit history. 
+ ## Final deliverable
  
  ## Screenshots
- > Screenshots of the input/output after running your application
+ It would be impractical to include screenshots of every scene in the game. Here is a screenshot of the start of a game, including the creation of a character, choices for the player to make, and a battle.
+ ![character creation](README_Resources/character_creation.jpg)
+ ![game beginning](README_Resources/first_battle.jpg)
+
+ Here is a screenshot of the end of a game, including the credits and the option to quit or start a new game.
+ ![game end](README_Resources/game_end.jpg)
+ 
  ## Installation/Usage
- > Instructions on installing and running your application
+VoidQuest can be built as a normal CMake project. Currently it has been shown to work with GCC and the Make generator on Linux.
+After building, the VoidQuest executable is located within the release directory. Ensure that the resources directory is a subdirectory of wherever the VoidQuest executable is run since it is needed to load the game.
+To install and run the project:
+1. Clone the project with the option `--recursive`
+2. Go into the project's root directory and run `cmake .`
+3. Then `make`
+4. Then run the executable `VoidQuest.elf` in the release directory
+
  ## Testing
- > How was your project tested/validated? If you used CI, you should have a "build passing" badge in this README.
+ ### Building, running tests, and evaluating test coverage
+* Ensure that `--coverage` (or equivalently, `-fprofile-arcs -ftest-coverage`) is passed to CMAKE_CXX_FLAGS. For instance, include `-DCMAKE_CXX_FLAGS=”--coverage”` when running the cmake configuration command.
+* Build the project and run the runAllTests executable (located in the bin subdirectory of the build directory)
+     * Ensure all tests pass
+     * Valgrind runAllTests with `leak-check=full` to ensure no leaks occur
+* lcov the build directory and output into gtest_coverage.info (ignored by gitignore)
+* genhtml, outputting into a CODE_COVERAGE directory (ignored by gitignore)
+
+The VoidQuest executable has been manually run with valgrind to ensure no leaks occur in the final product.
+
+We reached 100% code coverage with our tests.
+
+![code coverage](README_Resources/code_coverage.jpg)
+
+We also thoroughly playtested the game.
+
+### Exceptions to testing
+Some non-deterministic functions have been excluded from testing due to tests not being able to be reproducible. This specifically affects the attack and specialAttack functions in BattleManager. The outcomes of these functions rely on multiple randomly generated numbers. The behavior of these functions has been verified by other tests that call these functions and by thorough playtesting. In the future, we could test these by providing an interface to generate random numbers which would be passed into classes requiring randomness, allowing us to deterministically mock the random interface. 
+
  

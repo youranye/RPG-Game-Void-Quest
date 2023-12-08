@@ -22,6 +22,7 @@ add_executable(testCodeCoverage
   PlayerClassTests.cpp
   SceneParserTests.cpp
   SceneManagerTests.cpp
+  FileSceneStoreTests.cpp
   ../src/CharacterManager.cpp
   ../src/Character.cpp
   ../src/IOManager.cpp
