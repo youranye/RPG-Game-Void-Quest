@@ -11,7 +11,7 @@ Features of our RPG:
 * Character customization: Players can customize their character by choosing their name, species, and class, which affects their character stats and abilities.
 * Extendible world: The world is set up using data files, which means that new content can be added by simply adding more files.
 * Player choice: The player's choices affect their movement through the cave system.
-* Combat system: Players are able to fight enemies throughout their journey, and upgrade their equipment.
+* Combat system: Players are able to fight enemies throughout their journey.
 
 Output: Scenes are text-based, and printed out to the console. It shows the narrative text, status such as health, and options for progression.
 Input: Each option shown is lettered a, b, c, etc.. Users can select one of the options shown by typing the corresponding letter. 
@@ -118,7 +118,13 @@ If there was no SceneStore, SceneManager would rely on the FileSceneStore, which
  ![game end](README_Resources/game_end.jpg)
  
  ## Installation/Usage
- > Instructions on installing and running your application
+VoidQuest can be built as a normal CMake project. Currently it has been shown to work with GCC and the Make generator on Linux.
+After building, the VoidQuest executable is located within the release directory. Ensure that the resources directory is a subdirectory of wherever the VoidQuest Executable is run since it is needed to load the game.
+To Install and Run the Project
+1. clone the project with the option `--recursive`
+2. go into the projects root directory and run `cmake .`
+3. then `make`
+4. then run the executable `VoidQuest.elf` in the release directory
  ## Testing
  ### Building, running tests, and evaluating test coverage
 * Ensure that `--coverage` (or equivalently, `-fprofile-arcs -ftest-coverage`) is passed to CMAKE_CXX_FLAGS. For instance, include `-DCMAKE_CXX_FLAGS=”--coverage”` when running the cmake configuration command.
