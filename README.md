@@ -102,12 +102,7 @@ If there was no SceneStore, SceneManager would rely on the FileSceneStore, which
 
 ![new class diagram](README_Resources/new_class_diagram.png)
  
- > ## Final deliverable
- > All group members will give a demo to the reader during lab time. ou should schedule your demo on Calendly with the same reader who took your second scrum meeting. The reader will check the demo and the project GitHub repository and ask a few questions to all the team members. 
- > Before the demo, you should do the following:
- > * Complete the sections below (i.e. Screenshots, Installation/Usage, Testing)
- > * Plan one more sprint (that you will not necessarily complete before the end of the quarter). Your In-progress and In-testing columns should be empty (you are not doing more work currently) but your TODO column should have a full sprint plan in it as you have done before. This should include any known bugs (there should be some) or new features you would like to add. These should appear as issues/cards on your Project board.
- > * Make sure your README file and Project board are up-to-date reflecting the current status of your project (e.g. any changes that you have made during the project such as changes to your class diagram). Previous versions should still be visible through your commit history. 
+ ## Final deliverable
  
  ## Screenshots
  It would be impractical to include screenshots of every scene in the game. Here is a screenshot of the start of a game, including the creation of a character, choices for the player to make, and a battle.
@@ -119,12 +114,13 @@ If there was no SceneStore, SceneManager would rely on the FileSceneStore, which
  
  ## Installation/Usage
 VoidQuest can be built as a normal CMake project. Currently it has been shown to work with GCC and the Make generator on Linux.
-After building, the VoidQuest executable is located within the release directory. Ensure that the resources directory is a subdirectory of wherever the VoidQuest Executable is run since it is needed to load the game.
-To Install and Run the Project
-1. clone the project with the option `--recursive`
-2. go into the projects root directory and run `cmake .`
-3. then `make`
-4. then run the executable `VoidQuest.elf` in the release directory
+After building, the VoidQuest executable is located within the release directory. Ensure that the resources directory is a subdirectory of wherever the VoidQuest executable is run since it is needed to load the game.
+To install and run the project:
+1. Clone the project with the option `--recursive`
+2. Go into the project's root directory and run `cmake .`
+3. Then `make`
+4. Then run the executable `VoidQuest.elf` in the release directory
+
  ## Testing
  ### Building, running tests, and evaluating test coverage
 * Ensure that `--coverage` (or equivalently, `-fprofile-arcs -ftest-coverage`) is passed to CMAKE_CXX_FLAGS. For instance, include `-DCMAKE_CXX_FLAGS=”--coverage”` when running the cmake configuration command.
@@ -140,7 +136,9 @@ We reached 100% code coverage with our tests.
 
 ![code coverage](README_Resources/code_coverage.jpg)
 
+We also thoroughly playtested the game.
+
 ### Exceptions to testing
-Some non-deterministic functions have been excluded from testing due to tests not being able to be reproducible. This specifically affects the attack and specialAttack functions in BattleManager. The outcomes of these functions rely on multiple randomly generated numbers. The behavior of these functions has been verified by other tests that call these functions and by thorough playtesting. In the future, we could test these by providing an interface to generate random numbers which would be passed into classes requiring randomness, allowing us to deterministically mock the random interface.
+Some non-deterministic functions have been excluded from testing due to tests not being able to be reproducible. This specifically affects the attack and specialAttack functions in BattleManager. The outcomes of these functions rely on multiple randomly generated numbers. The behavior of these functions has been verified by other tests that call these functions and by thorough playtesting. In the future, we could test these by providing an interface to generate random numbers which would be passed into classes requiring randomness, allowing us to deterministically mock the random interface. 
 
  
