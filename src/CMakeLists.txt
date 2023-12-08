@@ -19,13 +19,13 @@ target_link_libraries(SceneManager BattleManager)
 add_executable(${CMAKE_PROJECT_NAME}
     main.cpp
 )
-
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME ${CMAKE_PROJECT_NAME}.elf)
 target_link_libraries(${CMAKE_PROJECT_NAME} CharacterManager Character IOManager GameManager BattleManager SceneManager NarrativeScene FileSceneStore SceneParser)
 
 #specifying dirs for making the release executable
 set(RESOURCES_SOURCE_DIR "${PROJECT_SOURCE_DIR}/resources")
 set(RESOURCES_DESTINATION_DIR "${PROJECT_SOURCE_DIR}/release/resources")
-set(VOIDQUEST_EXECUTABLE_SOURCE_DIR "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/VoidQuest")
+set(VOIDQUEST_EXECUTABLE_SOURCE_DIR "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/VoidQuest.elf")
 set(VOIDQUEST_EXECUTABLE_DESTINATION_DIR "${PROJECT_SOURCE_DIR}/release")
 
 # Add custom commands to copy the folder and file to release directory
